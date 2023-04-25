@@ -400,22 +400,105 @@ Copy + paste from clipboard
   (xclip-mode 1)
 #+end_src
 
-** company
+** company (commented out)
 
-Load company to facilitate auto-complete.
-Auto-complete behaviour is configured in each mode individually.
+# Load company to facilitate auto-complete.
+# Auto-complete behaviour is configured in each mode individually.
+# #+begin_src emacs-lisp
+#   (use-package company
+#     :ensure t
+#     :custom
+#     (company-idle-delay 0.0 "Recommended by lsp")
+#     (company-ispell-available t)
+#     (company-ispell-dictionary (expand-file-name "wordlist"
+#                                                  dotemacs-extras-directory))
+#     :config (global-company-mode '(LaTeX-mode latex-mode))) ;; enable company for latex only
+
+#   ;; make company respect cases
+#   (setq company-dabbrev-downcase nil)
+# #+end_src
+
+** corfu + cape
+
+Load corfu for autocomplete
 #+begin_src emacs-lisp
-  (use-package company
-    :ensure t
-    :custom
-    (company-idle-delay 0.0 "Recommended by lsp")
-    (company-ispell-available t)
-    (company-ispell-dictionary (expand-file-name "wordlist"
-                                                 dotemacs-extras-directory))
-    :config (global-company-mode '(LaTeX-mode latex-mode))) ;; enable company for latex only
+(use-package corfu
+  ;; Optional customizations
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)                 ;; Enable auto completion
+  ;; (corfu-separator ?\s)          ;; Orderless field separator
+  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
 
-  ;; make company respect cases
-  (setq company-dabbrev-downcase nil)
+  ;; Enable Corfu only for certain modes.
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
+
+  ;; Recommended: Enable Corfu globally.
+  ;; This is recommended since Dabbrev can be used globally (M-/).
+  ;; See also `corfu-exclude-modes'.
+  :init
+  (global-corfu-mode))
+
+;; A few more useful configurations...
+(use-package emacs
+  :init
+  ;; TAB cycle if there are only few candidates
+  (setq completion-cycle-threshold 3)
+
+  ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+  ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+  ;; (setq read-extended-command-predicate
+  ;;       #'command-completion-default-include-p)
+
+  ;; Enable indentation+completion using the TAB key.
+  ;; `completion-at-point' is often bound to M-TAB.
+  ;; (setq tab-always-indent 'complete)
+)
+#+end_src
+
+Load cape to use company backends for corfu
+#+begin_src emacs-lisp
+(use-package cape
+  ;; Bind dedicated completion commands
+  ;; Alternative prefix keys: C-c p, M-p, M-+, ...
+  :bind (("C-c p p" . completion-at-point) ;; capf
+         ("C-c p t" . complete-tag)        ;; etags
+         ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
+         ("C-c p h" . cape-history)
+         ("C-c p f" . cape-file)
+         ("C-c p k" . cape-keyword)
+         ("C-c p s" . cape-symbol)
+         ("C-c p a" . cape-abbrev)
+         ("C-c p l" . cape-line)
+         ("C-c p w" . cape-dict)
+         ("C-c p \\" . cape-tex)
+         ("C-c p _" . cape-tex)
+         ("C-c p ^" . cape-tex)
+         ("C-c p &" . cape-sgml)
+         ("C-c p r" . cape-rfc1345))
+  :init
+  ;; Add `completion-at-point-functions', used by `completion-at-point'.
+  ;; NOTE: The order matters!
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  ;; (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  ;;(add-to-list 'completion-at-point-functions #'cape-history)
+  ;;(add-to-list 'completion-at-point-functions #'cape-keyword)
+  ;;(add-to-list 'completion-at-point-functions #'cape-tex)
+  ;;(add-to-list 'completion-at-point-functions #'cape-sgml)
+  ;;(add-to-list 'completion-at-point-functions #'cape-rfc1345)
+  ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
+  ;;(add-to-list 'completion-at-point-functions #'cape-dict)
+  ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
+  ;;(add-to-list 'completion-at-point-functions #'cape-line)
+)
 #+end_src
 
 ** prescient
@@ -542,33 +625,70 @@ Enable spellcheck by default
   (add-hook 'LaTeX-mode-hook #'turn-on-flyspell)
 #+end_src
 
-** autocomplete
+** company-backends
 
-Load and group various company latex backends
+# Load and group various company latex backends (company)
+# #+begin_src emacs-lisp
+#   (defun sb/company-latex-mode ()
+#     "Add backends for latex completion in company mode."
+#     (use-package math-symbol-lists ; Required by ac-math and company-math
+#       :ensure t)
+#     (use-package company-math
+#       :ensure t)
+#     (use-package company-reftex
+#       :ensure t)
+#     (use-package company-bibtex
+#       :ensure t)
+#     (use-package company-auctex
+#       :ensure t)
+#     (make-local-variable 'company-backends)
+#     (setq-local company-backends
+#                 (append '((:separate company-math-symbols-latex
+#                                      company-math-symbols-unicode
+#                                      company-latex-commands))
+#                         company-backends))
+
+#     (setq-local company-backends
+#                 (append '((:separate company-reftex-labels
+#                                      company-reftex-citations))
+#                         company-backends))
+#     (company-auctex-init))
+#   (dolist (hook '(latex-mode-hook LaTeX-mode-hook))
+#     (add-hook hook #'sb/company-latex-mode))
+# #+end_src
+
+Load various company latex backends via cape for corfu (for autocomplete)
 #+begin_src emacs-lisp
-  (defun sb/company-latex-mode ()
-    "Add backends for latex completion in company mode."
-    (use-package math-symbol-lists ; Required by ac-math and company-math
-      :ensure t)
-    (use-package company-math
-      :ensure t)
-    (use-package company-reftex
-      :ensure t)
-    (use-package company-bibtex
-      :ensure t)
-    (make-local-variable 'company-backends)
-    (setq-local company-backends
-                (append '((:separate company-math-symbols-latex
-                                     company-math-symbols-unicode
-                                     company-latex-commands))
-                        company-backends))
+  (use-package company-math
+    :after tex
+    :init
+    (defun math-setup-capf ()
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-math-symbols-latex))
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-math-symbols-unicode))
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-latex-commands)))
+    :hook
+    (LaTeX-mode . math-setup-capf))
 
-    (setq-local company-backends
-                (append '((:separate company-reftex-labels
-                                     company-reftex-citations))
-                        company-backends)))
-  (dolist (hook '(latex-mode-hook LaTeX-mode-hook))
-    (add-hook hook #'sb/company-latex-mode))
+  (use-package company-reftex
+    :after tex
+    :init
+    (defun reftex-setup-capf ()
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-reftex-labels))
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-reftex-citations)))
+    :hook
+    (LaTeX-mode . reftex-setup-capf))
+
+  (use-package company-auctex
+    :after tex
+    :init
+    (defun auctex-setup-capf ()
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-auctex-labels))
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-auctex-bibs))
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-auctex-macros))
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-auctex-symbols))
+      (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-auctex-environments)))
+    :hook
+    (LaTeX-mode . auctex-setup-capf))
 #+end_src
 
 ** pdf-tools
