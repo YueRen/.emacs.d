@@ -705,6 +705,14 @@ Use and sync with pdf-tools
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 #+end_src
 
+** powerthesaurus
+
+Load powerthesaurus for looking up synonyms, antonyms and related terms
+#+begin_src emacs-lisp
+  (use-package powerthesaurus
+    :after tex)
+#+end_src
+
 
 * C++
 
