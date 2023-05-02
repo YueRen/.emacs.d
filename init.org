@@ -203,11 +203,6 @@ Load vertico for vertical minibuffer completion UI
     ;; (setq vertico-cycle t)
     )
 
-  ;; Persist history over Emacs restarts. Vertico sorts by history position.
-  (use-package savehist
-    :init
-    (savehist-mode))
-
   ;; A few more useful configurations...
   (use-package emacs
     :init
