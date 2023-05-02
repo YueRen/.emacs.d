@@ -755,9 +755,12 @@ Editing julia
 
 Running julia
 #+begin_src emacs-lisp
-  (add-to-list 'load-path "/home/ren/julia-1.8.5/bin/julia")
   (use-package julia-repl
-    :after julia-mode)
+    :after julia-mode
+    :init
+    (setq exec-path (append exec-path '("/home/ren/julia-1.8.5/bin")))
+    (add-to-list 'load-path "/home/ren/julia-1.8.5/bin/julia")
+    (show-paren-mode 1))
   (add-hook 'julia-mode-hook 'julia-repl-mode) ;; always use minor mode
 #+end_src
 
