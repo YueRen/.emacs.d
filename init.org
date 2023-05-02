@@ -230,6 +230,7 @@ Load vertico for vertical minibuffer completion UI
     ;; Enable recursive minibuffers
     (setq enable-recursive-minibuffers t))
 #+end_src
+Note: `vertico-multiform-categories` is set in the jinx section
 
 ** orderless
 
@@ -508,6 +509,21 @@ Load prescient for better ordering of completions
     (vertico-prescient-mode))
 #+end_src
 
+** jinx
+
+Load jinx for spell-checking (tex only for now)
+#+begin_src emacs-lisp
+  (use-package jinx
+    ;; :hook (emacs-startup . global-jinx-mode)
+    :after tex
+    :bind ([remap ispell-word] . jinx-correct))
+#+end_src
+
+Use vertico grid display to fit more suggestions on screen.
+#+begin_src emacs-lisp
+  (setq vertico-multiform-categories '((jinx grid) (vertico-grid-annotate . 36)))
+  (vertico-multiform-mode 1)
+#+end_src
 
 * Org Mode
 
@@ -615,10 +631,10 @@ Highlight \cref like \ref
   )
 #+end_src
 
-Enable spellcheck by default
-#+begin_src emacs-lisp
-  (add-hook 'LaTeX-mode-hook #'turn-on-flyspell)
-#+end_src
+# Enable spellcheck by default # done via jinx now
+# #+begin_src emacs-lisp
+#   (add-hook 'LaTeX-mode-hook #'turn-on-flyspell)
+# #+end_src
 
 ** company-backends
 
