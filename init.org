@@ -764,21 +764,21 @@ Running julia
   (add-hook 'julia-mode-hook 'julia-repl-mode) ;; always use minor mode
 #+end_src
 
-Shift+space send current line or region to a terminal buffer
-#+begin_src emacs-lisp
-  (defun send-region-or-current-line-to-terminal ()
-    "Send the region or the current line to the terminal buffer."
-    (interactive)
-    (let ((current-line (if (use-region-p)
-                            (buffer-substring (region-beginning) (region-end))
-                          (thing-at-point 'line t))))
-      (with-current-buffer (get-buffer-create "*terminal*")
-        (comint-send-string (get-buffer-process (current-buffer))
-                            (concat current-line "\n"))))
-    (forward-line 1))
+# Shift+space send current line or region to a terminal buffer
+# #+begin_src emacs-lisp
+#   (defun send-region-or-current-line-to-terminal ()
+#     "Send the region or the current line to the terminal buffer."
+#     (interactive)
+#     (let ((current-line (if (use-region-p)
+#                             (buffer-substring (region-beginning) (region-end))
+#                           (thing-at-point 'line t))))
+#       (with-current-buffer (get-buffer-create "*terminal*")
+#         (comint-send-string (get-buffer-process (current-buffer))
+#                             (concat current-line "\n"))))
+#     (forward-line 1))
 
-  (defun my-julia-mode-hook ()
-    (define-key julia-mode-map (kbd "S-SPC") 'send-region-or-current-line-to-terminal))
+#   (defun my-julia-mode-hook ()
+#     (define-key julia-mode-map (kbd "S-SPC") 'send-region-or-current-line-to-terminal))
 
-  (add-hook 'julia-mode-hook 'my-julia-mode-hook)
-#+end_src
+#   (add-hook 'julia-mode-hook 'my-julia-mode-hook)
+# #+end_src
