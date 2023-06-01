@@ -62,11 +62,11 @@ Always start column mode.
   (setq column-number-mode t)
 #+end_src
 
-Display recently opened files on startup in GUI
-#+begin_src emacs-lisp
-  (if (display-graphic-p)
-      (setq initial-buffer-choice 'recentf-open-files))
-#+end_src
+# Display recently opened files on startup in GUI
+# #+begin_src emacs-lisp
+#   (if (display-graphic-p)
+#       (setq initial-buffer-choice 'recentf-open-files))
+# #+end_src
 
 ** behaviour basics (no external packages required)
 
@@ -524,6 +524,61 @@ Use vertico grid display to fit more suggestions on screen.
   (setq vertico-multiform-categories '((jinx grid) (vertico-grid-annotate . 36)))
   (vertico-multiform-mode 1)
 #+end_src
+
+** dashboard
+
+Load dashboard + open it on startup
+#+begin_src emacs-lisp
+  ;; (use-package all-the-icons
+  ;;   :if (display-graphic-p))
+
+  (use-package dashboard
+    :config
+    (dashboard-setup-startup-hook)
+
+    ;; Set init time info
+    (setq dashboard-set-init-info nil)
+
+    ;; Set the title
+    (setq dashboard-banner-logo-title nil)
+
+    ;; Set the banner
+    (setq dashboard-startup-banner nil)
+    ;; Value can be
+    ;; - nil to display no banner
+    ;; - 'official which displays the official emacs logo
+    ;; - 'logo which displays an alternative emacs logo
+    ;; - 1, 2 or 3 which displays one of the text banners
+    ;; - "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
+    ;; - a cons of '("path/to/your/image.png" . "path/to/your/text.txt")
+
+    ;; Set the footer
+    (setq dashboard-set-footer nil)
+
+    ;; Content is not centered by default. To center, set
+    ;; (setq dashboard-center-content t)
+
+    ;; To disable shortcut "jump" indicators for each section, set
+    (setq dashboard-show-shortcuts nil)
+
+    ;; Use icons
+    ;; (setq dashboard-icon-type 'all-the-icons) ;; use `all-the-icons' package
+    ;; (setq dashboard-set-file-icons t)
+    ;; (setq dashboard-heading-icons '((recents   . "history")
+    ;;                                 (bookmarks . "bookmark")
+    ;;                                 (agenda    . "calendar")
+    ;;                                 (projects  . "rocket")
+    ;;                                 (registers . "database")))
+    ;; (setq dashboard-set-heading-icons t)
+
+    (setq dashboard-items '((bookmarks . 12)
+                            (recents  . 12)))
+    ;;                            (projects . 5)
+    ;;                            (agenda . 5)
+    ;;                            (registers . 5)))
+    )
+#+end_src
+
 
 * Org Mode
 
