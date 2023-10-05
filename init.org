@@ -169,6 +169,12 @@ Overwrite selected text with typed text
   (delete-selection-mode 1)
 #+end_src
 
+Parenthesis highlighting in programming modes
+#+begin_src emacs-lisp
+  (add-hook 'prog-mode-hook #'show-paren-mode)
+#+end_src
+
+
 ** visual theme
 
 Load dracula-theme in GUI, manoj-dark in terminal
