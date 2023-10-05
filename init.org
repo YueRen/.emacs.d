@@ -627,7 +627,7 @@ Indent code in source block as they would be in source files.
 
 Allow use of shift to select
 #+begin_src emacs-lisp
-  (setq org-support-shift-select t)
+  (setq org-support-shift-select 'always)
 #+end_src
 
 
