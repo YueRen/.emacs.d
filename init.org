@@ -174,7 +174,6 @@ Parenthesis highlighting in programming modes
   (add-hook 'prog-mode-hook #'show-paren-mode)
 #+end_src
 
-
 ** visual theme
 
 Load dracula-theme in GUI, manoj-dark in terminal
@@ -630,7 +629,6 @@ Allow use of shift to select
   (setq org-support-shift-select 'always)
 #+end_src
 
-
 * Git
 ** magit
 
@@ -639,7 +637,6 @@ Load magit.
   (use-package magit
     :commands magit-status)
 #+end_src
-
 
 * Shell
 ** Bash and bash aliases
@@ -652,7 +649,6 @@ Use bash as default shell and use bash aliases
   (setq shell-command-switch "-ic")
   (setenv "SHELL" shell-file-name)
 #+end_src
-
 
 
 * Latex
@@ -824,25 +820,24 @@ Turn on C++-mode for files ending in ".sing" and ".lib" for Singular
 #+end_src
 
 
-
 * Julia
 
-Editing julia
+Install julia-mode and automatically enter it when opening .jl files
 #+begin_src emacs-lisp
   (use-package julia-mode
     :mode "\\.jl\\'")
 #+end_src
 
-Running julia
+Install julia-repl and automatically enter julia-repl-mode when entering julia-mode
 #+begin_src emacs-lisp
   (use-package julia-repl
     :after julia-mode
     :init
     (setq exec-path (append exec-path '("/home/ren/julia-1.9.2/bin")))
-    (add-to-list 'load-path "/home/ren/julia-1.9.2/bin/julia")
-    (show-paren-mode 1))
+    (add-to-list 'load-path "/home/ren/julia-1.9.2/bin/julia"))
   (add-hook 'julia-mode-hook 'julia-repl-mode) ;; always use minor mode
 #+end_src
+
 
 # Shift+space send current line or region to a terminal buffer
 # #+begin_src emacs-lisp
