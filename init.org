@@ -570,6 +570,7 @@ This section configures how org-mode behaves.
   (use-package org
     :config
     (setq org-startup-indented t)
+    (setq org-startup-truncated nil)
     (setq org-ellipsis " ▾"))
 #+end_src
 
