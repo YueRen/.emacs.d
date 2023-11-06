@@ -730,16 +730,18 @@ Load go-translate to translate between German and English (C-n / C-p to switch t
 #+end_src
 
 
+
+
 * C++
 ** indentation
-Disable tabsIndentation after open round brackets
+Disable tabsIndentation after open round brackets.
 #+begin_src emacs-lisp
   (setq-default c-default-style "linux"
                 c-basic-offset 2)
 #+end_src
 
 ** singular
-Turn on C++-mode for files ending in ".sing" and ".lib" for Singular
+Turn on C++-mode for files ending in ".sing" and ".lib" for Singular.
 #+begin_src emacs-lisp
   (setq auto-mode-alist (cons '("\\.sing\\'" . c++-mode) auto-mode-alist))
   (setq auto-mode-alist (cons '("\\.lib\\'" .  c++-mode) auto-mode-alist))
