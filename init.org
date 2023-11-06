@@ -746,38 +746,30 @@ Turn on C++-mode for files ending in ".sing" and ".lib" for Singular
 
 
 * Julia
-Install julia-mode and automatically enter it when opening .jl files
+** julia-mode
+Install julia-mode and automatically enter it when opening .jl files.
 #+begin_src emacs-lisp
   (use-package julia-mode
     :mode "\\.jl\\'")
 #+end_src
 
-Install julia-repl and automatically enter julia-repl-mode when entering julia-mode
+** eglot-jl (disabled)
+Install eglot-js for language server support and automatically start it when entering julia-mode.
+Working on OSCAR files requires a valid Project.toml in the src folder.
+#+begin_src emacs-lisp
+  (use-package eglot-jl
+    :after julia-mode)
+  (add-hook 'julia-mode-hook 'eglot-ensure)
+  (add-hook 'julia-mode-hook 'eglot-jl-init)
+  (setq eldoc-echo-area-use-multiline-p nil)
+#+end_src
+
+Install julia-repl and automatically enter julia-repl-mode when entering julia-mode.
 #+begin_src emacs-lisp
   (use-package julia-repl
     :after julia-mode
     :init
-    (setq exec-path (append exec-path '("/home/ren/julia-1.9.2/bin")))
-    (add-to-list 'load-path "/home/ren/julia-1.9.2/bin/julia"))
-  (add-hook 'julia-mode-hook 'julia-repl-mode) ;; always use minor mode
+    (setq exec-path (append exec-path '("/home/ren/software/julia-1.9.3/bin")))
+    (add-to-list 'load-path "/home/ren/software/julia-1.9.3/bin/julia"))
+  (add-hook 'julia-mode-hook 'julia-repl-mode)
 #+end_src
-
-
-# Shift+space send current line or region to a terminal buffer
-# #+begin_src emacs-lisp
-#   (defun send-region-or-current-line-to-terminal ()
-#     "Send the region or the current line to the terminal buffer."
-#     (interactive)
-#     (let ((current-line (if (use-region-p)
-#                             (buffer-substring (region-beginning) (region-end))
-#                           (thing-at-point 'line t))))
-#       (with-current-buffer (get-buffer-create "*terminal*")
-#         (comint-send-string (get-buffer-process (current-buffer))
-#                             (concat current-line "\n"))))
-#     (forward-line 1))
-
-#   (defun my-julia-mode-hook ()
-#     (define-key julia-mode-map (kbd "S-SPC") 'send-region-or-current-line-to-terminal))
-
-#   (add-hook 'julia-mode-hook 'my-julia-mode-hook)
-# #+end_src
