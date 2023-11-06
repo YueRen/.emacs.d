@@ -4,6 +4,11 @@
 * Essentials
 This section configures the essentials of emacs, which are options that are not mode-specific
 ** package repositories and use-package
+Disable compiliation warnings
+#+begin_src emacs-lisp
+  (setq native-comp-async-report-warnings-errors 'silent)
+#+end_src
+
 Load 'package, add prominent repositories, and update package data
 #+begin_src emacs-lisp
   (require 'package)
