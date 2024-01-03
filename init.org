@@ -592,6 +592,27 @@ This section configures how org-mode behaves.
   (setq org-support-shift-select 'always)
 #+end_src
 
+** powerthesaurus
+Load powerthesaurus for looking up synonyms, antonyms and related terms.
+#+begin_src emacs-lisp
+  (use-package powerthesaurus)
+#+end_src
+
+
+** go-translate
+Load go-translate to translate between German and English (C-n / C-p to switch translation direction)
+#+begin_src emacs-lisp
+  (use-package go-translate
+    :config
+    (setq gts-translate-list '(("de" "en")))
+    ;; (setq gts-default-translator (gts-translator :engines (gts-bing-engine)))
+    (setq gts-default-translator
+          (gts-translator
+           :picker (gts-prompt-picker)
+           :engines (list (gts-bing-engine) (gts-google-engine))
+           :render (gts-buffer-render))))
+#+end_src
+
 
 * Git
 ** magit
@@ -707,30 +728,14 @@ Load pdf-tools to View pdf and sync tex.
   (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 #+end_src
 
-** powerthesaurus
-Load powerthesaurus for looking up synonyms, antonyms and related terms.
+** Latex input
 #+begin_src emacs-lisp
-  (use-package powerthesaurus
-    :after tex)
+  (with-temp-buffer
+  (activate-input-method "TeX") ;; the input method has to be triggered for `quail-package-alist' to be non-nil
+  (let ((quail-current-package (assoc "TeX" quail-package-alist)))
+   (quail-define-rules ((append . t))
+                       ("^\\alpha" ?ᵅ))))
 #+end_src
-
-** go-translate
-Load go-translate to translate between German and English (C-n / C-p to switch translation direction)
-#+begin_src emacs-lisp
-  (use-package go-translate
-    :after tex
-    :config
-    (setq gts-translate-list '(("de" "en")))
-    ;; (setq gts-default-translator (gts-translator :engines (gts-bing-engine)))
-    (setq gts-default-translator
-          (gts-translator
-           :picker (gts-prompt-picker)
-           :engines (list (gts-bing-engine) (gts-google-engine))
-           :render (gts-buffer-render))))
-#+end_src
-
-
-
 
 * C++
 ** indentation
