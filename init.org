@@ -673,6 +673,60 @@ Highlight \cref like \ref
   )
 #+end_src
 
+Auto-query for label for certain environments
+#+begin_src emacs-lisp
+  (setq reftex-label-alist
+        '(
+          ("convention" ?d "con:" "~\\ref{%s}" t  ("convention" "con."))
+          ("corollary" ?p "cor:" "~\\ref{%s}" t  ("corollary" "cor."))
+          ("definition" ?d "def:" "~\\ref{%s}" t  ("definition" "def."))
+          ("example" ?x "ex:" "~\\ref{%s}" t  ("example" "ex."))
+          ("lemma" ?p "lem:" "~\\ref{%s}" t  ("lemma" "lem."))
+          ("proposition" ?p "prop:" "~\\ref{%s}" t  ("proposition" "prop."))
+          ("remark" ?x "rem:" "~\\ref{%s}" t  ("remark" "rem."))
+          ("theorem" ?p "thm:" "~\\ref{%s}" t ("theorem" "thm."))
+         )
+  )
+
+  (add-hook 'LaTeX-mode-hook
+            (lambda ()
+              (LaTeX-add-environments
+               '("convention" LaTeX-env-label)
+               '("corollary" LaTeX-env-label)
+               '("definition" LaTeX-env-label)
+               '("example" LaTeX-env-label)
+               '("lemma" LaTeX-env-label)
+               '("proposition" LaTeX-env-label)
+               '("remark" LaTeX-env-label)
+               '("theorem" LaTeX-env-label))
+              (add-to-list
+               'LaTeX-label-alist
+               '("convention" . "con:"))
+              (add-to-list
+               'LaTeX-label-alist
+               '("corollary" . "cor:"))
+              (add-to-list
+               'LaTeX-label-alist
+               '("definition" . "def:"))
+              (add-to-list
+               'LaTeX-label-alist
+               '("example" . "ex:"))
+              (add-to-list
+               'LaTeX-label-alist
+               '("lemma" . "lem:"))
+              (add-to-list
+               'LaTeX-label-alist
+               '("proposition" . "prop:"))
+              (add-to-list
+               'LaTeX-label-alist
+               '("remark" . "rem:"))
+              (add-to-list
+               'LaTeX-label-alist
+               '("theorem" . "thm:"))
+            )
+  )
+#+end_src
+
 Enable spellcheck by default
 #+begin_src emacs-lisp
   (add-hook 'LaTeX-mode-hook #'turn-on-flyspell)
