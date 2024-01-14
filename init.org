@@ -791,6 +791,7 @@ Load pdf-tools to View pdf and sync tex.
                        ("^\\alpha" ?ᵅ))))
 #+end_src
 
+
 * C++
 ** indentation
 Disable tabsIndentation after open round brackets.
