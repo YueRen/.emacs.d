@@ -817,7 +817,7 @@ Install julia-mode and automatically enter it when opening .jl files.
     :mode "\\.jl\\'")
 #+end_src
 
-** eglot-jl (disabled)
+** eglot-jl
 Install eglot-js for language server support and automatically start it when entering julia-mode.
 Working on OSCAR files requires a valid Project.toml in the src folder.
 #+begin_src emacs-lisp
