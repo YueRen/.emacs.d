@@ -615,37 +615,40 @@ Auto-query for label for certain environments
                '("proposition" LaTeX-env-label)
                '("remark" LaTeX-env-label)
                '("theorem" LaTeX-env-label))
-              (add-to-list
-               'LaTeX-label-alist
-               '("convention" . "con:"))
-              (add-to-list
-               'LaTeX-label-alist
-               '("corollary" . "cor:"))
-              (add-to-list
-               'LaTeX-label-alist
-               '("definition" . "def:"))
-              (add-to-list
-               'LaTeX-label-alist
-               '("example" . "ex:"))
-              (add-to-list
-               'LaTeX-label-alist
-               '("lemma" . "lem:"))
-              (add-to-list
-               'LaTeX-label-alist
-               '("proposition" . "prop:"))
-              (add-to-list
-               'LaTeX-label-alist
-               '("remark" . "rem:"))
-              (add-to-list
-               'LaTeX-label-alist
-               '("theorem" . "thm:"))
-            )
-  )
+              (add-to-list 'LaTeX-label-alist '("convention" . "con:"))
+              (add-to-list 'LaTeX-label-alist '("corollary" . "cor:"))
+              (add-to-list 'LaTeX-label-alist '("definition" . "def:"))
+              (add-to-list 'LaTeX-label-alist '("example" . "ex:"))
+              (add-to-list 'LaTeX-label-alist '("lemma" . "lem:"))
+              (add-to-list 'LaTeX-label-alist '("proposition" . "prop:"))
+              (add-to-list 'LaTeX-label-alist '("remark" . "rem:"))
+              (add-to-list 'LaTeX-label-alist '("theorem" . "thm:"))))
 #+end_src
 
-Enable spellcheck by default
+** Custom spellcheck
+Ignore arguments of cref
 #+begin_src emacs-lisp
-  (add-hook 'LaTeX-mode-hook #'turn-on-flyspell)
+  (setq flyspell-tex-command-regexp
+        "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[a-z*]*\\|label\\|ref\\|cref\\|eqref\\|usepackage\\|documentclass\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
+#+end_src
+
+Ignore content of lstlisting
+#+begin_src emacs-lisp
+  (put 'LaTeX-mode 'flyspell-mode-predicate 'auctex-mode-flyspell-skip-myenv)
+  (defun auctex-mode-flyspell-skip-myenv ()
+    (save-excursion
+      (widen)
+      (let ((p (point))
+            (count 0))
+        (not (or (and (re-search-backward "\\\\begin{\\(tikzpicture\\|lstlisting\\|myenv3\\)}" nil t)
+                      (> p (point))
+                      (or (not (re-search-forward "^\\\\end{\\(tikzpicture\\|lstlisting\\|myenv3\\)}" nil t))
+                          (< p (point))))
+                 (eq 1 (progn (while (re-search-backward "`" (line-beginning-position) t)
+                                (setq count (1+ count)))
+                              (- count (* 2 (/ count 2))))))))))
+  (add-hook 'LaTeX-mode-hook (lambda () (setq flyspell-generic-check-word-predicate
+                                              'auctex-mode-flyspell-skip-myenv)))
 #+end_src
 
 ** company-backends
