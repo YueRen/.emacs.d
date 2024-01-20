@@ -4,12 +4,12 @@
 * Essentials
 This section configures the essentials of emacs, which are options that are not mode-specific
 ** package repositories and use-package
-Disable compiliation warnings
+Disable compiliation warnings.
 #+begin_src emacs-lisp
   (setq native-comp-async-report-warnings-errors 'silent)
 #+end_src
 
-Load 'package, add prominent repositories, and update package data
+Load package, add prominent repositories, and update package data.
 #+begin_src emacs-lisp
   (require 'package)
   (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
@@ -19,7 +19,7 @@ Load 'package, add prominent repositories, and update package data
   (unless package-archive-contents (package-refresh-contents))
 #+end_src
 
-Install 'use-package if necessary, load it, and set it to auto-install packages hereon
+Install use-package if necessary, load it, and set it to auto-install packages hereon.
 #+begin_src emacs-lisp
   (unless (package-installed-p 'use-package) (package-install 'use-package))
   (require 'use-package)
@@ -169,7 +169,7 @@ Overwrite selected text when typing text.
 #+end_src
 
 ** dired (no external packages required)
-Use-Package-Always-Ensure human readable sizes.
+Always use human readable sizes.
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-alFh")
 #+end_src
@@ -240,10 +240,9 @@ Load vertico for vertical minibuffer completion UI
     ;; Enable recursive minibuffers
     (setq enable-recursive-minibuffers t))
 #+end_src
-Note: `vertico-multiform-categories` is set in the jinx section
 
 ** marginalia
-Load marginalia for minibuffer annotations
+Load marginalia for minibuffer annotations.
 #+begin_src emacs-lisp
   (use-package marginalia
     ;; Either bind `marginalia-cycle` globally or only in the minibuffer
@@ -257,7 +256,7 @@ Load marginalia for minibuffer annotations
     (marginalia-mode))
 #+end_src
 ** orderless
-Load orderless for completion with space-seperated components
+Load orderless for completion with space-seperated components.
 #+begin_src emacs-lisp
   (use-package orderless
     :init
@@ -270,7 +269,7 @@ Load orderless for completion with space-seperated components
 #+end_src
 
 ** corfu + cape
-Load corfu for autocomplete
+Load corfu for autocomplete.
 #+begin_src emacs-lisp
   (use-package corfu
     :custom
@@ -280,7 +279,7 @@ Load corfu for autocomplete
     (global-corfu-mode))
 #+end_src
 
-Load cape to use company backends for corfu
+Load cape to use company backends for corfu.
 #+begin_src emacs-lisp
 (use-package cape
   ;; Bind dedicated completion commands
@@ -318,7 +317,7 @@ Load cape to use company backends for corfu
 )
 #+end_src
 ** prescient
-Load prescient for better ordering of completions
+Load prescient for better ordering of completions.
 #+begin_src emacs-lisp
   (use-package prescient
     :after vertico)
@@ -328,7 +327,7 @@ Load prescient for better ordering of completions
     (vertico-prescient-mode))
 #+end_src
 ** consult
-Load consult for various useful commands
+Load consult for various useful commands.
 #+begin_src emacs-lisp
   ;; Example configuration for Consult
   (use-package consult
@@ -451,7 +450,7 @@ Load consult for various useful commands
 #+end_src
 
 ** xclip
-Copy + paste from clipboard
+Copy + paste from clipboard.
 #+begin_src emacs-lisp
   (use-package xclip
     :init
