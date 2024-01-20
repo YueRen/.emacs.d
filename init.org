@@ -494,15 +494,15 @@ Copy + paste from clipboard
 ** jinx (disabled)
 Load jinx for spell-checking.  Disabled because of too many false negatives in tex.
 See https://github.com/minad/jinx/issues/25
-#+begin_src emacs-lisp
-  ;; (use-package jinx
-  ;;   :hook (emacs-startup . global-jinx-mode)
-  ;;   :after tex
-  ;;   :bind ([remap ispell-word] . jinx-correct))
+#+begin_src emacs-lisp :tangle no
+  (use-package jinx
+    :hook (emacs-startup . global-jinx-mode)
+    :after tex
+    :bind ([remap ispell-word] . jinx-correct))
 #+end_src
 
 Use vertico grid display to fit more suggestions on screen.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (setq vertico-multiform-categories '((jinx grid) (vertico-grid-annotate . 36)))
   (vertico-multiform-mode 1)
 #+end_src
