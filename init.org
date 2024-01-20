@@ -584,14 +584,6 @@ This section configures how org-mode behaves.
     (setq org-ellipsis " ▾"))
 #+end_src
 
-** auto-tangle this configuration
-#+begin_src emacs-lisp
-  (defun org-babel-tangle-emacs-config ()
-    (when (string-equal (buffer-file-name) (expand-file-name "~/.emacs.d/init.org"))
-      (let ((org-confirm-babel-evaluate nil)) (org-babel-tangle))))
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'org-babel-tangle-emacs-config)))
-#+end_src
-
 ** enable indentation in source block
 #+begin_src emacs-lisp
   (setq org-src-tab-acts-natively t)
@@ -846,3 +838,9 @@ Install julia-repl and automatically enter julia-repl-mode when entering julia-m
     (add-to-list 'load-path "/home/ren/software/julia-1.9.3/bin/julia"))
   (add-hook 'julia-mode-hook 'julia-repl-mode)
 #+end_src
+
+
+;; Local Variables:
+;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Reload?")(load-file user-init-file))) nil t)
+;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
+;; End:
