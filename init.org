@@ -486,8 +486,9 @@ Load consult for various useful commands
 ** xclip
 Copy + paste from clipboard
 #+begin_src emacs-lisp
-  (use-package xclip)
-  (xclip-mode 1)
+  (use-package xclip
+    :init
+    (xclip-mode 1))
 #+end_src
 
 ** jinx (disabled)
