@@ -504,34 +504,11 @@ Install and activate which-key, change seperator to ":" to fix vertical spacing 
     :config
     (setq which-key-separator ": "))
 #+end_src
-
-* Org
-This section configures how org-mode behaves.
-** load org mode with auto-indent
-#+begin_src emacs-lisp
-  (use-package org
-    :config
-    (setq org-startup-indented t)
-    (setq org-startup-truncated nil)
-    (setq org-ellipsis " ▾"))
-#+end_src
-
-** enable indentation in source block
-#+begin_src emacs-lisp
-  (setq org-src-tab-acts-natively t)
-#+end_src
-
-** allow shift select
-#+begin_src emacs-lisp
-  (setq org-support-shift-select 'always)
-#+end_src
-
 ** powerthesaurus
 Load powerthesaurus for looking up synonyms, antonyms and related terms.
 #+begin_src emacs-lisp
   (use-package powerthesaurus)
 #+end_src
-
 
 ** go-translate
 Load go-translate to translate between German and English (C-n / C-p to switch translation direction)
@@ -545,6 +522,20 @@ Load go-translate to translate between German and English (C-n / C-p to switch t
            :picker (gts-prompt-picker)
            :engines (list (gts-bing-engine) (gts-google-engine))
            :render (gts-buffer-render))))
+#+end_src
+
+
+* Org
+This section configures how org-mode behaves.
+** load org mode with auto-indent
+#+begin_src emacs-lisp
+  (use-package org
+    :config
+    (setq org-startup-indented t
+          org-startup-truncated nil
+          org-ellipsis " ▾"
+          org-src-tab-acts-natively t        ;; enable indentation in source blocks
+          org-support-shift-select 'always)) ;; allow shift select
 #+end_src
 
 
