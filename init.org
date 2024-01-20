@@ -639,15 +639,15 @@ Use bash as default shell and use bash aliases
 
 * Latex
 ** auctex
-Load auctex and reftex.
+Load auctex and reftex when opening .tex files.
 #+begin_src emacs-lisp
   (use-package tex
     :ensure auctex
     :mode
     ("\\.tex\\'" . latex-mode)
-  )
-  (add-hook 'LaTeX-mode-hook #'reftex-mode)
-  (add-hook 'latex-mode-hook #'reftex-mode)
+    :hook
+    (LaTeX-mode . reftex-mode)
+    (latex-mode . reftex-mode))
 #+end_src
 
 Auto-parse tex file on load and save.
