@@ -786,12 +786,13 @@ Load pdf-tools to View pdf and sync tex.
 #+end_src
 
 ** Latex input
+Customizing latex input method
 #+begin_src emacs-lisp
   (with-temp-buffer
-  (activate-input-method "TeX") ;; the input method has to be triggered for `quail-package-alist' to be non-nil
-  (let ((quail-current-package (assoc "TeX" quail-package-alist)))
-   (quail-define-rules ((append . t))
-                       ("^\\alpha" ?ᵅ))))
+    (activate-input-method "TeX") ;; the input method has to be triggered for `quail-package-alist' to be non-nil
+    (let ((quail-current-package (assoc "TeX" quail-package-alist)))
+      (quail-define-rules ((append . t))
+                          ("^\\alpha" ?ᵅ))))
 #+end_src
 
 
