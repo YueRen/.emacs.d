@@ -511,7 +511,7 @@ Load powerthesaurus for looking up synonyms, antonyms and related terms.
 #+end_src
 
 ** go-translate
-Load go-translate to translate between German and English (C-n / C-p to switch translation direction)
+Load go-translate to translate between German and English (C-n / C-p to switch direction).
 #+begin_src emacs-lisp
   (use-package go-translate
     :config
@@ -550,69 +550,58 @@ Load magit.
 
 * Shell
 ** Bash and bash aliases
-Use bash as default shell and use bash aliases
+Use bash as default shell and use bash aliases.
 #+begin_src emacs-lisp
-  (setq explicit-shell-file-name "/bin/bash")
-  (setq shell-file-name "bash")
-  (setq explicit-bash.exe-args '("--noediting" "--login" "-ic"))
-  (setq shell-command-switch "-ic")
+  (setq explicit-shell-file-name "/bin/bash"
+        shell-file-name "bash"
+        explicit-bash.exe-args '("--noediting" "--login" "-ic")
+        shell-command-switch "-ic")
   (setenv "SHELL" shell-file-name)
 #+end_src
 
 
 * Latex
-** auctex
-Load auctex and reftex when opening .tex files.
+** Basic setup
+Load auctex, reftex, and flyspell when opening .tex files.
 #+begin_src emacs-lisp
   (use-package tex
     :ensure auctex
     :mode
     ("\\.tex\\'" . latex-mode)
     :hook
-    (LaTeX-mode . reftex-mode)
-    (latex-mode . reftex-mode))
+    (LaTeX-mode . reftex-mode)      ;; always load reftex
+    (LaTeX-mode . turn-on-flyspell) ;; always load flyspell
+    :init
+    (setq TeX-parse-self t ;; auto-parse tex file on load
+          TeX-auto-save t  ;; auto-parse tex file on save
+          TeX-master nil)) ;; always query for master file
 #+end_src
 
-Auto-parse tex file on load and save.
-#+begin_src emacs-lisp
-  (setq TeX-parse-self t)
-  (setq TeX-auto-save t)
-#+end_src
-
-Never assume current file is master file and always query for master file.
-#+begin_src emacs-lisp
-  (setq-default TeX-master nil)
-#+end_src
-
+** Additional verbatim enviroments
 Register lstlisting as verbatim environment, ignore it for syntax highlighting
 #+begin_src emacs-lisp
   (eval-after-load 'latex '(add-to-list 'LaTeX-verbatim-environments "lstlisting"))
 #+end_src
 
+** Custom highlighting
 Highlight \cref like \ref
 #+begin_src emacs-lisp
   (setq font-latex-match-reference-keywords
-        '(
-           ("cref" "{")
-         )
-  )
+        '(("cref" "{")))
 #+end_src
 
+** Auto-query labels
 Auto-query for label for certain environments
 #+begin_src emacs-lisp
   (setq reftex-label-alist
-        '(
-          ("convention" ?d "con:" "~\\ref{%s}" t  ("convention" "con."))
+        '(("convention" ?d "con:" "~\\ref{%s}" t  ("convention" "con."))
           ("corollary" ?p "cor:" "~\\ref{%s}" t  ("corollary" "cor."))
           ("definition" ?d "def:" "~\\ref{%s}" t  ("definition" "def."))
           ("example" ?x "ex:" "~\\ref{%s}" t  ("example" "ex."))
           ("lemma" ?p "lem:" "~\\ref{%s}" t  ("lemma" "lem."))
           ("proposition" ?p "prop:" "~\\ref{%s}" t  ("proposition" "prop."))
           ("remark" ?x "rem:" "~\\ref{%s}" t  ("remark" "rem."))
-          ("theorem" ?p "thm:" "~\\ref{%s}" t ("theorem" "thm."))
-         )
-  )
-
+          ("theorem" ?p "thm:" "~\\ref{%s}" t ("theorem" "thm."))))
   (add-hook 'LaTeX-mode-hook
             (lambda ()
               (LaTeX-add-environments
