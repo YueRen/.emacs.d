@@ -563,8 +563,15 @@ Install prism.
   (use-package prism
     :hook (julia-mode . prism-mode))
 #+end_src
+** which-key
+Install and activate which-key.
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init
+    (which-key-mode)
+    :config
+    (setq which-key-separator ": "))
 #+end_src
-
 
 * Org
 This section configures how org-mode behaves.
