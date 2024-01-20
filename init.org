@@ -558,9 +558,11 @@ Load dashboard and open it on startup.
 #+end_src
 
 ** prism
-Install prism (unfortunately does not work well with julia).
+Install prism.
 #+begin_src emacs-lisp
-  ;; (use-package prism)
+  (use-package prism
+    :hook (julia-mode . prism-mode))
+#+end_src
 #+end_src
 
 
