@@ -526,10 +526,12 @@ Load go-translate to translate between German and English (C-n / C-p to switch d
 
 
 * Org
-This section configures how org-mode behaves.
-** load org mode with auto-indent
+** Basic setup
+Load org when opening .org files.
 #+begin_src emacs-lisp
   (use-package org
+    :mode
+    ("\\.org\\'" . org-mode)
     :config
     (setq org-startup-indented t
           org-startup-truncated nil
