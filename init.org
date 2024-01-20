@@ -480,16 +480,15 @@ Load dashboard and open it on startup.
   (use-package dashboard
     :config
     (dashboard-setup-startup-hook)
-    (setq dashboard-set-init-info nil        ;; disable init time info
-          dashboard-banner-logo-title nil    ;; disable title
-          dashboard-startup-banner nil      ;; disable banner
-          dashboard-set-footer nil           ;; disable footer
-          dashboard-show-shortcuts nil       ;; disable shortcut indicators
+    (setq dashboard-set-init-info nil         ;; disable init time info
+          dashboard-banner-logo-title nil     ;; disable title
+          dashboard-startup-banner nil        ;; disable banner
+          dashboard-set-footer nil            ;; disable footer
+          dashboard-show-shortcuts nil        ;; disable shortcut indicators
           dashboard-items '((bookmarks . 12)  ;; show 12 bookmarks
                             (recents  . 24))) ;; show 24 recent files
     )
 #+end_src
-
 ** prism
 Install prism and activate it in julia-mode.
 #+begin_src emacs-lisp
