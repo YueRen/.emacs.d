@@ -721,7 +721,7 @@ Customizing latex input method
 
 * C++
 ** indentation
-Disable tabsIndentation after open round brackets.
+Disable tabs indentation and set offset to 2.
 #+begin_src emacs-lisp
   (setq-default c-default-style "linux"
                 c-basic-offset 2)
