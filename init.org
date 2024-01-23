@@ -570,25 +570,63 @@ Load auctex, reftex, and flyspell when opening .tex files.
     :init
     (setq TeX-parse-self t ;; auto-parse tex file on load
           TeX-auto-save t  ;; auto-parse tex file on save
-          TeX-master nil)) ;; always query for master file
-#+end_src
-
-** Additional verbatim enviroments
-Register lstlisting as verbatim environment, ignore it for syntax highlighting
-#+begin_src emacs-lisp
-  (eval-after-load 'latex '(add-to-list 'LaTeX-verbatim-environments "lstlisting"))
+          TeX-master nil)  ;; always query for master file
+    :config
+    <<tex-custom-highlighting>>
+    <<tex-custom-verbatim-environments>>
+    <<tex-custom-spellcheck-blacklist-macros>>
+    <<tex-custom-spellcheck-blacklist-environments>>
+    <<tex-custom-query-labels>>
+    )
 #+end_src
 
 ** Custom highlighting
 Highlight \cref like \ref
-#+begin_src emacs-lisp
+#+name: tex-custom-highlighting
+#+begin_src emacs-lisp :tangle no
   (setq font-latex-match-reference-keywords
         '(("cref" "{")))
 #+end_src
 
-** Auto-query labels
-Auto-query for label for certain environments
-#+begin_src emacs-lisp
+** Custom verbatim enviroments
+Register lstlisting as verbatim environment, ignore it for syntax highlighting
+#+name: tex-custom-verbatim-environments
+#+begin_src emacs-lisp :tangle no
+  (eval-after-load 'latex '(add-to-list 'LaTeX-verbatim-environments "lstlisting"))
+#+end_src
+
+** Custom spellcheck blacklist
+Ignore arguments of cref
+#+name: tex-custom-spellcheck-blacklist-macros
+#+begin_src emacs-lisp :tangle no
+  (setq flyspell-tex-command-regexp
+        "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[a-z*]*\\|label\\|ref\\|cref\\|eqref\\|usepackage\\|documentclass\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
+#+end_src
+
+Ignore content of lstlisting
+#+name: tex-custom-spellcheck-blacklist-environments
+#+begin_src emacs-lisp :tangle no
+  (put 'LaTeX-mode 'flyspell-mode-predicate 'auctex-mode-flyspell-skip-myenv)
+  (defun auctex-mode-flyspell-skip-myenv ()
+    (save-excursion
+      (widen)
+      (let ((p (point))
+            (count 0))
+        (not (or (and (re-search-backward "\\\\begin{\\(tikzpicture\\|lstlisting\\|myenv3\\)}" nil t)
+                      (> p (point))
+                      (or (not (re-search-forward "^\\\\end{\\(tikzpicture\\|lstlisting\\|myenv3\\)}" nil t))
+                          (< p (point))))
+                 (eq 1 (progn (while (re-search-backward "`" (line-beginning-position) t)
+                                (setq count (1+ count)))
+                              (- count (* 2 (/ count 2))))))))))
+  (add-hook 'LaTeX-mode-hook (lambda () (setq flyspell-generic-check-word-predicate
+                                              'auctex-mode-flyspell-skip-myenv)))
+#+end_src
+
+** Custom query labels
+Auto-query for labels of certain environments
+#+name: tex-custom-query-labels
+#+begin_src emacs-lisp :tangle no
   (setq reftex-label-alist
         '(("convention" ?d "con:" "~\\ref{%s}" t  ("convention" "con."))
           ("corollary" ?p "cor:" "~\\ref{%s}" t  ("corollary" "cor."))
@@ -617,32 +655,6 @@ Auto-query for label for certain environments
               (add-to-list 'LaTeX-label-alist '("proposition" . "prop:"))
               (add-to-list 'LaTeX-label-alist '("remark" . "rem:"))
               (add-to-list 'LaTeX-label-alist '("theorem" . "thm:"))))
-#+end_src
-
-** Custom spellcheck
-Ignore arguments of cref
-#+begin_src emacs-lisp
-  (setq flyspell-tex-command-regexp
-        "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[a-z*]*\\|label\\|ref\\|cref\\|eqref\\|usepackage\\|documentclass\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
-#+end_src
-
-Ignore content of lstlisting
-#+begin_src emacs-lisp
-  (put 'LaTeX-mode 'flyspell-mode-predicate 'auctex-mode-flyspell-skip-myenv)
-  (defun auctex-mode-flyspell-skip-myenv ()
-    (save-excursion
-      (widen)
-      (let ((p (point))
-            (count 0))
-        (not (or (and (re-search-backward "\\\\begin{\\(tikzpicture\\|lstlisting\\|myenv3\\)}" nil t)
-                      (> p (point))
-                      (or (not (re-search-forward "^\\\\end{\\(tikzpicture\\|lstlisting\\|myenv3\\)}" nil t))
-                          (< p (point))))
-                 (eq 1 (progn (while (re-search-backward "`" (line-beginning-position) t)
-                                (setq count (1+ count)))
-                              (- count (* 2 (/ count 2))))))))))
-  (add-hook 'LaTeX-mode-hook (lambda () (setq flyspell-generic-check-word-predicate
-                                              'auctex-mode-flyspell-skip-myenv)))
 #+end_src
 
 ** company-backends
