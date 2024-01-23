@@ -449,14 +449,6 @@ Load consult for various useful commands.
   )
 #+end_src
 
-** xclip
-Copy + paste from clipboard.
-#+begin_src emacs-lisp
-  (use-package xclip
-    :init
-    (xclip-mode 1))
-#+end_src
-
 ** jinx (disabled)
 Load jinx for spell-checking.  Disabled because of too many false negatives in tex.
 See https://github.com/minad/jinx/issues/25
