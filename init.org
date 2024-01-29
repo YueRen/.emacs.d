@@ -1,6 +1,27 @@
 #+title: emacs.el
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el
 
+* Boostrapping straight
+
+#+begin_src emacs-lisp
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+        (bootstrap-version 7))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+  (straight-use-package 'use-package)
+#+end_src
+
 * Essentials
 This section configures the essentials of emacs, which are options that are not mode-specific
 ** package repositories and use-package
@@ -559,7 +580,7 @@ Use bash as default shell and use bash aliases.
 * Latex
 ** Basic setup
 Load auctex, reftex, and flyspell when opening .tex files.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb tangle
   (use-package tex
     :ensure auctex
     :mode
@@ -764,6 +785,16 @@ Install julia-repl and automatically enter julia-repl-mode when entering julia-m
     :init
     (setq exec-path (append exec-path '("/home/ren/software/julia-1.9.3/bin")))
     (add-to-list 'load-path "/home/ren/software/julia-1.9.3/bin/julia"))
+#+end_src
+
+* Copilot
+#+begin_src emacs-lisp
+  (use-package copilot
+    :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
+    :hook (prog-mode . copilot-mode)
+    :config
+    (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+    (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
 #+end_src
 
 * Local variables for tangling this configuration
