@@ -588,6 +588,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
     :hook
     (LaTeX-mode . reftex-mode)      ;; always load reftex
     (LaTeX-mode . turn-on-flyspell) ;; always load flyspell
+    (LaTeX-mode . TeX-fold-mode)    ;; always enable folding
     :init
     (setq TeX-parse-self t ;; auto-parse tex file on load
           TeX-auto-save t  ;; auto-parse tex file on save
@@ -598,6 +599,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
     <<tex-custom-spellcheck-blacklist-macros>>
     <<tex-custom-spellcheck-blacklist-environments>>
     <<tex-custom-query-labels>>
+    <<tex-custom-folding>>
     )
 #+end_src
 
@@ -676,6 +678,19 @@ Auto-query for labels of certain environments
               (add-to-list 'LaTeX-label-alist '("proposition" . "prop:"))
               (add-to-list 'LaTeX-label-alist '("remark" . "rem:"))
               (add-to-list 'LaTeX-label-alist '("theorem" . "thm:"))))
+#+end_src
+
+** Custom folding
+Enable fol
+#+name: tex-custom-folding
+#+begin_src emacs-lisp :tangle no
+  (defun TeX-fold-all ()
+    (interactive)
+    (let ((env (read-from-minibuffer "Environment: ")))
+      (save-excursion
+        (goto-char (point-min))
+        (while (search-forward (format "begin{%s}" env) nil t)
+          (TeX-fold-env)))))
 #+end_src
 
 ** company-backends
