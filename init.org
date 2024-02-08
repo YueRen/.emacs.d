@@ -564,6 +564,13 @@ Load magit.
     :commands magit-status)
 #+end_src
 
+** forge
+Load forge
+#+begin_src emacs-lisp
+  (use-package forge
+    :after magit)
+  (setq auth-sources '("~/.authinfo.gpg"))
+#+end_src
 
 * Shell
 ** Bash and bash aliases
