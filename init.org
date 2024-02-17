@@ -200,6 +200,17 @@ Auto-refresh dired.
   (setq global-auto-revert-non-file-buffers t)
 #+end_src
 
+** transparency
+Toggle transparency
+#+begin_src emacs-lisp
+  (set-frame-parameter nil 'alpha-background 85) ; For current frame
+  (add-to-list 'default-frame-alist '(alpha-background . 85)) ; For all new frames henceforth
+  (defun yr/toggle-window-transparency ()
+    "Toggle frame's background transparency."
+    (interactive)
+    (let* ((desired-alpha 85)) (set-frame-parameter nil 'alpha-background (if (not (frame-parameter nil 'alpha-background)) desired-alpha))))
+#+end_src
+
 ** visual theme
 Load dracula-theme in GUI and manoj-dark in terminal.
 #+begin_src emacs-lisp
