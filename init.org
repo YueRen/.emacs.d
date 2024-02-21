@@ -790,6 +790,14 @@ Turn on C++-mode for files ending in ".sing" and ".lib" for Singular.
 
 
 * Julia
+** vterm
+Install vterm.
+#+begin_src emacs-lisp
+  (use-package vterm
+    :config
+    (setq vterm-kill-buffer-on-exit nil))
+#+end_src
+
 ** julia-mode
 Install julia-mode and automatically enter it when opening .jl files.
 #+begin_src emacs-lisp
@@ -817,7 +825,9 @@ Install julia-repl and automatically enter julia-repl-mode when entering julia-m
     :hook (julia-mode . julia-repl-mode)
     :init
     (setq exec-path (append exec-path '("/home/ren/software/julia-1.9.3/bin")))
-    (add-to-list 'load-path "/home/ren/software/julia-1.9.3/bin/julia"))
+    (add-to-list 'load-path "/home/ren/software/julia-1.9.3/bin/julia")
+    :config
+    (julia-repl-set-terminal-backend 'vterm))
 #+end_src
 
 * Copilot
