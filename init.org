@@ -696,7 +696,7 @@ Auto-query for labels of certain environments
 #+end_src
 
 ** Custom folding
-Enable fol
+Enable folding and unfolding
 #+name: tex-custom-folding
 #+begin_src emacs-lisp :tangle no
   (defun TeX-fold-all ()
@@ -706,6 +706,14 @@ Enable fol
         (goto-char (point-min))
         (while (search-forward (format "begin{%s}" env) nil t)
           (TeX-fold-env)))))
+  (defun TeX-unfold-all ()
+    (interactive)
+    (let ((env (read-from-minibuffer "Environment: ")))
+      (save-excursion
+        (goto-char (point-min))
+        (while (search-forward (format "begin{%s}" env) nil t)
+          (TeX-fold-clearout-item)))))
+#+end_src
 #+end_src
 ** company-backends
 Load various company latex backends via cape for corfu (for autocomplete)
