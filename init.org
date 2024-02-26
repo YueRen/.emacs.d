@@ -550,7 +550,6 @@ Load go-translate to translate between German and English (C-n / C-p to switch d
            :render (gts-buffer-render))))
 #+end_src
 
-
 * Org
 ** Basic setup
 Load org when opening .org files.
@@ -565,7 +564,6 @@ Load org when opening .org files.
           org-src-tab-acts-natively t        ;; enable indentation in source blocks
           org-support-shift-select 'always)) ;; allow shift select
 #+end_src
-
 
 * Git
 ** magit
@@ -593,7 +591,6 @@ Use bash as default shell and use bash aliases.
         shell-command-switch "-ic")
   (setenv "SHELL" shell-file-name)
 #+end_src
-
 
 * Latex
 ** Basic setup
@@ -710,7 +707,6 @@ Enable fol
         (while (search-forward (format "begin{%s}" env) nil t)
           (TeX-fold-env)))))
 #+end_src
-
 ** company-backends
 Load various company latex backends via cape for corfu (for autocomplete)
 #+begin_src emacs-lisp
@@ -772,7 +768,6 @@ Customizing latex input method
                           ("^\\alpha" ?ᵅ))))
 #+end_src
 
-
 * C++
 ** indentation
 Disable tabs indentation and set offset to 2.
@@ -787,7 +782,6 @@ Turn on C++-mode for files ending in ".sing" and ".lib" for Singular.
   (setq auto-mode-alist (cons '("\\.sing\\'" . c++-mode) auto-mode-alist))
   (setq auto-mode-alist (cons '("\\.lib\\'" .  c++-mode) auto-mode-alist))
 #+end_src
-
 
 * Julia
 ** vterm
