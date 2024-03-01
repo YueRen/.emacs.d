@@ -77,7 +77,7 @@ Remove top menu bar, right scroll bar, and top tool bar.
 
 Display column number.
 #+begin_src emacs-lisp
-  (setq column-number-mode t)
+  (column-number-mode)
 #+end_src
 
 Enable parenthesis highlighting in programming modes.
