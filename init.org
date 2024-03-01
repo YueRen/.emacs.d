@@ -85,6 +85,11 @@ Enable parenthesis highlighting in programming modes.
   (add-hook 'prog-mode-hook #'show-paren-mode)
 #+end_src
 
+Highlight current line.
+#+begin_src emacs-lisp
+  (global-hl-line-mode)
+#+end_src
+
 ** behaviour basics (no external packages required)
 Remember recently opened files, recent lines and minibuffer-history.
 #+begin_src emacs-lisp
