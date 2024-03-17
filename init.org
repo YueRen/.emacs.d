@@ -556,7 +556,7 @@ Load go-translate to translate between German and English (C-n / C-p to switch d
 #+end_src
 
 * Org
-** Basic setup
+** basic setup
 Load org when opening .org files.
 #+begin_src emacs-lisp
   (use-package org
@@ -566,10 +566,76 @@ Load org when opening .org files.
     (setq org-startup-indented t
           org-startup-truncated nil
           org-ellipsis " ▾"
-          org-src-tab-acts-natively t        ;; enable indentation in source blocks
-          org-support-shift-select 'always)) ;; allow shift select
+          org-src-tab-acts-natively t       ;; enable indentation in source blocks
+          org-support-shift-select 'always  ;; allow shift select
+          org-image-actual-width nil)       ;; allow rescaling of images
+
+    (setq org-preview-latex-default-process 'dvisvgm)
+    (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
+    (defun my/text-scale-adjust-latex-previews ()
+      "Adjust the size of latex preview fragments when changing the buffer's text scale."
+      (pcase major-mode
+        ('latex-mode
+         (dolist (ov (overlays-in (point-min) (point-max)))
+           (if (eq (overlay-get ov 'category)
+                   'preview-overlay)
+               (my/text-scale--resize-fragment ov))))
+        ('org-mode
+         (dolist (ov (overlays-in (point-min) (point-max)))
+           (if (eq (overlay-get ov 'org-overlay-type)
+                   'org-latex-overlay)
+               (my/text-scale--resize-fragment ov))))))
+
+    (defun my/text-scale--resize-fragment (ov)
+      (overlay-put
+       ov 'display
+       (cons 'image
+             (plist-put
+              (cdr (overlay-get ov 'display))
+              :scale (+ 1.0 (* 0.3 text-scale-mode-amount))))))
+
+    (add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews))
 #+end_src
 
+** org-present
+Load org-present for basic presentations in org-files.
+#+begin_src emacs-lisp
+    (use-package org-present
+      :after org
+      :config
+      (define-key org-present-mode-keymap [right] nil) ;; undo binding right key
+      (define-key org-present-mode-keymap [left] nil)  ;; undo binding left key
+      (define-key org-present-mode-keymap (kbd "<next>") 'org-present-next)   ;; bind next slide to pageup
+      (define-key org-present-mode-keymap (kbd "<prior>") 'org-present-prev)) ;; bind previous slide to pagedown
+#+end_src
+
+** visual-fill-column for org-present
+Load visual-fill-column to pad and center text (in org-present).
+#+begin_src emacs-lisp
+  (use-package visual-fill-column
+    :init
+    ;; Configure fill width
+    (setq visual-fill-column-width 120
+          visual-fill-column-center-text t)
+
+    (defun my/org-present-start ()
+      ;; Center the presentation and wrap lines
+      (visual-fill-column-mode 1)
+      (visual-line-mode 1))
+
+    (defun my/org-present-end ()
+      ;; Stop centering the document
+      (visual-fill-column-mode 0)
+      (visual-line-mode 0))
+
+    (add-hook 'org-present-mode-hook 'my/org-present-start)
+    (add-hook 'org-present-mode-quit-hook 'my/org-present-end))
+
+    ;; Register hooks with org-present
+    ;; :hook
+    ;; (org-present-mode-hook . my/org-present-start)
+    ;; (org-present-mode-quit-hook . my/org-present-end))
+#+end_src
 * Git
 ** magit
 Load magit.
