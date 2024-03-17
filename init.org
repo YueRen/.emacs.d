@@ -598,7 +598,8 @@ Load org when opening .org files.
 #+end_src
 
 ** org-present
-Load org-present for basic presentations in org-files.
+Setting up org-present for basic presentations in org-files as per instructions on:
+https://systemcrafters.net/emacs-tips/presentations-with-org-present/
 #+begin_src emacs-lisp
     (use-package org-present
       :after org
