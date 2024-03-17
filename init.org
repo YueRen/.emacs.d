@@ -613,7 +613,12 @@ Load auctex, reftex, and flyspell when opening .tex files.
     (setq TeX-parse-self t ;; auto-parse tex file on load
           TeX-auto-save t  ;; auto-parse tex file on save
           TeX-master nil)  ;; always query for master file
+    (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
     :config
+    (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+          TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+          TeX-source-correlate-mode t
+          TeX-source-correlate-start-server t)
     <<tex-custom-highlighting>>
     <<tex-custom-verbatim-environments>>
     <<tex-custom-spellcheck-blacklist-macros>>
@@ -768,16 +773,9 @@ Load various company latex backends via cape for corfu (for autocomplete)
 Load pdf-tools to View pdf and sync tex.
 #+begin_src emacs-lisp
   (use-package pdf-tools
-    :after tex
-    :init
-    (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
     :config
     (pdf-tools-install)
-    (setq pdf-view-resize-factor 1.05
-          TeX-view-program-selection '((output-pdf "PDF Tools"))
-          TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-          TeX-source-correlate-mode t
-          TeX-source-correlate-start-server t))
+    (setq pdf-view-resize-factor 1.05))
 #+end_src
 
 ** Latex input
