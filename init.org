@@ -846,7 +846,9 @@ Install julia-repl and automatically enter julia-repl-mode when entering julia-m
     (julia-repl-set-terminal-backend 'vterm))
 #+end_src
 
-* Copilot
+* Copilot and GPTel
+Installing copilot as per the instructions on
+https://github.com/copilot-emacs/copilot.el
 #+begin_src emacs-lisp
   (use-package copilot
     :straight (:host github :repo "copilot-emacs/copilot.el" :files ("dist" "*.el"))
@@ -856,6 +858,11 @@ Install julia-repl and automatically enter julia-repl-mode when entering julia-m
     (setq copilot-indent-offset-warning-disable t)) ;; disables a warning that always arises in tex-mode
 #+end_src
 
+Installing GPTel as per instructions on
+https://github.com/karthink/gptel
+#+begin_src emacs-lisp
+  (straight-use-package 'gptel)
+#+end_src
 * Local variables for tangling this configuration
 Declare local variables below as safe
 #+begin_src emacs-lisp
