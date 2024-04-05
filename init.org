@@ -217,12 +217,12 @@ Toggle transparency
 #+end_src
 
 ** visual theme
-Load dracula-theme in GUI and manoj-dark in terminal.
+Load dracula-theme in GUI.
 #+begin_src emacs-lisp
-  (use-package dracula-theme)
-  (if (display-graphic-p)
-      (load-theme 'dracula t)
-    (load-theme 'manoj-dark t))
+  (use-package dracula-theme
+    :init
+    (if (display-graphic-p)
+      (load-theme 'dracula t)))
 #+end_src
 
 ** visual fonts
