@@ -487,13 +487,14 @@ https://github.com/alphapapa/prism.el
     :hook (julia-mode . prism-mode)) ;; auto-activate in julia-mode
 #+end_src
 ** which-key
-Install and activate which-key, change seperator to ":" to fix vertical spacing issues.
+Install and activate which-key as per instructions on
+https://github.com/justbur/emacs-which-key
 #+begin_src emacs-lisp
   (use-package which-key
     :init
     (which-key-mode)
     :config
-    (setq which-key-separator ": "))
+    (setq which-key-separator ": ")) ;; change seperator to fix vertical spacing issues
 #+end_src
 ** powerthesaurus
 Load powerthesaurus for looking up synonyms, antonyms and related terms.
