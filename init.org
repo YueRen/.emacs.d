@@ -835,44 +835,46 @@ Turn on C++-mode for files ending in ".sing" and ".lib" for Singular.
 #+end_src
 
 * Julia
-** vterm
-Install vterm.
-#+begin_src emacs-lisp
-  (use-package vterm
-    :config
-    (setq vterm-kill-buffer-on-exit nil))
-#+end_src
-
 ** julia-mode
-Install julia-mode and automatically enter it when opening .jl files.
+Load julia-mode as per instructions on
+https://github.com/JuliaEditorSupport/julia-emacs
 #+begin_src emacs-lisp
   (use-package julia-mode
-    :mode "\\.jl\\'")
+    :mode "\\.jl\\'") ;; defer loading until and auto-activate when .jl files are opened
 #+end_src
 
 ** eglot-jl
-Install eglot-js for language server support and automatically start it when entering julia-mode.
-Working on OSCAR files requires a valid Project.toml in the src folder.
+Load eglot-js for language server support as per instructions on
+https://github.com/non-Jedi/eglot-jl
 #+begin_src emacs-lisp
   (use-package eglot-jl
-    :after julia-mode
+    :after julia-mode            ;; defer loading until julia-mode is started
     :hook
-    (julia-mode . eglot-ensure)
+    (julia-mode . eglot-ensure)  ;; auto-activate when julia-mode is started
     (julia-mode . eglot-jl-init)
     :config
     (setq eldoc-echo-area-use-multiline-p nil))
 #+end_src
+** vterm
+Install vterm as per instructions on
+https://github.com/akermu/emacs-libvterm
+#+begin_src emacs-lisp
+  (use-package vterm
+    :after julia-mode) ;; defer loading until julia-mode is started
+#+end_src
 
-Install julia-repl and automatically enter julia-repl-mode when entering julia-mode.
+** julia-repl
+Install julia-repl as per instructions on
+https://github.com/tpapp/julia-repl
 #+begin_src emacs-lisp
   (use-package julia-repl
-    :after julia-mode
-    :hook (julia-mode . julia-repl-mode)
+    :after julia-mode                    ;; defer loading until julia-mode is started
+    :hook (julia-mode . julia-repl-mode) ;; auto-activate when julia-mode is started
     :init
-    (setq exec-path (append exec-path '("/home/ren/software/julia-1.9.3/bin")))
-    (add-to-list 'load-path "/home/ren/software/julia-1.9.3/bin/julia")
+    (setq exec-path (append exec-path '("/home/ren/.juliaup/bin")))
+    (add-to-list 'load-path "/home/ren/.juliaup/bin/julia")
     :config
-    (julia-repl-set-terminal-backend 'vterm))
+    (julia-repl-set-terminal-backend 'vterm)) ;; use vterm (recommended)
 #+end_src
 
 * Copilot and GPTel
