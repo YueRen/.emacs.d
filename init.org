@@ -559,7 +559,16 @@ Load org when opening .org files.
 
     (add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews))
 #+end_src
-
+** org-modern
+Load org-modern as per instructions on
+https://github.com/minad/org-modern
+#+begin_src emacs-lisp
+  (use-package org-modern
+    :after org                   ;; defer loading after org
+    :hook
+    (org-mode . org-modern-mode) ;; auto-activate in org-mode
+  )
+#+end_src
 ** org-present
 Setting up org-present for basic presentations in org-files as per instructions on:
 https://systemcrafters.net/emacs-tips/presentations-with-org-present/
