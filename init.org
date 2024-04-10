@@ -612,7 +612,7 @@ Load magit.
 Load forge
 #+begin_src emacs-lisp
   (use-package forge
-    :after magit)
+    :after magit) ;; defer loading until magit is loaded
   (setq auth-sources '("~/.authinfo.gpg"))
 #+end_src
 
