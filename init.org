@@ -332,7 +332,8 @@ https://github.com/radian-software/prescient.el
     (corfu-prescient-mode))
 #+end_src
 ** consult
-Load consult for various useful commands.
+Load consult for various useful commands as per instructions on
+https://github.com/minad/consult
 #+begin_src emacs-lisp
   ;; Example configuration for Consult
   (use-package consult
