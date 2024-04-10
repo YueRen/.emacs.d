@@ -317,14 +317,19 @@ https://github.com/minad/cape
 )
 #+end_src
 ** prescient
-Load prescient for better ordering of completions.
+Load prescient for better ordering of completions as per instructions on
+https://github.com/radian-software/prescient.el
 #+begin_src emacs-lisp
   (use-package prescient
     :after vertico)
   (use-package vertico-prescient
-    :after vertico
+    :after prescient
     :init
     (vertico-prescient-mode))
+  (use-package corfu-prescient
+    :after prescient
+    :init
+    (corfu-prescient-mode))
 #+end_src
 ** consult
 Load consult for various useful commands.
