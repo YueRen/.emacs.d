@@ -524,7 +524,7 @@ Load org when opening .org files.
 #+begin_src emacs-lisp
   (use-package org
     :mode
-    ("\\.org\\'" . org-mode)
+    ("\\.org\\'" . org-mode) ;; defer loading and auto-activate when .org file is opened
     :config
     (setq org-startup-indented t
           org-startup-truncated nil
