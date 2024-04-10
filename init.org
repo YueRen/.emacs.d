@@ -243,12 +243,13 @@ https://github.com/minad/vertico
 #+end_src
 
 ** marginalia
-Load marginalia for minibuffer annotations.
+Load marginalia for minibuffer annotations as per instructions on
+https://github.com/minad/marginalia
 #+begin_src emacs-lisp
   (use-package marginalia
-    ;; Either bind `marginalia-cycle` globally or only in the minibuffer
-    :bind (("M-A" . marginalia-cycle)
-           :map minibuffer-local-map
+    ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+    ;; available in the *Completions* buffer, add it to `completion-list-mode-map'.
+    :bind (:map minibuffer-local-map
            ("M-A" . marginalia-cycle))
     ;; The :init configuration is always executed (Not lazy!)
     :init
