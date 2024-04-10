@@ -505,13 +505,13 @@ https://github.com/SavchenkoValeriy/emacs-powerthesaurus
 #+end_src
 
 ** go-translate
-Load go-translate to translate between German and English (C-n / C-p to switch direction).
+Load go-translate to translate between German and English (C-n / C-p to switch direction),
+as per instructions on https://github.com/lorniu/go-translate
 #+begin_src emacs-lisp
   (use-package go-translate
-    :commands gts-do-translate
+    :commands gts-do-translate  ;; defer loading until gts-do-translate is called
     :config
     (setq gts-translate-list '(("de" "en")))
-    ;; (setq gts-default-translator (gts-translator :engines (gts-bing-engine)))
     (setq gts-default-translator
           (gts-translator
            :picker (gts-prompt-picker)
