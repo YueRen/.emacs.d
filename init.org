@@ -497,10 +497,11 @@ https://github.com/justbur/emacs-which-key
     (setq which-key-separator ": ")) ;; change seperator to fix vertical spacing issues
 #+end_src
 ** powerthesaurus
-Load powerthesaurus for looking up synonyms, antonyms and related terms.
+Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
+https://github.com/SavchenkoValeriy/emacs-powerthesaurus
 #+begin_src emacs-lisp
   (use-package powerthesaurus
-    :commands powerthesaurus-transient)
+    :commands powerthesaurus-transient) ;; defer loading after powerthesaurus-transient is called
 #+end_src
 
 ** go-translate
