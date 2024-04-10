@@ -605,7 +605,7 @@ Load visual-fill-column to pad and center text (in org-present).
 Load magit.
 #+begin_src emacs-lisp
   (use-package magit
-    :commands magit-status)
+    :commands magit-status) ;; defer loading until magit-status is called
 #+end_src
 
 ** forge
