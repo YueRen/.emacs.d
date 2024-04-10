@@ -583,8 +583,9 @@ https://systemcrafters.net/emacs-tips/presentations-with-org-present/
       (define-key org-present-mode-keymap (kbd "<prior>") 'org-present-prev)) ;; bind previous slide to pagedown
 #+end_src
 
-** visual-fill-column for org-present
-Load visual-fill-column to pad and center text (in org-present).
+** visual-fill-column
+Load visual-fill-column to pad and center text (in org-present) as per instructions on
+https://systemcrafters.net/emacs-tips/presentations-with-org-present/
 #+begin_src emacs-lisp
   (use-package visual-fill-column
     :init
