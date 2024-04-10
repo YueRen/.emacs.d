@@ -266,19 +266,20 @@ https://github.com/oantolin/orderless
     (setq completion-styles '(orderless basic)
           completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
-
-** corfu + cape
-Load corfu for autocomplete.
+** corfu
+Load corfu for autocomplete as per instructions on
+https://github.com/minad/corfu
 #+begin_src emacs-lisp
   (use-package corfu
     :custom
+    (corfu-auto t)  ;; Enable showing autocompletion automatically
     (corfu-cycle t) ;; Enable cycling for `corfu-next/previous'
-    (corfu-auto t)  ;; Enable auto completion
     :init
     (global-corfu-mode))
 #+end_src
-
-Load cape to use company backends for corfu.
+** cape
+Load cape to use company backends for corfu as per instructions on
+https://github.com/minad/cape
 #+begin_src emacs-lisp
 (use-package cape
   ;; Bind dedicated completion commands
