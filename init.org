@@ -462,6 +462,17 @@ https://github.com/justbur/emacs-which-key
     :config
     (setq which-key-separator ": ")) ;; change seperator to fix vertical spacing issues
 #+end_src
+** dired-subtree
+Load dired-subtree and bind dired-subtree-toggle to tab as per intstructions on
+https://www.youtube.com/watch?v=vm-FvNdYFcc
+#+begin_src emacs-lisp
+  (use-package dired-subtree
+    :after dired
+    :bind (:map dired-mode-map
+                ("<tab>" . dired-subtree-toggle)
+                ("<C-tab>" . dired-subtree-cycle)))
+#+end_src
+
 ** powerthesaurus
 Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
 https://github.com/SavchenkoValeriy/emacs-powerthesaurus
