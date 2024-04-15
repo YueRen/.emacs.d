@@ -441,7 +441,8 @@ Set up doom-modeline as per instructions on
 https://github.com/seagle0128/doom-modeline
 #+begin_src emacs-lisp
   (use-package doom-modeline
-    :init (doom-modeline-mode 1))
+    :init
+    (doom-modeline-mode 1))
 #+end_src
 ** prism
 Install prism as per instructions on
