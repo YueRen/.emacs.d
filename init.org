@@ -148,6 +148,11 @@ Overwrite selected text when typing text.
   (delete-selection-mode 1)
 #+end_src
 
+Confirm upon exiting emacs
+#+begin_src emacs-lisp
+  (setq confirm-kill-emacs 'y-or-n-p)
+#+end_src
+
 ** dired (no external packages required)
 Always use human readable sizes.
 #+begin_src emacs-lisp
