@@ -801,7 +801,14 @@ https://github.com/vedang/pdf-tools
     (pdf-tools-install)
     (setq pdf-view-resize-factor 1.05)) ;; decrease resizing factor for better control
 #+end_src
-
+** citar
+Load citar to handle global bibliography from zotero as per instructions on
+https://github.com/emacs-citar/citar
+#+begin_src emacs-lisp
+  (use-package citar
+    :custom
+    (citar-bibliography '("~/all.bib")))
+#+end_src
 ** Latex input
 Customizing latex input method as per instructions on
 https://www.emacswiki.org/emacs/TeXInputMethod
