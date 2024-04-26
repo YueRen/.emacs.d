@@ -802,7 +802,7 @@ https://github.com/vedang/pdf-tools
     (setq pdf-view-resize-factor 1.05)) ;; decrease resizing factor for better control
 #+end_src
 ** citar
-Load citar to handle global bibliography from zotero as per instructions on
+Load citar to handle global bibliography in all.bib (exported from zotero) as per instructions on
 https://github.com/emacs-citar/citar
 #+begin_src emacs-lisp
   (use-package citar
