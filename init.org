@@ -31,6 +31,11 @@ Disable compiliation warnings.
   (setq native-comp-async-report-warnings-errors 'silent)
 #+end_src
 
+Disable warning buffer popup unless error.
+#+begin_src emacs-lisp
+  (setq warning-minimum-level :error)
+#+end_src
+
 Load package, add prominent repositories, and update package data.
 #+begin_src emacs-lisp
   (require 'package)
