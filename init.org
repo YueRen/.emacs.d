@@ -220,15 +220,16 @@ https://github.com/minad/marginalia
     ;; enabled right away. Note that this forces loading the package.
     (marginalia-mode))
 #+end_src
-** orderless
-Load orderless for completion with space-seperated components as per instructions on
-https://github.com/oantolin/orderless
+** which-key
+Install and activate which-key as per instructions on
+https://github.com/justbur/emacs-which-key
 #+begin_src emacs-lisp
-  (use-package orderless
+  (use-package which-key
     :init
-    (setq completion-styles '(orderless basic)
-          completion-category-overrides '((file (styles partial-completion)))))
-#+end_src
+    (which-key-mode)
+    :config
+    (setq which-key-separator ": ")) ;; change seperator to fix vertical spacing issues
+#+END_SRC
 ** corfu
 Load corfu for autocomplete as per instructions on
 https://github.com/minad/corfu
@@ -278,6 +279,15 @@ https://github.com/minad/cape
   ;;(add-to-list 'completion-at-point-functions #'cape-symbol)
   ;;(add-to-list 'completion-at-point-functions #'cape-line)
 )
+#+end_src
+** orderless
+Load orderless for completion with space-seperated components as per instructions on
+https://github.com/oantolin/orderless
+#+begin_src emacs-lisp
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless basic)
+          completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 ** prescient
 Load prescient for better ordering of completions as per instructions on
@@ -461,16 +471,6 @@ https://github.com/alphapapa/prism.el
   (use-package prism
     :after julia-mode
     :hook (julia-mode . prism-mode)) ;; auto-activate in julia-mode
-#+end_src
-** which-key
-Install and activate which-key as per instructions on
-https://github.com/justbur/emacs-which-key
-#+begin_src emacs-lisp
-  (use-package which-key
-    :init
-    (which-key-mode)
-    :config
-    (setq which-key-separator ": ")) ;; change seperator to fix vertical spacing issues
 #+end_src
 ** dired-subtree
 Load dired-subtree and bind dired-subtree-toggle to tab as per intstructions on
