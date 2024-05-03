@@ -548,7 +548,22 @@ https://www.youtube.com/watch?v=vm-FvNdYFcc
                 ("<tab>" . dired-subtree-toggle)
                 ("<C-tab>" . dired-subtree-cycle)))
 #+end_src
-
+** openwith
+Load openwith to open certain files with external programs by default as per instructions on
+https://github.com/thisirs/openwith
+#+begin_src emacs-lisp
+  (use-package openwith
+    :config
+    (setq openwith-associations
+          (list
+           (list (openwith-make-extension-regexp
+                  '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
+                 "libreoffice"
+                 '(file))
+           ))
+    :init
+    (openwith-mode 1))
+#+end_src
 ** powerthesaurus
 Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
 https://github.com/SavchenkoValeriy/emacs-powerthesaurus
