@@ -587,9 +587,16 @@ as per instructions on https://github.com/lorniu/go-translate
 ** basic setup
 Load org when opening .org files.
 #+begin_src emacs-lisp
+  (defun my/org-copy-special ()
+    "Copy the current region using `org-copy-special` and deactivate the mark."
+    (interactive)
+    (org-copy-special)
+    (deactivate-mark))
   (use-package org
     :mode
     ("\\.org\\'" . org-mode) ;; defer loading and auto-activate when .org file is opened
+    :bind (:map org-mode-map
+                ("C-c C-x M-w" . my/org-copy-special))
     :config
     (setq org-startup-indented t
           org-startup-truncated nil
