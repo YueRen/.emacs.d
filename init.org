@@ -940,6 +940,8 @@ https://github.com/non-Jedi/eglot-jl
     :hook
     (julia-mode . eglot-ensure)  ;; auto-activate when julia-mode is started
     (julia-mode . eglot-jl-init)
+    :init
+    (setq eglot-connect-timeout nil)
     :config
     (setq eldoc-echo-area-use-multiline-p nil))
 #+end_src
@@ -973,6 +975,7 @@ https://github.com/copilot-emacs/copilot.el
     :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
     :hook (julia-mode . copilot-mode)
     :config
+    (setq copilot--base-dir "/home/ren/.emacs.d/straight/repos/copilot.el/")
     (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion)
     (setq copilot-indent-offset-warning-disable t)) ;; disables a warning that always arises in tex-mode
 #+end_src
