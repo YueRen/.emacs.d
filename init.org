@@ -536,7 +536,7 @@ https://github.com/alphapapa/prism.el
 #+begin_src emacs-lisp
   (use-package prism
     :after julia-mode
-    :hook (julia-mode . prism-mode)) ;; auto-activate in julia-mode
+    :hook (julia-mode . prism-whitespace-mode)) ;; auto-activate in julia-mode
 #+end_src
 ** dired-subtree
 Load dired-subtree and bind dired-subtree-toggle to tab as per intstructions on
