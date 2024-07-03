@@ -574,6 +574,17 @@ https://github.com/thisirs/openwith
     :init
     (openwith-mode 1))
 #+end_src
+** buffer-move
+Load and setup buffer-move as per instructions on
+https://github.com/lukhas/buffer-move
+#+begin_src emacs-lisp
+  (use-package buffer-move
+    :bind
+    (("C-x C-<up>" . buf-move-up)
+     ("C-x C-<down>" . buf-move-down)
+     ("C-x C-<left>" . buf-move-left)
+     ("C-x C-<right>" . buf-move-right)))
+#+end_src
 ** powerthesaurus
 Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
 https://github.com/SavchenkoValeriy/emacs-powerthesaurus
