@@ -71,8 +71,8 @@ Maximize frames by default.
 
 Empty startup screen and scratch buffer.
 #+begin_src emacs-lisp
-  (setq inhibit-startup-screen t)
-  (setq initial-scratch-message nil)
+  (setq inhibit-startup-screen t
+        initial-scratch-message nil)
 #+end_src
 
 Remove top menu bar, right scroll bar, and top tool bar.
