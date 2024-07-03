@@ -487,8 +487,11 @@ https://github.com/oantolin/embark
                  '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                    nil
                    (window-parameters (mode-line-format . none)))))
+#+end_src
 
-  ;; Consult users will also want the embark-consult package.
+Load embark-consult as per instructions on
+https://github.com/oantolin/embark
+#+begin_src emacs-lisp
   (use-package embark-consult
     :ensure t ; only need to install it, embark loads it after consult if found
     :hook
