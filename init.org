@@ -56,10 +56,11 @@ Install use-package if necessary, load it, and set it to auto-install packages h
 ** no-littering (loading early required)
 Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/'.
 #+begin_src emacs-lisp
-  (use-package no-littering)
-  (no-littering-theme-backups)
-  (setq auto-save-file-name-transforms
-        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+  (use-package no-littering
+    :config
+    (no-littering-theme-backups)
+    (setq auto-save-file-name-transforms
+          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 #+end_src
 
 ** visual basics (no external packages required)
