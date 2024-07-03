@@ -524,7 +524,7 @@ https://github.com/emacs-dashboard/emacs-dashboard
     (setq dashboard-center-content t) ;; center dashboard
     (setq dashboard-startupify-list '(dashboard-insert-items)) ;; only show items in dashboard
     (setq dashboard-items '((bookmarks . 12)   ;; show 12 bookmarks
-                            (recents  . 24)))) ;; show 24 recent files
+                            (recents  . 36)))) ;; show 36 recent files
 #+end_src
 ** doom-modeline
 Set up doom-modeline as per instructions on
