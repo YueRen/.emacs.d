@@ -557,7 +557,10 @@ Load casual-dired and bind it to '?' as per instructions on
 https://github.com/kickingvegas/casual-dired
 #+begin_src emacs-lisp
   (use-package casual-dired
-    :bind (:map dired-mode-map ("?" . 'casual-dired-tmenu)))
+    :after dired
+    :bind (:map dired-mode-map
+                ("?" . 'casual-dired-tmenu)))
+#+end_src
 ** casual-bookmarks
 Load casual-bookmark and bind it to `?` as per instructions on
 https://github.com/kickingvegas/casual-suite
