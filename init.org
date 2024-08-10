@@ -704,6 +704,15 @@ https://systemcrafters.net/emacs-tips/presentations-with-org-present/
     ;; (org-present-mode-hook . my/org-present-start)
     ;; (org-present-mode-quit-hook . my/org-present-end))
 #+end_src
+* Denote
+Install denote.
+#+begin_src emacs-lisp
+  (use-package denote
+    :hook
+    (dired-mode . denote-dired-mode)    ;; file highlighting in dired
+    :config
+    (setq denote-directory "~/notes/"))
+#+end_src
 * Git
 ** magit
 Load magit.
