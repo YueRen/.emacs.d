@@ -154,6 +154,13 @@ Overwrite selected text when typing text.
   (delete-selection-mode 1)
 #+end_src
 
+Prefer Prefer vertical splits over horizontal ones, taken from
+https://github.com/jamescherti/minimal-emacs.d
+#+begin_src emacs-lisp
+(setq split-width-threshold 170
+      split-height-threshold nil)
+#+end_src
+
 Confirm upon exiting emacs
 #+begin_src emacs-lisp
   (setq confirm-kill-emacs 'y-or-n-p)
