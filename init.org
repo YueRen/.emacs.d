@@ -942,6 +942,7 @@ Load citar to handle global bibliography in all.bib (exported from zotero) as pe
 https://github.com/emacs-citar/citar
 #+begin_src emacs-lisp
   (use-package citar
+    :after tex
     :custom
     (citar-bibliography '("~/all.bib")))
 #+end_src
