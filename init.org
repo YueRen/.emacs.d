@@ -571,9 +571,11 @@ https://github.com/kickingvegas/casual-dired
 ** casual-bookmarks
 Load casual-bookmark and bind it to `?` as per instructions on
 https://github.com/kickingvegas/casual-suite
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package casual-bookmarks
-    :bind (:map bookmark-mode-map ("?" . 'casual-bookmarks-tmenu)))
+  :after bookmark
+  :bind (:map bookmark-bmenu-mode-map
+              ("?" . casual-bookmarks-tmenu)))
 #+end_src
 ** openwith
 Load openwith to open certain files with external programs by default as per instructions on
