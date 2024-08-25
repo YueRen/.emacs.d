@@ -57,10 +57,11 @@ Install use-package if necessary, load it, and set it to auto-install packages h
 Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/'.
 #+begin_src emacs-lisp
   (use-package no-littering
+    :custom
+    (auto-save-file-name-transforms
+     `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
     :config
-    (no-littering-theme-backups)
-    (setq auto-save-file-name-transforms
-          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
+    (no-littering-theme-backups))
 #+end_src
 
 ** visual basics (no external packages required)
@@ -199,7 +200,7 @@ Load dracula-theme in GUI.
 
 ** visual fonts
 Todo(?): fonts
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 #+end_src
 
 ** vertico
@@ -207,10 +208,10 @@ Load vertico for vertical minibuffer completion UI as per instructions on
 https://github.com/minad/vertico
 #+begin_src emacs-lisp
   (use-package vertico
+    :custom
+    (vertico-count 6)  ;; Customize number of candidates shown
     :init
-    (vertico-mode)
-    (setq vertico-count 3)  ;; Customize number of candidates shown
-    )
+    (vertico-mode))
 #+end_src
 
 ** marginalia
@@ -233,11 +234,11 @@ Install and activate which-key as per instructions on
 https://github.com/justbur/emacs-which-key
 #+begin_src emacs-lisp
   (use-package which-key
+    :custom
+    (which-key-separator ": ") ;; change seperator to fix vertical spacing issues
     :init
-    (which-key-mode)
-    :config
-    (setq which-key-separator ": ")) ;; change seperator to fix vertical spacing issues
-#+END_SRC
+    (which-key-mode))
+#+end_src
 ** corfu
 Load corfu for autocomplete as per instructions on
 https://github.com/minad/corfu
@@ -293,9 +294,9 @@ Load orderless for completion with space-seperated components as per instruction
 https://github.com/oantolin/orderless
 #+begin_src emacs-lisp
   (use-package orderless
-    :init
-    (setq completion-styles '(orderless basic)
-          completion-category-overrides '((file (styles partial-completion)))))
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 ** prescient
 Load prescient for better ordering of completions as per instructions on
@@ -526,12 +527,13 @@ Set up dashboard as per instructions on:
 https://github.com/emacs-dashboard/emacs-dashboard
 #+begin_src emacs-lisp
   (use-package dashboard
+    :custom
+    (dashboard-center-content t) ;; center dashboard
+    (dashboard-startupify-list '(dashboard-insert-items)) ;; only show items in dashboard
+    (dashboard-items '((bookmarks . 12)   ;; show 12 bookmarks
+                       (recents  . 36))) ;; show 36 recent files
     :config
-    (dashboard-setup-startup-hook)    ;; open dashboard on startup
-    (setq dashboard-center-content t) ;; center dashboard
-    (setq dashboard-startupify-list '(dashboard-insert-items)) ;; only show items in dashboard
-    (setq dashboard-items '((bookmarks . 12)   ;; show 12 bookmarks
-                            (recents  . 36)))) ;; show 36 recent files
+    (dashboard-setup-startup-hook))    ;; open dashboard on startup
 #+end_src
 ** doom-modeline
 Set up doom-modeline as per instructions on
@@ -618,9 +620,9 @@ as per instructions on https://github.com/lorniu/go-translate
 #+begin_src emacs-lisp
   (use-package go-translate
     :commands gts-do-translate  ;; defer loading until gts-do-translate is called
-    :config
-    (setq gt-langs '(en fr))
-    (setq gt-default-translator (gt-translator :engines (gt-google-engine))))
+    :custom
+    (gt-langs '(en fr))
+    (gt-default-translator (gt-translator :engines (gt-google-engine))))
 #+end_src
 ** delete not kill
 Alternatives of built-in emacs commands that do not change the kill ring
@@ -676,14 +678,13 @@ Load org when opening .org files.
     ("\\.org\\'" . org-mode) ;; defer loading and auto-activate when .org file is opened
     :bind (:map org-mode-map
                 ("C-c C-x M-w" . my/org-copy-special))
+    :custom
+    (org-startup-indented t)            ;; on startup indent lines
+    (org-startup-truncated nil)         ;; on startup disable truncate
+    (org-src-tab-acts-natively t)       ;; tab in src blocks = indent
+    (org-support-shift-select 'always)  ;; allow shift select
+    (org-image-actual-width nil)        ;; allow custom sizesof images
     :config
-    (setq org-startup-indented t
-          org-startup-truncated nil
-          org-ellipsis " ▾"
-          org-src-tab-acts-natively t       ;; enable indentation in source blocks
-          org-support-shift-select 'always  ;; allow shift select
-          org-image-actual-width nil)       ;; allow rescaling of images
-
     (setq org-preview-latex-default-process 'dvisvgm)
     (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
     (defun my/text-scale-adjust-latex-previews ()
@@ -724,13 +725,13 @@ https://github.com/minad/org-modern
 Setting up org-present for basic presentations in org-files as per instructions on:
 https://systemcrafters.net/emacs-tips/presentations-with-org-present/
 #+begin_src emacs-lisp
-    (use-package org-present
-      :after org
-      :config
-      (define-key org-present-mode-keymap [right] nil) ;; undo binding right key
-      (define-key org-present-mode-keymap [left] nil)  ;; undo binding left key
-      (define-key org-present-mode-keymap (kbd "<next>") 'org-present-next)   ;; bind next slide to pageup
-      (define-key org-present-mode-keymap (kbd "<prior>") 'org-present-prev)) ;; bind previous slide to pagedown
+  (use-package org-present
+    :after org
+    :config
+    (define-key org-present-mode-keymap [right] nil) ;; undo binding right key
+    (define-key org-present-mode-keymap [left] nil)  ;; undo binding left key
+    (define-key org-present-mode-keymap (kbd "<next>") 'org-present-next)   ;; bind next slide to pageup
+    (define-key org-present-mode-keymap (kbd "<prior>") 'org-present-prev)) ;; bind previous slide to pagedown
 #+end_src
 
 ** visual-fill-column
@@ -974,9 +975,11 @@ Load pdf-tools to view pdfs as per instructions on
 https://github.com/vedang/pdf-tools
 #+begin_src emacs-lisp
   (use-package pdf-tools
+    :custom
+    (pdf-view-resize-factor 1.05) ;; decrease resizing factor for better control
     :init
-    (pdf-tools-install)
-    (setq pdf-view-resize-factor 1.05)) ;; decrease resizing factor for better control
+    (pdf-tools-install))
+
 #+end_src
 ** citar
 Load citar to handle global bibliography in all.bib (exported from zotero) as per instructions on
@@ -1036,10 +1039,10 @@ https://github.com/non-Jedi/eglot-jl
     :hook
     (julia-mode . eglot-ensure)  ;; auto-activate when julia-mode is started
     (julia-mode . eglot-jl-init)
+    :custom
+    (eldoc-echo-area-use-multiline-p nil)
     :init
-    (setq eglot-connect-timeout nil)
-    :config
-    (setq eldoc-echo-area-use-multiline-p nil))
+    (setq eglot-connect-timeout nil))
 #+end_src
 ** vterm
 Install vterm as per instructions on
@@ -1070,10 +1073,12 @@ https://github.com/copilot-emacs/copilot.el
   (use-package copilot
     :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
     :hook (julia-mode . copilot-mode)
-    :config
-    (setq copilot--base-dir "/home/ren/.emacs.d/straight/repos/copilot.el/")
-    (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion)
-    (setq copilot-indent-offset-warning-disable t)) ;; disables a warning that always arises in tex-mode
+    :custom
+    (copilot--base-dir "/home/ren/.emacs.d/straight/repos/copilot.el/")
+    (copilot-indent-offset-warning-disable t) ;; disables a warning that always arises in tex-mode
+    :bind (:map copilot-completion-map
+           ("C-<tab>" . copilot-accept-completion))
+    )
 #+end_src
 
 Installing GPTel as per instructions on
