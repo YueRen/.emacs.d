@@ -622,6 +622,45 @@ as per instructions on https://github.com/lorniu/go-translate
     (setq gt-langs '(en fr))
     (setq gt-default-translator (gt-translator :engines (gt-google-engine))))
 #+end_src
+** delete not kill
+Alternatives of built-in emacs commands that do not change the kill ring
+*** kill-line (C-k)
+#+begin_src emacs-lisp
+  (defun my-delete-line (&optional arg)
+    (interactive "P")
+    (delete-region (point)
+                   (progn
+                     (if arg
+                         (forward-visible-line (prefix-numeric-value arg))
+                       (if (eobp)
+                           (signal 'end-of-buffer nil))
+                       (let ((end
+                              (save-excursion
+                                (end-of-visible-line) (point))))
+                         (if (or (save-excursion
+                                   (unless show-trailing-whitespace
+                                     (skip-chars-forward " \t" end))
+                                   (= (point) end))
+                                 (and kill-whole-line (bolp)))
+                             (forward-visible-line 1)
+                           (goto-char end))))
+                     (point))))
+  (global-set-key (kbd "C-k") 'my-delete-line)
+#+END_SRC
+*** kill-sentence (M-k)
+#+begin_src emacs-lisp
+  (defun my-delete-sentence (&optional arg)
+  (interactive "p")
+  (delete-region (point) (progn (forward-sentence arg) (point))))
+  (global-set-key (kbd "M-k") 'my-delete-sentence)
+#+end_src
+*** kill-word (M-d)
+#+begin_src emacs-lisp
+  (defun my-delete-word (arg)
+  (interactive "p")
+  (delete-region (point) (progn (forward-word arg) (point))))
+  (global-set-key (kbd "M-d") 'my-delete-sentence)
+#+end_src
 
 * Org
 ** basic setup
