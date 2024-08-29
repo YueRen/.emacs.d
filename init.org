@@ -280,8 +280,8 @@ Load vertico for vertical minibuffer completion UI as per instructions on
 https://github.com/minad/vertico
 #+begin_src emacs-lisp
   (use-package vertico
-    :custom
-    (vertico-count 6)  ;; Customize number of candidates shown
+    ;; :custom
+    ;; (vertico-count 6)  ;; Customize number of candidates shown
     :init
     (vertico-mode))
 #+end_src
@@ -579,6 +579,30 @@ https://github.com/oantolin/embark
     :ensure t ; only need to install it, embark loads it after consult if found
     :hook
     (embark-collect-mode . consult-preview-at-point-mode))
+#+end_src
+** vertico-posframe
+Load vertico-posframe to show vertico in a posframe as per instructions on
+https://github.com/tumashu/vertico-posframe
+#+begin_src emacs-lisp
+  (use-package vertico-posframe
+    :init
+    (vertico-posframe-mode))
+#+end_src
+** which-key-posframe
+Load which-key-posframe to show vertico in a posframe as per instructions on
+https://github.com/yanghaoxie/which-key-posframe
+#+begin_src emacs-lisp
+  (use-package which-key-posframe
+    :init
+    (which-key-posframe-mode))
+#+end_src
+** transient-posframe
+Load transient-posframe to show vertico in a posframe as per instructions on
+https://github.com/yanghaoxie/transient-posframe
+#+begin_src emacs-lisp
+  (use-package transient-posframe
+    :init
+    (transient-posframe-mode))
 #+end_src
 ** powerthesaurus
 Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
