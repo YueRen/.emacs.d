@@ -263,6 +263,19 @@ https://github.com/lukhas/buffer-move
      ("C-x C-<left>" . buf-move-left)
      ("C-x C-<right>" . buf-move-right)))
 #+end_src
+*** framemove
+Load framemove for switching between frames
+#+begin_src emacs-lisp
+  (use-package framemove
+    :straight (:host github :repo "emacsmirror/framemove")
+    :custom
+    (framemove-hook-into-windmove t)
+    :bind
+    (("C-x 5 <up>" . fm-up-frame)
+     ("C-x 5 <down>" . fm-down-frame)
+     ("C-x 5 <left>" . fm-left-frame)
+     ("C-x 5 <right>" . fm-right-frame)))
+#+end_src
 ** startup
 *** dashboard
 Set up dashboard as per instructions on:
