@@ -268,8 +268,8 @@ Load framemove for switching between frames
 #+begin_src emacs-lisp
   (use-package framemove
     :straight (:host github :repo "emacsmirror/framemove")
-    :custom
-    (framemove-hook-into-windmove t)
+    :init
+    (setq framemove-hook-into-windmove t) ;; doesn't work as :config or :custom??
     :bind
     (("C-x 5 <up>" . fm-up-frame)
      ("C-x 5 <down>" . fm-down-frame)
