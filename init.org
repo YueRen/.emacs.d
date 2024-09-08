@@ -114,6 +114,10 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
 #+begin_src emacs-lisp
   (tool-bar-mode -1)
 #+end_src
+*** remove decorations
+#+begin_src emacs-lisp
+  (setq default-frame-alist '((undecorated . t)))
+#+end_src
 *** highlight current line
 #+begin_src emacs-lisp
   (global-hl-line-mode)
