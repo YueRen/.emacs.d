@@ -116,7 +116,7 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
 #+end_src
 *** remove decorations
 #+begin_src emacs-lisp
-  (setq default-frame-alist '((undecorated . t)))
+  (add-to-list 'default-frame-alist '(undecorated . t))
 #+end_src
 *** highlight current line
 #+begin_src emacs-lisp
@@ -616,9 +616,9 @@ Load go-translate to translate between German and English (C-n / C-p to switch d
 as per instructions on https://github.com/lorniu/go-translate
 #+begin_src emacs-lisp
   (use-package go-translate
-    :commands gts-do-translate  ;; defer loading until gts-do-translate is called
+    :commands gt-do-translate  ;; defer loading until gts-do-translate is called
     :custom
-    (gt-langs '(en fr))
+    (gt-langs '(de en))
     (gt-default-translator (gt-translator :engines (gt-google-engine))))
 #+end_src
 * Bookmarks
