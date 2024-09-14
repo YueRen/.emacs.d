@@ -658,6 +658,22 @@ https://www.youtube.com/watch?v=vm-FvNdYFcc
                 ("<tab>" . dired-subtree-toggle)
                 ("<C-tab>" . dired-subtree-cycle)))
 #+end_src
+** dired-open
+Load dired-open as per instructions on
+https://github.com/Fuco1/dired-hacks/tree/master?tab=readme-ov-file#dired-open
+#+begin_src emacs-lisp
+  (use-package dired-open
+    :after dired
+    :custom
+    (dired-open-extensions
+     '(("doc" . "libreoffice")
+       ("xls" . "libreoffice")
+       ("ppt" . "libreoffice")
+       ("odt" . "libreoffice")
+       ("ods" . "libreoffice")
+       ("odg" . "libreoffice")
+       ("odp" . "libreoffice"))))
+#+end_src
 ** casual-dired
 Load casual-dired and bind it to '?' as per instructions on
 https://github.com/kickingvegas/casual-dired
@@ -666,20 +682,6 @@ https://github.com/kickingvegas/casual-dired
     :after dired
     :bind (:map dired-mode-map
                 ("?" . 'casual-dired-tmenu)))
-#+end_src
-** openwith
-Load openwith to open certain files with external programs by default as per instructions on
-https://github.com/thisirs/openwith
-#+begin_src emacs-lisp :tangle no
-  (use-package openwith
-    :hook (dired-mode . openwith-mode)
-    :config
-    (setq openwith-associations
-          (list
-           (list (openwith-make-extension-regexp
-                  '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
-                 "libreoffice"
-                 '(file)))))
 #+end_src
 * Notes
 Cusomizations for note taking
