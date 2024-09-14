@@ -620,7 +620,11 @@ as per instructions on https://github.com/lorniu/go-translate
     :commands gt-do-translate  ;; defer loading until gts-do-translate is called
     :custom
     (gt-langs '(de en))
-    (gt-default-translator (gt-translator :engines (gt-google-engine))))
+    (gt-default-translator
+     (gt-translator
+      :taker (gt-taker :prompt t)
+      :engines (gt-google-engine)
+      :render  (gt-buffer-render))))
 #+end_src
 * Bookmarks
 Customizations for bookmarks
