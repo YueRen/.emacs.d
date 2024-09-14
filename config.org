@@ -1,7 +1,8 @@
-#+title: emacs.el
+#+title: GNU Emacs config
 #+author: Yue Ren
 #+date: 25/08/2025
-#+PROPERTY: header-args:emacs-lisp :tangle ./init.el
+#+description: config centered around latex and julialang
+#+startup: showeverything
 
 * Package management
 ** bootstrapping straight
@@ -1102,25 +1103,3 @@ https://github.com/karthink/gptel
 #+begin_src emacs-lisp
   (use-package gptel)
 #+end_src
-* Local variables for tangling this configuration
-Declare local variables below as safe
-#+begin_src emacs-lisp
-  (setq safe-local-variable-values
-        '((eval add-hook 'after-save-hook
-                (lambda nil
-                  (if
-                      (y-or-n-p "Tangle?")
-                      (org-babel-tangle)))
-                nil t)
-          (eval add-hook 'after-save-hook
-                (lambda nil
-                  (if
-                      (y-or-n-p "Reload?")
-                      (load-file user-init-file)))
-                nil t)))
-#+end_src
-
-;; Local Variables:
-;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Reload?")(load-file user-init-file))) nil t)
-;; eval: (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
-;; End:
