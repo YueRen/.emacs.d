@@ -119,9 +119,10 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(undecorated . t))
 #+end_src
-*** highlight current line
+*** highlight current line in sources and texts
 #+begin_src emacs-lisp
-  (global-hl-line-mode)
+  (add-hook 'prog-mode-hook #'hl-line-mode)
+  (add-hook 'text-mode-hook #'hl-line-mode)
 #+end_src
 *** parenthesis highlighting in programming modes
 #+begin_src emacs-lisp
