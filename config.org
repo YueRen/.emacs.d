@@ -711,7 +711,6 @@ Load org when opening .org files.
     :custom
     (org-startup-indented t)            ;; on startup indent lines
     (org-startup-truncated nil)         ;; on startup disable truncate
-    (org-src-tab-acts-natively t)       ;; tab in src blocks = indent
     (org-support-shift-select 'always)  ;; allow shift select
     (org-image-actual-width nil)        ;; allow custom sizesof images
     (org-ellipsis " ▼")
