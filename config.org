@@ -1,7 +1,7 @@
 #+title: GNU Emacs config
 #+author: Yue Ren
-#+date: 25/08/2025
-#+description: config centered around latex and julialang
+#+date: 19/09/2025
+#+description: config with main usecase latex and julialang, optimized for screen efficiency
 #+startup: showeverything
 
 * Package management
