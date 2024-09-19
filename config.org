@@ -99,9 +99,10 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
 #+begin_src emacs-lisp
   (setq inhibit-startup-screen t)
 #+end_src
-*** empty scratch buffer
+*** empty scratch buffer and make fundamental mode
 #+begin_src emacs-lisp
-  (setq initial-scratch-message nil)
+  (setq initial-scratch-message nil
+        initial-major-mode 'fundamental-mode)
 #+end_src
 *** remove top menu bar
 #+begin_src emacs-lisp
@@ -127,6 +128,10 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
 *** parenthesis highlighting in programming modes
 #+begin_src emacs-lisp
   (add-hook 'prog-mode-hook #'show-paren-mode)
+#+end_src
+*** parenthesis pairing in programming modes
+#+begin_src emacs-lisp
+  (add-hook 'prog-mode-hook #'electric-pair-mode)
 #+end_src
 *** set transparency
 #+begin_src emacs-lisp
@@ -582,6 +587,29 @@ https://github.com/oantolin/embark
     :hook
     (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
+** powerthesaurus
+Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
+https://github.com/SavchenkoValeriy/emacs-powerthesaurus
+#+begin_src emacs-lisp
+  (use-package powerthesaurus
+    :commands powerthesaurus-transient) ;; defer loading after powerthesaurus-transient is called
+#+end_src
+** go-translate
+Load go-translate to translate between German and English (C-n / C-p to switch direction),
+as per instructions on https://github.com/lorniu/go-translate
+#+begin_src emacs-lisp
+  (use-package go-translate
+    :commands gt-do-translate  ;; defer loading until gts-do-translate is called
+    :custom
+    (gt-langs '(de en))
+    (gt-default-translator
+     (gt-translator
+      :taker (gt-taker :prompt t)
+      :engines (gt-google-engine)
+      :render  (gt-buffer-render))))
+#+end_src
+* Posframes
+Packages and customizations for posframes
 ** vertico-posframe
 Load vertico-posframe to show vertico in a posframe as per instructions on
 https://github.com/tumashu/vertico-posframe
@@ -606,29 +634,8 @@ https://github.com/yanghaoxie/transient-posframe
     :init
     (transient-posframe-mode))
 #+end_src
-** powerthesaurus
-Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
-https://github.com/SavchenkoValeriy/emacs-powerthesaurus
-#+begin_src emacs-lisp
-  (use-package powerthesaurus
-    :commands powerthesaurus-transient) ;; defer loading after powerthesaurus-transient is called
-#+end_src
-** go-translate
-Load go-translate to translate between German and English (C-n / C-p to switch direction),
-as per instructions on https://github.com/lorniu/go-translate
-#+begin_src emacs-lisp
-  (use-package go-translate
-    :commands gt-do-translate  ;; defer loading until gts-do-translate is called
-    :custom
-    (gt-langs '(de en))
-    (gt-default-translator
-     (gt-translator
-      :taker (gt-taker :prompt t)
-      :engines (gt-google-engine)
-      :render  (gt-buffer-render))))
-#+end_src
-* Bookmarks
-Customizations for bookmarks
+* Transients
+Packages for transient shortcuts
 ** casual-bookmarks
 Load casual-bookmark and bind it to `?` as per instructions on
 https://github.com/kickingvegas/casual-suite
@@ -638,8 +645,17 @@ https://github.com/kickingvegas/casual-suite
   :bind (:map bookmark-bmenu-mode-map
               ("?" . casual-bookmarks-tmenu)))
 #+end_src
+** casual-dired
+Load casual-dired and bind it to '?' as per instructions on
+https://github.com/kickingvegas/casual-dired
+#+begin_src emacs-lisp
+  (use-package casual-dired
+    :after dired
+    :bind (:map dired-mode-map
+                ("?" . 'casual-dired-tmenu)))
+#+end_src
 * Dired
-Customizations for dired
+Packages and customizations for dired
 ** basic setup
 Use human readable sizes
 #+begin_src emacs-lisp
@@ -675,17 +691,8 @@ https://github.com/Fuco1/dired-hacks/tree/master?tab=readme-ov-file#dired-open
        ("odg" . "libreoffice")
        ("odp" . "libreoffice"))))
 #+end_src
-** casual-dired
-Load casual-dired and bind it to '?' as per instructions on
-https://github.com/kickingvegas/casual-dired
-#+begin_src emacs-lisp
-  (use-package casual-dired
-    :after dired
-    :bind (:map dired-mode-map
-                ("?" . 'casual-dired-tmenu)))
-#+end_src
 * Notes
-Cusomizations for note taking
+Packages and customizations for note taking
 ** Org
 Customizations for org
 *** basic setup
@@ -744,7 +751,21 @@ https://github.com/minad/org-modern
     :hook
     (org-mode . org-modern-mode)) ;; auto-activate in org-mode
 #+end_src
-*** org-present
+** Denote
+Customizations for denote
+*** Basic setup
+Load denote for note taking as per instructions on
+https://protesilaos.com/emacs/denote
+#+begin_src emacs-lisp
+  (use-package denote
+    :hook
+    (dired-mode . denote-dired-mode)    ;; file highlighting in dired
+    :config
+    (setq denote-directory "~/notes/"))
+#+end_src
+* Presentations
+Packages and customizations for presentations
+** org-present
 Setting up org-present for basic presentations in org-files as per instructions on:
 https://systemcrafters.net/emacs-tips/presentations-with-org-present/
 #+begin_src emacs-lisp
@@ -756,7 +777,7 @@ https://systemcrafters.net/emacs-tips/presentations-with-org-present/
     (define-key org-present-mode-keymap (kbd "<next>") 'org-present-next)   ;; bind next slide to pageup
     (define-key org-present-mode-keymap (kbd "<prior>") 'org-present-prev)) ;; bind previous slide to pagedown
 #+end_src
-*** visual-fill-column
+** visual-fill-column
 Load visual-fill-column to pad and center text (in org-present) as per instructions on
 https://systemcrafters.net/emacs-tips/presentations-with-org-present/
 #+begin_src emacs-lisp
@@ -784,20 +805,8 @@ https://systemcrafters.net/emacs-tips/presentations-with-org-present/
     ;; (org-present-mode-hook . my/org-present-start)
     ;; (org-present-mode-quit-hook . my/org-present-end))
 #+end_src
-** Denote
-Customizations for denote
-*** Basic setup
-Load denote for note taking as per instructions on
-https://protesilaos.com/emacs/denote
-#+begin_src emacs-lisp
-  (use-package denote
-    :hook
-    (dired-mode . denote-dired-mode)    ;; file highlighting in dired
-    :config
-    (setq denote-directory "~/notes/"))
-#+end_src
 * Git
-Customizations for git
+Packages and customizations for git
 ** magit
 Load magit as per instructions on
 https://github.com/magit/magit
@@ -814,6 +823,7 @@ https://github.com/magit/forge
   (setq auth-sources '("~/.authinfo.gpg"))
 #+end_src
 * Shell
+Customizations for shell
 ** Bash and bash aliases
 Use bash as default shell and use bash aliases.
 #+begin_src emacs-lisp
@@ -824,6 +834,7 @@ Use bash as default shell and use bash aliases.
   (setenv "SHELL" shell-file-name)
 #+end_src
 * Latex
+Packages and customizations for latex
 ** Basic setup
 Load auctex, reftex, and flyspell when opening .tex files.
 #+begin_src emacs-lisp :noweb tangle
@@ -1028,13 +1039,7 @@ https://www.emacswiki.org/emacs/TeXInputMethod
                           ("\\CC" ?ℂ))))
 #+end_src
 * Julia
-** julia-mode
-Load julia-mode as per instructions on
-https://github.com/JuliaEditorSupport/julia-emacs
-#+begin_src emacs-lisp
-  (use-package julia-mode
-    :mode "\\.jl\\'") ;; defer loading until and auto-activate when .jl files are opened
-#+end_src
+Packages and customizations for julia
 ** eglot-jl
 Load eglot-js for language server support as per instructions on
 https://github.com/non-Jedi/eglot-jl
@@ -1056,6 +1061,21 @@ https://github.com/akermu/emacs-libvterm
   (use-package vterm
     :after julia-mode) ;; defer loading until julia-mode is started
 #+end_src
+** prism
+Install prism as per instructions on
+https://github.com/alphapapa/prism.el
+#+begin_src emacs-lisp
+  (use-package prism
+    :after julia-mode
+    :hook (julia-mode . prism-whitespace-mode)) ;; auto-activate in julia-mode
+#+end_src
+** julia-mode
+Load julia-mode as per instructions on
+https://github.com/JuliaEditorSupport/julia-emacs
+#+begin_src emacs-lisp
+  (use-package julia-mode
+    :mode "\\.jl\\'") ;; defer loading until and auto-activate when .jl files are opened
+#+end_src
 ** julia-repl
 Install julia-repl as per instructions on
 https://github.com/tpapp/julia-repl
@@ -1069,15 +1089,8 @@ https://github.com/tpapp/julia-repl
     :config
     (julia-repl-set-terminal-backend 'vterm)) ;; use vterm (recommended)
 #+end_src
-** prism
-Install prism as per instructions on
-https://github.com/alphapapa/prism.el
-#+begin_src emacs-lisp
-  (use-package prism
-    :after julia-mode
-    :hook (julia-mode . prism-whitespace-mode)) ;; auto-activate in julia-mode
-#+end_src
 * C++
+Packages and customizations for C++
 ** indentation
 Disable tabs indentation and set offset to 2.
 #+begin_src emacs-lisp
@@ -1091,6 +1104,7 @@ Turn on C++-mode for files ending in ".sing" and ".lib" for Singular.
   (setq auto-mode-alist (cons '("\\.lib\\'" .  c++-mode) auto-mode-alist))
 #+end_src
 * LLMs
+Packages and customizations for LLMs
 ** Copilot
 Installing copilot as per the instructions on
 https://github.com/copilot-emacs/copilot.el
