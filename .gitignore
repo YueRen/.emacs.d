@@ -1,0 +1,9 @@
+config.el
+custom.el
+eln-cache/
+elpa/
+history
+recentf
+straight/
+transient/
+var/
