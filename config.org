@@ -824,7 +824,7 @@ https://github.com/alphapapa/magit-todos
 ** forge (disabled)
 Load forge as per instructions on
 https://github.com/magit/forge
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package forge
     :after magit) ;; defer loading until magit is loaded
   (setq auth-sources '("~/.authinfo.gpg"))
