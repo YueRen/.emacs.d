@@ -94,6 +94,11 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
 #+begin_src emacs-lisp
   (setq warning-minimum-level :error)
 #+end_src
+*** change custom-file
+#+begin_src emacs-lisp
+  (setq custom-file (concat user-emacs-directory "custom.el"))
+  (load custom-file 'noerror)
+#+end_src
 ** visuals
 *** empty startup screen
 #+begin_src emacs-lisp
