@@ -813,6 +813,14 @@ https://github.com/magit/magit
   (use-package magit
     :commands magit-status) ;; defer loading until magit-status is called
 #+end_src
+** magit-todos
+Load magit-todos as per instructions on
+https://github.com/alphapapa/magit-todos
+#+begin_src emacs-lisp
+  (use-package magit-todos
+    :after magit
+    :config (magit-todos-mode 1))
+#+end_src
 ** forge (disabled)
 Load forge as per instructions on
 https://github.com/magit/forge
@@ -850,6 +858,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
           TeX-auto-save t  ;; auto-parse tex file on save
           TeX-master nil)  ;; always query for master file
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+    (add-hook 'TeX-update-style-hook 'hl-todo-mode) ;; fix  for hl-todo-mode
     :config
     (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
           TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
