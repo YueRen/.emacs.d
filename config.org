@@ -858,7 +858,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
           TeX-auto-save t  ;; auto-parse tex file on save
           TeX-master nil)  ;; always query for master file
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-    (add-hook 'TeX-update-style-hook 'hl-todo-mode) ;; fix  for hl-todo-mode
+    (add-hook 'TeX-update-style-hook 'hl-todo-mode) ;; fix for hl-todo-mode
     :config
     (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
           TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
