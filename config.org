@@ -657,7 +657,8 @@ https://github.com/kickingvegas/casual-dired
   (use-package casual-dired
     :after dired
     :bind (:map dired-mode-map
-                ("?" . 'casual-dired-tmenu)))
+                ("?" . 'casual-dired-tmenu)
+                ("s" . #'casual-dired-sort-by-tmenu)))
 #+end_src
 * Dired
 Packages and customizations for dired
