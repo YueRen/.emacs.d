@@ -624,7 +624,7 @@ https://github.com/tumashu/vertico-posframe
     (vertico-posframe-mode))
 #+end_src
 ** which-key-posframe
-Load which-key-posframe to show vertico in a posframe as per instructions on
+Load which-key-posframe to show which-key in a posframe as per instructions on
 https://github.com/yanghaoxie/which-key-posframe
 #+begin_src emacs-lisp
   (use-package which-key-posframe
@@ -632,7 +632,7 @@ https://github.com/yanghaoxie/which-key-posframe
     (which-key-posframe-mode))
 #+end_src
 ** transient-posframe
-Load transient-posframe to show vertico in a posframe as per instructions on
+Load transient-posframe to show transients in a posframe as per instructions on
 https://github.com/yanghaoxie/transient-posframe
 #+begin_src emacs-lisp
   (use-package transient-posframe
