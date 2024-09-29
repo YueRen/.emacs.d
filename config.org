@@ -660,6 +660,19 @@ https://github.com/kickingvegas/casual-dired
                 ("?" . 'casual-dired-tmenu)
                 ("s" . #'casual-dired-sort-by-tmenu)))
 #+end_src
+** casual-cals
+Load casual-calc and bind it to `?` as per instructions on
+https://github.com/kickingvegas/casual-calc
+#+begin_src emacs-lisp
+  (use-package casual-calc
+    :after (calc)
+    :bind (:map
+           calc-mode-map
+           ("?" . casual-calc-tmenu)
+           :map
+           calc-alg-map
+           ("?" . casual-calc-tmenu)))
+#+end_src
 * Dired
 Packages and customizations for dired
 ** basic setup
