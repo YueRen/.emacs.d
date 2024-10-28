@@ -769,6 +769,13 @@ https://github.com/minad/org-modern
     :hook
     (org-mode . org-modern-mode)) ;; auto-activate in org-mode
 #+end_src
+*** org-pdftools
+Load org-pdftools as per instructions on
+https://github.com/fuxialexander/org-pdftools
+#+begin_src emacs-lisp
+  (use-package org-pdftools
+    :after (org pdf-tools))
+#+end_src
 ** Denote
 Customizations for denote
 *** Basic setup
