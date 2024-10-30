@@ -783,10 +783,11 @@ Load denote for note taking as per instructions on
 https://protesilaos.com/emacs/denote
 #+begin_src emacs-lisp
   (use-package denote
+    :after org
     :hook
     (dired-mode . denote-dired-mode)    ;; file highlighting in dired
-    :config
-    (setq denote-directory "~/notes/"))
+    :custom
+    (denote-directory "~/notes/"))
 #+end_src
 * Presentations
 Packages and customizations for presentations
