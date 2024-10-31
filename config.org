@@ -641,37 +641,19 @@ https://github.com/yanghaoxie/transient-posframe
 #+end_src
 * Transients
 Packages for transient shortcuts
-** casual-bookmarks
-Load casual-bookmark and bind it to `?` as per instructions on
-https://github.com/kickingvegas/casual-suite
+** casual
+Load casual and bind it to `?`
 #+begin_src emacs-lisp
-  (use-package casual-bookmarks
-  :after bookmark
-  :bind (:map bookmark-bmenu-mode-map
-              ("?" . casual-bookmarks-tmenu)))
-#+end_src
-** casual-dired
-Load casual-dired and bind it to '?' as per instructions on
-https://github.com/kickingvegas/casual-dired
-#+begin_src emacs-lisp
-  (use-package casual-dired
-    :after dired
-    :bind (:map dired-mode-map
-                ("?" . 'casual-dired-tmenu)
-                ("s" . #'casual-dired-sort-by-tmenu)))
-#+end_src
-** casual-cals
-Load casual-calc and bind it to `?` as per instructions on
-https://github.com/kickingvegas/casual-calc
-#+begin_src emacs-lisp
-  (use-package casual-calc
-    :after (calc)
-    :bind (:map
-           calc-mode-map
-           ("?" . casual-calc-tmenu)
-           :map
-           calc-alg-map
-           ("?" . casual-calc-tmenu)))
+  (use-package casual
+    :bind ( :map bookmark-bmenu-mode-map
+            ("?" . casual-bookmarks-tmenu)
+            :map dired-mode-map
+            ("?" . 'casual-dired-tmenu)
+            ("s" . #'casual-dired-sort-by-tmenu)
+            :map calc-mode-map
+            ("?" . casual-calc-tmenu)
+            :map calc-alg-map
+            ("?" . casual-calc-tmenu)))
 #+end_src
 * Dired
 Packages and customizations for dired
