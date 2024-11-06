@@ -1057,6 +1057,26 @@ https://www.emacswiki.org/emacs/TeXInputMethod
 #+end_src
 * Julia
 Packages and customizations for julia
+** julia-mode
+Load julia-mode as per instructions on
+https://github.com/JuliaEditorSupport/julia-emacs
+#+begin_src emacs-lisp
+  (use-package julia-mode
+    :mode "\\.jl\\'") ;; defer loading until and auto-activate when .jl files are opened
+#+end_src
+** julia-repl
+Install julia-repl as per instructions on
+https://github.com/tpapp/julia-repl
+#+begin_src emacs-lisp
+  (use-package julia-repl
+    :after julia-mode                    ;; defer loading until julia-mode is started
+    :hook (julia-mode . julia-repl-mode) ;; auto-activate when julia-mode is started
+    :init
+    (setq exec-path (append exec-path '("/home/ren/.juliaup/bin")))
+    (add-to-list 'load-path "/home/ren/.juliaup/bin/julia")
+    :config
+    (julia-repl-set-terminal-backend 'vterm)) ;; use vterm (recommended)
+#+end_src
 ** eglot-jl
 Load eglot-js for language server support as per instructions on
 https://github.com/non-Jedi/eglot-jl
@@ -1085,26 +1105,6 @@ https://github.com/alphapapa/prism.el
   (use-package prism
     :after julia-mode
     :hook (julia-mode . prism-whitespace-mode)) ;; auto-activate in julia-mode
-#+end_src
-** julia-mode
-Load julia-mode as per instructions on
-https://github.com/JuliaEditorSupport/julia-emacs
-#+begin_src emacs-lisp
-  (use-package julia-mode
-    :mode "\\.jl\\'") ;; defer loading until and auto-activate when .jl files are opened
-#+end_src
-** julia-repl
-Install julia-repl as per instructions on
-https://github.com/tpapp/julia-repl
-#+begin_src emacs-lisp
-  (use-package julia-repl
-    :after julia-mode                    ;; defer loading until julia-mode is started
-    :hook (julia-mode . julia-repl-mode) ;; auto-activate when julia-mode is started
-    :init
-    (setq exec-path (append exec-path '("/home/ren/.juliaup/bin")))
-    (add-to-list 'load-path "/home/ren/.juliaup/bin/julia")
-    :config
-    (julia-repl-set-terminal-backend 'vterm)) ;; use vterm (recommended)
 #+end_src
 * C++
 Packages and customizations for C++
