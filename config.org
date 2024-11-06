@@ -645,6 +645,7 @@ Packages for transient shortcuts
 Load casual and bind it to `?`
 #+begin_src emacs-lisp
   (use-package casual
+    :ensure t
     :bind ( :map bookmark-bmenu-mode-map
             ("?" . casual-bookmarks-tmenu)
             :map dired-mode-map
