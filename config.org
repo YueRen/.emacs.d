@@ -636,6 +636,7 @@ Load transient-posframe to show transients in a posframe as per instructions on
 https://github.com/yanghaoxie/transient-posframe
 #+begin_src emacs-lisp
   (use-package transient-posframe
+    :straight (:host github :repo "tarsiiformes/transient-posframe" :branch "fix-sizing" :files ("*.el"))
     :init
     (transient-posframe-mode))
 #+end_src
@@ -755,8 +756,9 @@ https://github.com/minad/org-modern
 Load org-pdftools as per instructions on
 https://github.com/fuxialexander/org-pdftools
 #+begin_src emacs-lisp
-  (use-package org-pdftools
-    :after (:any org pdf-tools))
+    (use-package org-pdftools
+      :after (:any org pdf-tools)
+      :hook (org-mode . org-pdftools-setup-link))
 #+end_src
 ** Denote
 Customizations for denote
@@ -833,7 +835,7 @@ https://github.com/alphapapa/magit-todos
 ** forge (disabled)
 Load forge as per instructions on
 https://github.com/magit/forge
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package forge
     :after magit) ;; defer loading until magit is loaded
   (setq auth-sources '("~/.authinfo.gpg"))
