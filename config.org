@@ -643,18 +643,72 @@ https://github.com/yanghaoxie/transient-posframe
 * Transients
 Packages for transient shortcuts
 ** casual
-Load casual and bind it to `?`
+Load casual and bind it to `?` as per instructions in
+https://github.com/kickingvegas/casual/discussions/78
 #+begin_src emacs-lisp
   (use-package casual
-    :bind ( :map bookmark-bmenu-mode-map
-            ("?" . casual-bookmarks-tmenu)
-            :map dired-mode-map
-            ("?" . 'casual-dired-tmenu)
-            ("s" . #'casual-dired-sort-by-tmenu)
-            :map calc-mode-map
-            ("?" . casual-calc-tmenu)
-            :map calc-alg-map
-            ("?" . casual-calc-tmenu)))
+    :ensure t
+    :config
+    (setq casual-lib-use-unicode t)
+    (with-eval-after-load "org-agenda"
+      (require 'casual-agenda)
+      (keymap-set org-agenda-mode-map "?" #'casual-agenda-tmenu)
+      (keymap-set org-agenda-mode-map "M-j" #'org-agenda-clock-goto)
+      (keymap-set org-agenda-mode-map "J"   #'bookmark-jump))
+    (with-eval-after-load "bookmark"
+      (require 'casual-bookmarks)
+      (keymap-set bookmark-bmenu-mode-map "?" #'casual-bookmarks-tmenu)
+      (keymap-set bookmark-bmenu-mode-map "J"   #'bookmark-jump))
+    (with-eval-after-load "calc"
+      (require 'casual-calc)
+      (keymap-set calc-mode-map "?" #'casual-calc-tmenu)
+      (keymap-set calc-alg-map  "?" #'casual-calc-tmenu))
+    (with-eval-after-load "dired"
+      (require 'casual-dired)
+      (keymap-set dired-mode-map "?" #'casual-dired-tmenu)
+      (keymap-set dired-mode-map "s"   #'casual-dired-sort-by-tmenu)
+      (keymap-set dired-mode-map "/"   #'casual-dired-search-replace-tmenu))
+    (with-eval-after-load "ibuffer"
+      (require 'casual-ibuffer)
+      (keymap-set ibuffer-mode-map "?" #'casual-ibuffer-tmenu)
+      (keymap-set ibuffer-mode-map "F"   #'casual-ibuffer-filter-tmenu)
+      (keymap-set ibuffer-mode-map "s"   #'casual-ibuffer-sortby-tmenu)
+      (keymap-set ibuffer-mode-map "<double-mouse-1>"   #'ibuffer-visit-buffer)
+      (keymap-set ibuffer-mode-map "M-<double-mouse-1>" #'ibuffer-visit-buffer-other-window)
+      (keymap-set ibuffer-mode-map "{"   #'ibuffer-backwards-next-marked)
+      (keymap-set ibuffer-mode-map "}"   #'ibuffer-forward-next-marked)
+      (keymap-set ibuffer-mode-map "["   #'ibuffer-backward-filter-group)
+      (keymap-set ibuffer-mode-map "]"   #'ibuffer-forward-filter-group)
+      (keymap-set ibuffer-mode-map "$"   #'ibuffer-toggle-filter-group))
+    (with-eval-after-load "info"
+      (require 'casual-info)
+      (keymap-set Info-mode-map "?" #'casual-info-tmenu)
+      ;; Use web-browser history navigation bindings
+      (keymap-set Info-mode-map "M-[" #'Info-history-back)
+      (keymap-set Info-mode-map "M-]" #'Info-history-forward)
+      ;; Bind p and n to paragraph navigation
+      (keymap-set Info-mode-map "p" #'casual-info-browse-backward-paragraph)
+      (keymap-set Info-mode-map "n" #'casual-info-browse-forward-paragraph)
+      ;; Bind h and l to navigate to previous and next nodes
+      ;; Bind j and k to navigate to next and previous references
+      (keymap-set Info-mode-map "h" #'Info-prev)
+      (keymap-set Info-mode-map "j" #'Info-next-reference)
+      (keymap-set Info-mode-map "k" #'Info-prev-reference)
+      (keymap-set Info-mode-map "l" #'Info-next)
+      ;; Bind / to search
+      (keymap-set Info-mode-map "/" #'Info-search)
+      ;; Set Bookmark
+      (keymap-set Info-mode-map "B" #'bookmark-set))
+    (with-eval-after-load "isearch"
+      (require 'casual-isearch)
+      (keymap-set isearch-mode-map "?" #'casual-isearch-tmenu))
+    (with-eval-after-load "re-builder"
+      (require 'casual-re-builder)
+      (keymap-set reb-mode-map      "?" #'casual-re-builder-tmenu)
+      (keymap-set reb-lisp-mode-map "?" #'casual-re-builder-tmenu))
+    ;; (require 'casual-editkit)
+    ;; (keymap-global-set "?" #'casual-editkit-main-tmenu)
+    )
 #+end_src
 * Dired
 Packages and customizations for dired
