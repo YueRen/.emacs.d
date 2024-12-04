@@ -701,7 +701,7 @@ https://github.com/kickingvegas/casual/discussions/78
       (keymap-set Info-mode-map "B" #'bookmark-set))
     (with-eval-after-load "isearch"
       (require 'casual-isearch)
-      (keymap-set isearch-mode-map "?" #'casual-isearch-tmenu))
+      (keymap-set isearch-mode-map "C-o" #'casual-isearch-tmenu))
     (with-eval-after-load "re-builder"
       (require 'casual-re-builder)
       (keymap-set reb-mode-map      "?" #'casual-re-builder-tmenu)
