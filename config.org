@@ -303,18 +303,12 @@ https://github.com/lukhas/buffer-move
      ("C-x C-<left>" . buf-move-left)
      ("C-x C-<right>" . buf-move-right)))
 #+end_src
-*** framemove
-Load framemove for switching between frames
+*** ace-window
+Load ace-window for switching between windows and frames
 #+begin_src emacs-lisp
-  (use-package framemove
-    :straight (:host github :repo "emacsmirror/framemove")
-    :init
-    (setq framemove-hook-into-windmove t) ;; doesn't work as :config or :custom??
+  (use-package ace-window
     :bind
-    (("C-x 5 <up>" . fm-up-frame)
-     ("C-x 5 <down>" . fm-down-frame)
-     ("C-x 5 <left>" . fm-left-frame)
-     ("C-x 5 <right>" . fm-right-frame)))
+    (("M-o" . ace-window)))
 #+end_src
 ** startup
 *** dashboard
