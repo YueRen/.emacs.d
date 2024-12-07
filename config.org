@@ -180,7 +180,7 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 *** switching windows
-Use C-x <arrow> to change between buffers.
+Use C-x <arrow> to switch windows.
 #+begin_src emacs-lisp
   (use-package windmove
     :bind
@@ -293,7 +293,7 @@ https://github.com/seagle0128/doom-modeline
 #+end_src
 ** frames and windows
 *** buffer-move
-Load buffer-move as per instructions on
+Load buffer-move for moving windows as per instructions on
 https://github.com/lukhas/buffer-move
 #+begin_src emacs-lisp
   (use-package buffer-move
