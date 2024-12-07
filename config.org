@@ -157,7 +157,7 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   (set-frame-parameter nil 'alpha-background 85)              ;; for current frame
   (add-to-list 'default-frame-alist '(alpha-background . 85)) ;; for new frames henceforth
   (defun yr/toggle-window-transparency ()
-    "Toggle frame's background transparency."
+    "Toggle current frame's background transparency."
     (interactive)
     (let* ((desired-alpha 85)) (set-frame-parameter nil 'alpha-background (if (not (frame-parameter nil 'alpha-background)) desired-alpha))))
 #+end_src
@@ -181,7 +181,6 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 #+end_src
 *** switching windows
 Use C-x <arrow> to change between buffers.
-(no need for initialisation)
 #+begin_src emacs-lisp
   (use-package windmove
     :bind
@@ -277,6 +276,12 @@ https://github.com/dracula/emacs
     (if (display-graphic-p)
       (load-theme 'dracula t)))
 #+end_src
+*** nerd-icons
+Load nerd-icons as per instructions on
+https://github.com/rainstormstudio/nerd-icons.el
+#+begin_src emacs-lisp
+  (use-package nerd-icons)
+#+end_src
 ** modeline
 *** doom-modeline
 Load doom-modeline as per instructions on
@@ -352,6 +357,16 @@ https://github.com/minad/marginalia
     ;; enabled right away. Note that this forces loading the package.
     (marginalia-mode))
 #+end_src
+** nerd-icons-completion
+Load nerd-icons-completions for nerd icons in marginalia as per instructions on
+https://github.com/rainstormstudio/nerd-icons-completion
+#+begin_src emacs-lisp
+  (use-package nerd-icons-completion
+    :after marginalia
+    :config
+    (nerd-icons-completion-mode)
+    (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+#+end_src
 ** which-key
 Load which-key as per instructions on
 https://github.com/justbur/emacs-which-key
@@ -372,6 +387,15 @@ https://github.com/minad/corfu
     (corfu-cycle t) ;; Enable cycling for `corfu-next/previous'
     :init
     (global-corfu-mode))
+#+end_src
+** nerd-icons-corfu
+Load nerd-icons-corfu for nerd icons in corfu as per instructions on
+https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
+#+begin_src emacs-lisp
+  (use-package nerd-icons-corfu
+    :after corfu
+    :config
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 #+end_src
 ** cape
 Load cape to use company backends for corfu as per instructions on
@@ -765,6 +789,14 @@ https://github.com/Fuco1/dired-hacks/tree/master?tab=readme-ov-file#dired-open
        ("ods" . "libreoffice")
        ("odg" . "libreoffice")
        ("odp" . "libreoffice"))))
+#+end_src
+** nerd-icons-dired
+Load nerd-icons-dired as per instructions on
+https://github.com/rainstormstudio/nerd-icons-dired
+#+begin_src emacs-lisp
+  (use-package nerd-icons-dired
+    :hook
+    (dired-mode . nerd-icons-dired-mode))
 #+end_src
 * Notes
 Packages and customizations for note taking
