@@ -669,13 +669,21 @@ https://github.com/yanghaoxie/which-key-posframe
     (which-key-posframe-mode))
 #+end_src
 ** transient-posframe
-Load transient-posframe to show transients in a posframe as per instructions on
-https://github.com/yanghaoxie/transient-posframe
+Use workaround for transient-posframe to show transients in a posframe as per instructions on
+https://github.com/yanghaoxie/transient-posframe/pull/7
 #+begin_src emacs-lisp
-  (use-package transient-posframe
-    :straight (:host github :repo "tarsiiformes/transient-posframe" :branch "fix-sizing" :files ("*.el"))
-    :init
-    (transient-posframe-mode))
+(setq transient-mode-line-format nil)
+(setq transient-display-buffer-action
+      (list
+       (lambda (buffer _)
+         (posframe-show
+          buffer
+          :poshandler #'posframe-poshandler-frame-center
+          :min-width transient-minimal-frame-width
+          :lines-truncate t
+          :internal-border-color (transient--prefix-color)
+          :internal-border-width 1)
+         (get-buffer-window transient--buffer t))))
 #+end_src
 * Transients
 Packages for transient shortcuts
