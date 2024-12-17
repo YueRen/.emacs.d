@@ -758,11 +758,15 @@ https://github.com/kickingvegas/casual/discussions/78
 * Dired
 Packages and customizations for dired
 ** basic setup
-Use human readable sizes
+*** Use human readable sizes
 #+begin_src emacs-lisp
   (setq dired-listing-switches "-alFh")
 #+end_src
-Enable auto-refresh
+*** Disable opening a new buffer per folder
+#+begin_src emacs-lisp
+  (setq dired-kill-when-opening-new-dired-buffer t)
+#+end_src
+*** Enable auto-refresh
 #+begin_src emacs-lisp
   (setq global-auto-revert-non-file-buffers t)
 #+end_src
