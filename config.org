@@ -272,9 +272,9 @@ Load dracula-theme as per instructions on
 https://github.com/dracula/emacs
 #+begin_src emacs-lisp
   (use-package dracula-theme
+    :if (display-graphic-p)
     :init
-    (if (display-graphic-p)
-      (load-theme 'dracula t)))
+    (load-theme 'dracula t))
 #+end_src
 *** nerd-icons
 Load nerd-icons as per instructions on
