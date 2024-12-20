@@ -992,6 +992,8 @@ Load auctex, reftex, and flyspell when opening .tex files.
     <<tex-custom-spellcheck-blacklist-environments>>
     <<tex-custom-query-labels>>
     <<tex-custom-folding>>
+    <<tex-custom-reftex-goto-label>>
+    <<tex-custom-bibtool-current-file>>
     )
 #+end_src
 ** Custom highlighting
@@ -1066,18 +1068,18 @@ Load auctex, reftex, and flyspell when opening .tex files.
               (add-to-list 'LaTeX-label-alist '("remark" . "rem:"))
               (add-to-list 'LaTeX-label-alist '("theorem" . "thm:"))))
 #+end_src
-** Custom folding (disabled)
+** Custom folding
 Enable folding and unfolding
 #+name: tex-custom-folding
 #+begin_src emacs-lisp :tangle no
-  (defun TeX-fold-all ()
+  (defun yr/TeX-fold-all ()
     (interactive)
     (let ((env (read-from-minibuffer "Environment: ")))
       (save-excursion
         (goto-char (point-min))
         (while (search-forward (format "begin{%s}" env) nil t)
           (TeX-fold-env)))))
-  (defun TeX-unfold-all ()
+  (defun yr/TeX-unfold-all ()
     (interactive)
     (let ((env (read-from-minibuffer "Environment: ")))
       (save-excursion
@@ -1088,12 +1090,29 @@ Enable folding and unfolding
 ** Custom reftex-goto-label
 By default, `reftex-goto-label` does not `push-mark` at the point of departure, so you cannot jump back by using `C-u C-SPC`.
 This function fixes this issue
-#+begin_src emacs-lisp
-(defun my-reftex-goto-label ()
+#+name: tex-custom-reftex-goto-label
+#+begin_src emacs-lisp :tangle no
+(defun yr/reftex-goto-label ()
   "Wrapper around reftex-goto-label with jump back functionality."
   (interactive)
   (push-mark)
   (reftex-goto-label))
+#+end_src
+** Custom bibtool-current-file
+Custom command for running bibtool on a currently opened .bib file
+#+name: tex-custom-bibtool-current-file
+#+begin_src emacs-lisp :tangle no
+  (defun yr/bibtool-current-file ()
+    "Run bibtool on the current buffer's file, using a local or global .bibtoolrsc configuration."
+    (interactive)
+    (let ((file (buffer-file-name)))
+      (if file
+          (let ((default-directory (file-name-directory file))
+                (base-file (file-name-nondirectory file)))
+            (if (file-exists-p ".bibtoolrsc")
+                (shell-command (concat "bibtool " base-file " -o " base-file))
+              (shell-command (concat "bibtool -r ~/.bibtoolsrc " base-file " -o " base-file))))
+        (message "Not visiting a file!"))))
 #+end_src
 ** company-backends
 Load various company latex backends via cape for corfu (for autocomplete)
