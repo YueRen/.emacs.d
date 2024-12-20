@@ -1103,15 +1103,13 @@ Custom command for running bibtool on a currently opened .bib file
 #+name: tex-custom-bibtool-current-file
 #+begin_src emacs-lisp :tangle no
   (defun yr/bibtool-current-file ()
-    "Run bibtool on the current buffer's file, using a local or global .bibtoolrsc configuration."
+    "Run bibtool on the current buffer's file."
     (interactive)
     (let ((file (buffer-file-name)))
       (if file
           (let ((default-directory (file-name-directory file))
                 (base-file (file-name-nondirectory file)))
-            (if (file-exists-p ".bibtoolrsc")
-                (shell-command (concat "bibtool " base-file " -o " base-file))
-              (shell-command (concat "bibtool -r ~/.bibtoolsrc " base-file " -o " base-file))))
+            (shell-command (concat "bibtool " base-file " -o " base-file)))
         (message "Not visiting a file!"))))
 #+end_src
 ** company-backends
