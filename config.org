@@ -1181,8 +1181,8 @@ https://github.com/tpapp/julia-repl
     :after julia-mode                    ;; defer loading until julia-mode is started
     :hook (julia-mode . julia-repl-mode) ;; auto-activate when julia-mode is started
     :init
-    (setq exec-path (append exec-path '("/home/ren/.juliaup/bin")))
-    (add-to-list 'load-path "/home/ren/.juliaup/bin/julia")
+    (setq exec-path (append exec-path '("~/.juliaup/bin")))
+    (add-to-list 'load-path "~/.juliaup/bin/julia")
     :config
     (julia-repl-set-terminal-backend 'vterm)) ;; use vterm (recommended)
 #+end_src
@@ -1239,7 +1239,7 @@ https://github.com/copilot-emacs/copilot.el
     :after julia-mode ;; defer loading after julia-mode has started
     :hook (julia-mode . copilot-mode)
     :custom
-    (copilot--base-dir "/home/ren/.emacs.d/straight/repos/copilot.el/")
+    (copilot--base-dir "~/.emacs.d/straight/repos/copilot.el/")
     (copilot-indent-offset-warning-disable t) ;; disables a warning that always arises in tex-mode
     :bind (:map copilot-completion-map
            ("C-<tab>" . copilot-accept-completion)))
