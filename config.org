@@ -1212,6 +1212,13 @@ https://github.com/alphapapa/prism.el
     :after julia-mode
     :hook (julia-mode . prism-whitespace-mode)) ;; auto-activate in julia-mode
 #+end_src
+** symbol-overlay
+Install symbol overlay
+#+begin_src emacs-lisp
+  (use-package symbol-overlay
+    :after julia-mode ;; defer loading until julia-mode is started
+    :hook (julia-mode . symbol-overlay-mode)) ;; auto-activate in julia-mode
+#+end_src
 * C++
 Packages and customizations for C++
 ** indentation
