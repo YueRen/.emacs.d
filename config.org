@@ -737,17 +737,14 @@ https://github.com/kickingvegas/casual/discussions/78
 * Dired
 Packages and customizations for dired
 ** basic setup
-*** Use human readable sizes
 #+begin_src emacs-lisp
-  (setq dired-listing-switches "-alFh")
-#+end_src
-*** Disable opening a new buffer per folder
-#+begin_src emacs-lisp
-  (setq dired-kill-when-opening-new-dired-buffer t)
-#+end_src
-*** Enable auto-refresh
-#+begin_src emacs-lisp
-  (setq global-auto-revert-non-file-buffers t)
+  (use-package dired
+    :ensure nil ; do not load, it is built-in and no such package exist
+    :custom
+    (dired-listing-switches "-alFh")             ; all files, list, add / to folders, human readable sizes
+    (dired-kill-when-opening-new-dired-buffer t) ; open folders in existing buffer instead of a new buffer
+    (global-auto-revert-non-file-buffers t)      ; auto-refresh
+    (dired-dwim-target t))                       ; if two dired buffers open, use other as default target
 #+end_src
 ** dired-subtree
 Load dired-subtree and bind dired-subtree-toggle to tab as per intstructions on
