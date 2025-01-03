@@ -764,7 +764,9 @@ Packages and customizations for dired
     (dired-listing-switches "-alFh")             ; all files, list, add / to folders, human readable sizes
     (dired-kill-when-opening-new-dired-buffer t) ; open folders in existing buffer instead of a new buffer
     (global-auto-revert-non-file-buffers t)      ; auto-refresh
-    (dired-dwim-target t))                       ; if two dired buffers open, use other as default target
+    (dired-dwim-target t)                        ; if two dired buffers open, use other as default target
+    (wdired-allow-to-change-permissions t)       ; allow wdired to change permissions
+    (wdired-allow-to-redirect-links t))          ; allow wdired to change symlinks
 #+end_src
 ** dired-subtree
 Load dired-subtree and bind dired-subtree-toggle to tab as per intstructions on
