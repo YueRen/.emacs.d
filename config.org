@@ -243,6 +243,26 @@ delete word without changing kill ring, alternative to kill-word
     (delete-region (point) (progn (forward-word arg) (point))))
   (global-set-key (kbd "M-d") 'my-delete-word)
 #+end_src
+** spellchecking
+Load appropriate personal dictionary based on ispell-local-dictionary.
+#+begin_src emacs-lisp
+(defun yr/setup-flyspell-personal-dictionary ()
+  "Set ispell-personal-dictionary based on ispell-local-dictionary. Does nothing if ispell-local-dictionary is not set."
+  (when (and (boundp 'ispell-local-dictionary) ispell-local-dictionary)
+    (let* ((dict ispell-local-dictionary)
+           (personal-dict (expand-file-name (format ".aspell.%s.pws" dict) (getenv "HOME")))
+           (lang-name (if (string-match "_" dict)
+                          (substring dict 0 (match-beginning 0)) ; Use the name up to the first `_` if it exists
+                        dict)))                                  ; Use the entire name otherwise
+      ;; Check if the personal dictionary file exists; if not, create it
+      (unless (file-exists-p personal-dict)
+        (with-temp-file personal-dict
+          (insert (format "personal_ws-1.1 %s 0\n" lang-name))))
+      ;; Set ispell-personal-dictionary
+      (setq ispell-local-pdict personal-dict))))
+
+(add-hook 'hack-local-variables-hook 'yr/setup-flyspell-personal-dictionary)
+#+end_src
 * Fundamentals (advanced)
 Customizations that affect everything and require packages
 ** visuals
