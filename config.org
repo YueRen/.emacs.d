@@ -785,7 +785,9 @@ https://www.youtube.com/watch?v=vm-FvNdYFcc
     :after dired
     :bind (:map dired-mode-map
                 ("<tab>" . dired-subtree-toggle)
-                ("<C-tab>" . dired-subtree-cycle)))
+                ("<C-tab>" . dired-subtree-cycle))
+    :custom
+    (dired-subtree-use-backgrounds . nil)) ;; no special background for dired-subtree
 #+end_src
 ** dired-open
 Load dired-open as per instructions on
