@@ -887,7 +887,12 @@ Load denote for note taking as per instructions on
 https://protesilaos.com/emacs/denote
 #+begin_src emacs-lisp
   (use-package denote
-    :after org
+    :bind
+    (("C-c n n" . denote-open-or-create)
+     ("C-c n r" . denote-rename-file)
+     ("C-c n l" . denote-link)
+     ("C-c n b" . denote-backlinks)
+     ("C-c n d" . denote-sort-dired))
     :hook
     (dired-mode . denote-dired-mode)    ;; file highlighting in dired
     :custom
