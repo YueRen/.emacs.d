@@ -627,6 +627,16 @@ https://github.com/oantolin/embark
     :hook
     (embark-collect-mode . consult-preview-at-point-mode))
 #+end_src
+** helpful
+Load helpful for better help packages
+#+begin_src emacs-lisp
+  (use-package helpful
+    :bind
+    (("C-h f" . helpful-function)
+     ("C-h x" . helpful-command)
+     ("C-h k" . helpful-key)
+     ("C-h v" . helpful-variable)))
+#+end_src
 ** powerthesaurus
 Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
 https://github.com/SavchenkoValeriy/emacs-powerthesaurus
