@@ -270,7 +270,7 @@ Load dracula-theme as per instructions on
 https://github.com/dracula/emacs
 #+begin_src emacs-lisp
   (use-package dracula-theme
-    :if (display-graphic-p)
+    :if (window-system)
     :init
     (load-theme 'dracula t))
 #+end_src
