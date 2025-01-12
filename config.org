@@ -346,8 +346,11 @@ https://github.com/emacs-dashboard/emacs-dashboard
     :custom
     (dashboard-center-content t) ;; center dashboard
     (dashboard-startupify-list '(dashboard-insert-items)) ;; only show items in dashboard
-    (dashboard-items '((bookmarks . 12)   ;; show 12 bookmarks
+    (dashboard-items '((bookmarks . 12)  ;; show 12 bookmarks
                        (recents  . 36))) ;; show 36 recent files
+    (dashboard-icon-type 'nerd-icons)    ;; show icons
+    (dashboard-set-heading-icons t)
+    (dashboard-set-file-icons t)
     :config
     (dashboard-setup-startup-hook))    ;; open dashboard on startup
 #+end_src
