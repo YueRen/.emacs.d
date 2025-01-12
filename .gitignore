@@ -5,5 +5,6 @@ elpa/
 history
 recentf
 straight/
+themes/dracula-pro-*-theme.el
 transient/
 var/
