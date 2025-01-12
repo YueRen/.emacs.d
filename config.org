@@ -303,6 +303,13 @@ https://github.com/dracula/emacs
     :init
     (load-theme 'dracula t))
 #+end_src
+*** dracula-pro-theme
+Load dracula-pro-theme as per instructions in readme
+#+begin_src emacs-lisp
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+  ;; (load-theme 'dracula-pro-alucard t) ; light theme
+  ;; (load-theme 'dracula-pro-pro t) ; dark theme
+#+end_src
 *** nerd-icons
 Load nerd-icons as per instructions on
 https://github.com/rainstormstudio/nerd-icons.el
