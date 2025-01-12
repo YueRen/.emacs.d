@@ -83,6 +83,10 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   (setq custom-file (locate-user-emacs-file "custom.el"))
   (load custom-file :no-error-if-file-is-missing)
 #+end_src
+*** smooth scrolling
+#+begin_src emacs-lisp
+  (pixel-scroll-precision-mode 1)
+#+end_src
 ** visuals
 *** empty startup screen
 #+begin_src emacs-lisp
