@@ -316,6 +316,17 @@ https://github.com/rainstormstudio/nerd-icons.el
 #+begin_src emacs-lisp
   (use-package nerd-icons)
 #+end_src
+*** pulsar
+Load pulsar as per instructions on
+https://github.com/protesilaos/pulsar
+#+begin_src emacs-lisp
+  (use-package pulsar
+    :custom
+    (pulsar-face 'pulsar-magenta)
+    (pulsar-pulse-region-functions pulsar-pulse-region-common-functions)
+    :init
+    (pulsar-global-mode 1))
+#+end_src
 ** modeline
 *** doom-modeline
 Load doom-modeline as per instructions on
