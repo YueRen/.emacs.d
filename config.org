@@ -137,7 +137,15 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   (defun yr/toggle-window-transparency ()
     "Toggle current frame's background transparency."
     (interactive)
-    (let* ((desired-alpha 85)) (set-frame-parameter nil 'alpha-background (if (not (frame-parameter nil 'alpha-background)) desired-alpha))))
+    (let* ((desired-alpha 85)
+           (current-alpha (frame-parameter nil 'alpha-background)))
+      (if (equal current-alpha desired-alpha)
+          (progn
+            (set-frame-parameter nil 'alpha-background nil) ;; Set current frame to opaque
+            (setq default-frame-alist (assq-delete-all 'alpha-background default-frame-alist))) ;; Update default to opaque
+        (progn
+          (set-frame-parameter nil 'alpha-background desired-alpha) ;; Set current frame to transparent
+          (add-to-list 'default-frame-alist '(alpha-background . 85)))))) ;; Update default to transparent
 #+end_src
 ** modeline
 *** display column number
