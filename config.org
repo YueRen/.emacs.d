@@ -1202,10 +1202,11 @@ Load pdf-tools to view pdfs as per instructions on
 https://github.com/vedang/pdf-tools
 #+begin_src emacs-lisp
   (use-package pdf-tools
+    :mode "\\.pdf\\'"
     :custom
     (pdf-view-resize-factor 1.05) ;; decrease resizing factor for better control
     :init
-    (pdf-tools-install))
+    (pdf-loader-install))
 #+end_src
 ** citar
 Load citar to handle global bibliography in all.bib (exported from zotero) as per instructions on
