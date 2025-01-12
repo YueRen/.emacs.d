@@ -130,9 +130,26 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 #+begin_src emacs-lisp
   (use-package elec-pair
     :custom
-    (electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit "be conservative in closing pairs, e.g., do not close pair when at beginning or in the middle of words")
+    (electric-pair-inhibit-predicate 'yr/electric-pair-conservative-inhibit)
     :hook
-    (prog-mode . electric-pair-mode))
+    (prog-mode . electric-pair-mode)
+    :init
+    (defun yr/electric-pair-conservative-inhibit (char)
+      (or
+       ;; I find it more often preferable not to pair when the
+       ;; same char is next.
+       (eq char (char-after))
+       ;; Don't pair up when we insert the second of "" or of ((.
+       (and (eq char (char-before))
+            (eq char (char-before (1- (point)))))
+       ;; I also find it often preferable not to pair next to a word.
+       (eq (char-syntax (following-char)) ?w)
+       ;; Don't pair at the end of a word, unless parens.
+       (and
+        (eq (char-syntax (char-before (1- (point)))) ?w)
+        (eq (preceding-char) char)
+        (not (eq (char-syntax (preceding-char)) 40) ;; 40 is open paren
+             )))))
 #+end_src
 *** enable transparency
 #+begin_src emacs-lisp
