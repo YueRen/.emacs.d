@@ -909,7 +909,7 @@ Load org-pdftools as per instructions on
 https://github.com/fuxialexander/org-pdftools
 #+begin_src emacs-lisp
     (use-package org-pdftools
-      :after (:any org pdf-tools)
+      :after (:all org pdf-tools)
       :hook (org-mode . org-pdftools-setup-link))
 #+end_src
 ** Denote
