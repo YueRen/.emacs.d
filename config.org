@@ -148,7 +148,7 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
        (and
         (eq (char-syntax (char-before (1- (point)))) ?w)
         (eq (preceding-char) char)
-        (not (eq (char-syntax (preceding-char)) 40) ;; 40 is open paren
+        (not (eq (char-syntax (preceding-char)) ?\()
              )))))
 #+end_src
 *** enable transparency
