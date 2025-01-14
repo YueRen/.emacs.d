@@ -1015,17 +1015,6 @@ https://github.com/magit/forge
     :after magit) ;; defer loading until magit is loaded
   (setq auth-sources '("~/.authinfo.gpg"))
 #+end_src
-* Shell
-Customizations for shell
-** Bash and bash aliases
-Use bash as default shell and use bash aliases.
-#+begin_src emacs-lisp
-  (setq explicit-shell-file-name "/bin/bash"
-        shell-file-name "bash"
-        explicit-bash.exe-args '("--noediting" "--login" "-ic")
-        shell-command-switch "-ic")
-  (setenv "SHELL" shell-file-name)
-#+end_src
 * Latex
 Packages and customizations for latex
 ** Basic setup
