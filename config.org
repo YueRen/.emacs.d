@@ -355,6 +355,19 @@ Load ace-window for switching between windows and frames
     :bind
     (("M-o" . ace-window)))
 #+end_src
+** editing
+*** visual-replace
+Load visual-replace as per instructions on
+https://github.com/szermatt/visual-replace
+#+begin_src emacs-lisp
+(use-package visual-replace
+  :bind (("M-%" . visual-replace)
+         :map isearch-mode-map
+         ("M-%" . visual-replace-from-isearch))
+  :config
+  (define-key visual-replace-mode-map (kbd "M-%")
+              visual-replace-secondary-mode-map))
+#+end_src
 ** startup
 *** dashboard
 Set up dashboard as per instructions on:
