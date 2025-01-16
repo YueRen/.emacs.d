@@ -959,7 +959,9 @@ https://protesilaos.com/emacs/denote
     :hook
     (dired-mode . denote-dired-mode)    ;; file highlighting in dired
     :custom
-    (denote-directory "~/notes/"))
+    (denote-directory "~/notes/")
+    :init
+    (denote-rename-buffer-mode 1))
 #+end_src
 * Presentations
 Packages and customizations for presentations
@@ -1023,7 +1025,7 @@ https://github.com/alphapapa/magit-todos
 ** forge (disabled)
 Load forge as per instructions on
 https://github.com/magit/forge
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (use-package forge
     :after magit) ;; defer loading until magit is loaded
   (setq auth-sources '("~/.authinfo.gpg"))
