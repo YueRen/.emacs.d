@@ -153,8 +153,8 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 #+end_src
 *** enable transparency
 #+begin_src emacs-lisp
-  (set-frame-parameter nil 'alpha-background 85)              ;; for current frame
-  (add-to-list 'default-frame-alist '(alpha-background . 85)) ;; for new frames henceforth
+  (set-frame-parameter nil 'alpha-background 90)              ;; for current frame
+  (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; for new frames henceforth
   (defun yr/toggle-window-transparency ()
     "Toggle current frame's background transparency."
     (interactive)
