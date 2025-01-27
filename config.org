@@ -1039,7 +1039,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
   (setq flyspell-tex-command-regexp
         "\\(\\(begin\\|end\\)[ \t]*{\\|\\(documentclass\\|cite[a-z*]*\\|ref\\|cref\\|Cref\\|eqref\\|input\\|label\\|textsc\\|texttt\\|usepackage\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
 #+end_src
-*** Ignore content of lstlisting
+*** Ignore content of tikzpicture and lstlisting
 #+name: tex-custom-spellcheck-blacklist-environments
 #+begin_src emacs-lisp :tangle no
   (put 'LaTeX-mode 'flyspell-mode-predicate 'auctex-mode-flyspell-skip-myenv)
