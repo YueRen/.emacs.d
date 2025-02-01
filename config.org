@@ -838,11 +838,6 @@ Customizations for org
 *** basic setup
 Load org when opening .org files.
 #+begin_src emacs-lisp
-  (defun my/org-copy-special ()
-    "Copy the current region using `org-copy-special` and deactivate the mark."
-    (interactive)
-    (org-copy-special)
-    (deactivate-mark))
   (use-package org
     :mode
     ("\\.org\\'" . org-mode) ;; defer loading and auto-activate when .org file is opened
@@ -879,7 +874,13 @@ Load org when opening .org files.
               (cdr (overlay-get ov 'display))
               :scale (+ 1.0 (* 0.3 text-scale-mode-amount))))))
 
-    (add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews))
+    (add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews)
+    :init
+    (defun my/org-copy-special ()
+      "Copy the current region using `org-copy-special` and deactivate the mark."
+      (interactive)
+      (org-copy-special)
+      (deactivate-mark)))
 #+end_src
 *** org-modern
 Load org-modern as per instructions on
