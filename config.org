@@ -781,6 +781,26 @@ https://github.com/kickingvegas/casual/discussions/78
            :map Info-mode-map
            ("?" . 'casual-info-tmenu)))
 #+end_src
+* Folding
+** outline-indent
+Load outline-indent as per instructions on
+https://github.com/jamescherti/outline-indent.el
+#+begin_src emacs-lisp
+  (use-package outline-indent
+    :bind
+    (("<backtab>" . yr/outline-indent-toggle-fold))
+    :custom
+    (outline-indent-ellipsis " ▼ ")
+    :init
+    (defun yr/outline-indent-toggle-fold ()
+      "Open or close a fold under point recursively."
+      (interactive)
+      (save-excursion
+        (outline-back-to-heading)
+        (if (not (outline-invisible-p (line-end-position)))
+            (outline-indent-close-fold)
+          (outline-indent-open-fold-rec)))))
+#+end_src
 * Dired
 Packages and customizations for dired
 ** basic setup
