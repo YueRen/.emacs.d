@@ -871,6 +871,8 @@ Load org when opening .org files.
   (use-package org
     :mode
     ("\\.org\\'" . org-mode) ;; defer loading and auto-activate when .org file is opened
+    :hook
+    (org-mode . indent-bars-mode) ;; enable indent bars
     :bind (:map org-mode-map
                 ("C-c C-x M-w" . my/org-copy-special))
     :custom
