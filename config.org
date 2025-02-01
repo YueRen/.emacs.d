@@ -1255,7 +1255,13 @@ Load julia-mode as per instructions on
 https://github.com/JuliaEditorSupport/julia-emacs
 #+begin_src emacs-lisp
   (use-package julia-mode
-    :mode "\\.jl\\'") ;; defer loading until and auto-activate when .jl files are opened
+    :mode "\\.jl\\'" ;; defer loading until and auto-activate when .jl files are opened
+    :hook
+    (julia-mode . outline-indent-minor-mode) ;; enable folding
+    (julia-mode . indent-bars-mode) ;; show indent bars
+    :init
+    (with-eval-after-load 'julia-mode ;; disable <backtack> shortcut, it is reserved for folding
+      (define-key julia-mode-map (kbd "<backtab>") nil)))
 #+end_src
 ** julia-repl
 Install julia-repl as per instructions on
