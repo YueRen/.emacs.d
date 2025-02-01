@@ -1026,9 +1026,10 @@ Load auctex, reftex, and flyspell when opening .tex files.
     :mode
     ("\\.tex\\'" . latex-mode)
     :hook
-    (LaTeX-mode . reftex-mode)      ;; always load reftex
-    (LaTeX-mode . turn-on-flyspell) ;; always load flyspell
-    (LaTeX-mode . TeX-fold-mode)    ;; always enable folding
+    (LaTeX-mode . reftex-mode)      ;; enable referencing
+    (LaTeX-mode . turn-on-flyspell) ;; enable spellchecking
+    (LaTeX-mode . outline-indent-minor-mode) ;; enable folding
+    (LaTeX-mode . indent-bars-mode) ;; enable indentation highlighting
     :init
     (setq TeX-parse-self t ;; auto-parse tex file on load
           TeX-auto-save t  ;; auto-parse tex file on save
