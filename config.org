@@ -801,6 +801,15 @@ https://github.com/jamescherti/outline-indent.el
             (outline-indent-close-fold)
           (outline-indent-open-fold-rec)))))
 #+end_src
+** indent-bars
+Load indent-bars as per instructions on
+https://github.com/jdtsmith/indent-bars
+#+begin_src emacs-lisp
+  (use-package indent-bars
+    :custom
+    (indent-bars-starting-column 0)
+    (indent-bars-spacing-override 2))
+#+end_src
 * Dired
 Packages and customizations for dired
 ** basic setup
