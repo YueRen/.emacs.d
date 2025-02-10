@@ -1005,7 +1005,9 @@ Load magit as per instructions on
 https://github.com/magit/magit
 #+begin_src emacs-lisp
   (use-package magit
-    :commands magit-status) ;; defer loading until magit-status is called
+    :commands magit-status ;; defer loading until magit-status is called
+    :custom
+    (magit-format-file-function #'magit-format-file-nerd-icons))
 #+end_src
 ** magit-todos
 Load magit-todos as per instructions on
