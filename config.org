@@ -886,6 +886,7 @@ Load org when opening .org files.
     (org-support-shift-select 'always)  ;; allow shift select
     (org-image-actual-width nil)        ;; allow custom sizesof images
     (org-ellipsis " ▼")
+    (org-agenda-files '("~/notes"))
     :config
     (setq org-preview-latex-default-process 'dvisvgm)
     (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
