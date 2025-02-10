@@ -807,8 +807,13 @@ https://github.com/jdtsmith/indent-bars
 #+begin_src emacs-lisp
   (use-package indent-bars
     :custom
-    (indent-bars-starting-column 0)
-    (indent-bars-spacing-override 2))
+    (indent-bars-color '(highlight :face-bg t :blend 0.2)) ; decreasing visibility of bars
+    :init
+    (defun yr/indent-bars-tex-setup () ; correcting bar spacing for tex files
+      (when (derived-mode-p 'tex-mode)
+        (setq-local indent-bars-spacing-override 2)
+        (indent-bars-reset)))
+    (add-hook 'indent-bars-mode-hook 'yr/indent-bars-tex-setup))
 #+end_src
 * Dired
 Packages and customizations for dired
