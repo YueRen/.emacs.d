@@ -158,7 +158,7 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   (defun yr/toggle-window-transparency ()
     "Toggle current frame's background transparency."
     (interactive)
-    (let* ((desired-alpha 85)
+    (let* ((desired-alpha 90)
            (current-alpha (frame-parameter nil 'alpha-background)))
       (if (equal current-alpha desired-alpha)
           (progn
