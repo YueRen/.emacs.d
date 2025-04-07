@@ -15,15 +15,15 @@ Load package, add prominent repositories, and update package data.
   (unless package-archive-contents (package-refresh-contents))
 #+end_src
 ** use-package
-Add imenu-support
+Add imenu-support (needs to be loaded before use-package)
 #+begin_src emacs-lisp
-  (setq use-package-enable-imenu-support t)
+  (setopt use-package-enable-imenu-support t)
 #+end_src
 Install use-package if necessary, load it, and set it to auto-install packages hereon.
 #+begin_src emacs-lisp
   (unless (package-installed-p 'use-package) (package-install 'use-package))
   (require 'use-package)
-  (setq use-package-always-ensure t)
+  (setopt use-package-always-ensure t)
 #+end_src
 * Fundamentals (basics)
 Customizations that affect everything and require no external packages
@@ -55,32 +55,32 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
   (use-package saveplace
     :custom
     (save-place-limit 1024 "increase number of saved file lines")
-    :init
+    :config
     (save-place-mode))
 #+end_src
 *** remember minibuffer history
 #+begin_src emacs-lisp
   (use-package savehist
-    :init
+    :config
     (savehist-mode))
 #+end_src
 *** confirm before exiting emacs
 #+begin_src emacs-lisp
-  (setq confirm-kill-emacs 'y-or-n-p)
+  (setopt confirm-kill-emacs 'y-or-n-p)
 #+end_src
 *** disable compiliation warnings
 #+begin_src emacs-lisp
-  (setq native-comp-async-report-warnings-errors 'silent)
+  (setopt native-comp-async-report-warnings-errors 'silent)
 #+end_src
 *** disable warning popups unless error
 #+begin_src emacs-lisp
-  (setq warning-minimum-level :error)
+  (setopt warning-minimum-level :error)
 #+end_src
 *** custom-file
 Change custom-file as per instructions on
 https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 #+begin_src emacs-lisp
-  (setq custom-file (locate-user-emacs-file "custom.el"))
+  (setopt custom-file (locate-user-emacs-file "custom.el"))
   (load custom-file :no-error-if-file-is-missing)
 #+end_src
 *** smooth scrolling
@@ -90,12 +90,12 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 ** visuals
 *** empty startup screen
 #+begin_src emacs-lisp
-  (setq inhibit-startup-screen t)
+  (setopt inhibit-startup-screen t)
 #+end_src
 *** empty scratch buffer and make it fundamental mode
 #+begin_src emacs-lisp
-  (setq initial-scratch-message nil
-        initial-major-mode 'fundamental-mode)
+  (setopt initial-scratch-message nil
+  				initial-major-mode 'fundamental-mode)
 #+end_src
 *** remove top menu bar
 #+begin_src emacs-lisp
@@ -125,6 +125,10 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   (use-package paren
     :hook
     (prog-mode . show-paren-mode))
+#+end_src
+*** set fill-column width to 100
+#+begin_src emacs-lisp
+  (setq-default fill-column 100)
 #+end_src
 *** enable pairing of parenthesis in programming modes
 #+begin_src emacs-lisp
@@ -178,7 +182,7 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   (use-package time
     :custom
     (display-time-24hr-format t "display time in 24h format")
-    :init
+    :config
     (display-time-mode))
 #+end_src
 ** frames and windows
@@ -199,8 +203,8 @@ Use C-x <arrow> to switch windows.
 *** prefer vertical splits over horizontal splits
 https://github.com/jamescherti/minimal-emacs.d
 #+begin_src emacs-lisp
-(setq split-width-threshold 170
-      split-height-threshold nil)
+  (setopt split-width-threshold 170
+  				split-height-threshold nil)
 #+end_src
 ** editing
 *** delete trailing whitespaces before each save
@@ -209,7 +213,7 @@ https://github.com/jamescherti/minimal-emacs.d
 #+end_src
 *** add final newline before each save
 #+begin_src emacs-lisp
-  (setq require-final-newline t)
+  (setopt require-final-newline t)
 #+end_src
 *** auto-refresh files
 #+begin_src emacs-lisp
@@ -222,12 +226,12 @@ default is 8, which is too much
 #+end_src
 *** use spaces instead of tabs
 #+begin_src emacs-lisp
-  (setq indent-tabs-mode nil)
+  (indent-tabs-mode 1)
 #+end_src
 *** overwrite selected text when typing over it
 #+begin_src emacs-lisp
   (use-package delsel
-    :init
+    :config
     (delete-selection-mode 1))
 #+end_src
 *** alternatives of built-in commands
@@ -270,6 +274,15 @@ delete word without changing kill ring, alternative to kill-word
     (interactive "p")
     (delete-region (point) (progn (forward-word arg) (point))))
   (global-set-key (kbd "M-d") 'my-delete-word)
+#+end_src
+** searching
+*** show number of hits in modeline
+#+begin_src emacs-lisp
+  (setopt isearch-lazy-count t)
+#+end_src
+*** do not cancel search when scrolling
+#+begin_src emacs-lisp
+  (setopt isearch-allow-scroll t)
 #+end_src
 ** spellchecking
 Load appropriate personal dictionary based on ispell-local-dictionary.
@@ -394,7 +407,7 @@ https://github.com/minad/vertico
   (use-package vertico
     ;; :custom
     ;; (vertico-count 6)  ;; Customize number of candidates shown
-    :init
+    :config
     (vertico-mode))
 #+end_src
 ** marginalia
@@ -565,15 +578,12 @@ https://github.com/minad/consult
     ;; The :init configuration is always executed (Not lazy)
     :init
 
-    ;; Optionally configure the register formatting. This improves the register
-    ;; preview for `consult-register', `consult-register-load',
-    ;; `consult-register-store' and the Emacs built-ins.
-    (setq register-preview-delay 0.5
-          register-preview-function #'consult-register-format)
-
-    ;; Optionally tweak the register preview window.
-    ;; This adds thin lines, sorting and hides the mode line of the window.
-    (advice-add #'register-preview :override #'consult-register-window)
+  	;; Tweak the register preview for `consult-register-load',
+  	;; `consult-register-store' and the built-in commands.  This improves the
+  	;; register formatting, adds thin separator lines, register sorting and hides
+  	;; the window mode line.
+  	(advice-add #'register-preview :override #'consult-register-window)
+  	(setq register-preview-delay 0.5)
 
     ;; Use Consult to select xref locations with preview
     (setq xref-show-xrefs-function #'consult-xref
@@ -603,23 +613,9 @@ https://github.com/minad/consult
     ;; Both < and C-+ work reasonably well.
     (setq consult-narrow-key "<") ;; "C-+"
 
-    ;; Optionally make narrowing help available in the minibuffer.
-    ;; You may want to use `embark-prefix-help-command' or which-key instead.
-    ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-
-    ;; By default `consult-project-function' uses `project-root' from project.el.
-    ;; Optionally configure a different project root function.
-    ;;;; 1. project.el (the default)
-    ;; (setq consult-project-function #'consult--default-project--function)
-    ;;;; 2. vc.el (vc-root-dir)
-    ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
-    ;;;; 3. locate-dominating-file
-    ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
-    ;;;; 4. projectile.el (projectile-project-root)
-    ;; (autoload 'projectile-project-root "projectile")
-    ;; (setq consult-project-function (lambda (_) (projectile-project-root)))
-    ;;;; 5. No project support
-    ;; (setq consult-project-function nil)
+  	;; Optionally make narrowing help available in the minibuffer.
+  	;; You may want to use `embark-prefix-help-command' or which-key instead.
+  	;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
   )
 #+end_src
 ** embark
@@ -1073,7 +1069,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
 *** Register lstlisting as verbatim environment to ignore it for syntax highlighting
 #+name: tex-custom-verbatim-environments
 #+begin_src emacs-lisp :tangle no
-  (eval-after-load 'latex '(add-to-list 'LaTeX-verbatim-environments "lstlisting"))
+  (eval-after-load 'latex '(add-to-list 'LaTeX-verbatim-environments "jllisting"))
 #+end_src
 ** Custom spellcheck blacklist
 *** ignore arguments of cref and input
