@@ -1276,9 +1276,6 @@ https://github.com/tpapp/julia-repl
   (use-package julia-repl
     :after julia-mode                    ;; defer loading until julia-mode is started
     :hook (julia-mode . julia-repl-mode) ;; auto-activate when julia-mode is started
-    :init
-    (setq exec-path (append exec-path '("~/.juliaup/bin")))
-    (add-to-list 'load-path "~/.juliaup/bin/julia")
     :config
     (julia-repl-set-terminal-backend 'vterm)) ;; use vterm (recommended)
 #+end_src
