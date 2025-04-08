@@ -1243,6 +1243,7 @@ https://github.com/emacs-citar/citar
 Customizing latex input method as per instructions on
 https://www.emacswiki.org/emacs/TeXInputMethod
 #+begin_src emacs-lisp
+  (setopt default-input-method "TeX")
   (with-temp-buffer
     (activate-input-method "TeX") ;; the input method has to be triggered for `quail-package-alist' to be non-nil
     (let ((quail-current-package (assoc "TeX" quail-package-alist)))
