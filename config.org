@@ -1290,8 +1290,7 @@ https://github.com/non-Jedi/eglot-jl
     (julia-mode . eglot-jl-init)
     :custom
     (eldoc-echo-area-use-multiline-p nil)
-    :init
-    (setq eglot-connect-timeout nil))
+    (eglot-connect-timeout nil))
 #+end_src
 ** vterm
 Install vterm as per instructions on
