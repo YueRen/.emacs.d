@@ -1349,5 +1349,11 @@ Installing GPTel as per instructions on
 https://github.com/karthink/gptel
 #+begin_src emacs-lisp
   (use-package gptel
-    :commands gptel) ;; defer loading after gptel is called
+    :commands gptel ;; defer loading after gptel is called
+  	:config
+  	(setq
+  	 gptel-model 'gemini-2.0-flash
+  	 gptel-backend (gptel-make-gemini "Gemini"
+  									 :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
+  									 :stream t)))
 #+end_src
