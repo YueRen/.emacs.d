@@ -311,7 +311,6 @@ Load dracula-theme as per instructions on
 https://github.com/dracula/emacs
 #+begin_src emacs-lisp
   (use-package dracula-theme
-    :if (window-system)
     :config
     (load-theme 'dracula t))
 #+end_src
@@ -394,6 +393,7 @@ https://github.com/emacs-dashboard/emacs-dashboard
     (dashboard-icon-type 'nerd-icons)    ;; show icons
     (dashboard-set-heading-icons t)
     (dashboard-set-file-icons t)
+  	(initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name))) ;; make dashboard the initial buffer
     :config
     (dashboard-setup-startup-hook))    ;; open dashboard on startup
 #+end_src
@@ -1357,3 +1357,5 @@ https://github.com/karthink/gptel
   									 :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
   									 :stream t)))
 #+end_src
+* Server
+No config necessary.  To use emacs in daemon mode, just start emacs with `emacsclient -c -a=""` instead of `emacs`, e.g., by mapping it to some hotkey.  The command is short for `emacsclient --create-frame --alternate-editor="emacs --daemon"`.
