@@ -863,7 +863,7 @@ https://github.com/rainstormstudio/nerd-icons-dired
 #+end_src
 * Notes
 Packages and customizations for note taking
-** Org
+** org
 Customizations for org
 *** basic setup
 Load org when opening .org files.
@@ -932,7 +932,7 @@ https://github.com/fuxialexander/org-pdftools
       :after (:any org pdf-tools)
       :hook (org-mode . org-pdftools-setup-link))
 #+end_src
-** Denote
+** denote
 Customizations for denote
 *** Basic setup
 Load denote for note taking as per instructions on
