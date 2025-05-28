@@ -1358,11 +1358,18 @@ https://github.com/karthink/gptel
   (use-package gptel
     :commands gptel ;; defer loading after gptel is called
   	:config
-  	(setq
+  	;; the following setq has to be in :config, putting it in :custom does not work
+  	(setopt
   	 gptel-model 'gemini-2.0-flash
   	 gptel-backend (gptel-make-gemini "Gemini"
   									 :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
-  									 :stream t)))
+  									 :stream t))
+  	:init
+  	;; the following has to be in :init, putting it in :config does not work
+  	(setopt gptel-directives '((default     . "You are a large language model living in Emacs and a helpful assistant. Provide comprehensive answers and use examples where appropriate.")
+  														 (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
+  														 (writing     . "You are a large language model and a writing assistant. Provide comprehensive answers and use examples where appropriate.")
+  														 (chat        . "You are a large language model and a conversation partner. Provide comprehensive answers and use examples where appropriate."))))
 #+end_src
 * Server
 No config necessary.  To use emacs in daemon mode, just start emacs with `emacsclient -c -a=""` instead of `emacs`, e.g., by mapping it to some hotkey.  The command is short for `emacsclient --create-frame --alternate-editor="emacs --daemon"`.
