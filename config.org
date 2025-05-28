@@ -952,6 +952,13 @@ https://protesilaos.com/emacs/denote
     :config
     (denote-rename-buffer-mode 1))
 #+end_src
+** denote-org
+Load denote-org for note taking as per instructions on
+https://protesilaos.com/emacs/denote-org
+#+begin_src emacs-lisp
+  (use-package denote-org
+  	:after denote)
+#+end_src
 * Presentations
 Packages and customizations for presentations
 ** org-present
