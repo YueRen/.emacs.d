@@ -206,10 +206,6 @@ https://github.com/jamescherti/minimal-emacs.d
   				split-height-threshold nil)
 #+end_src
 ** editing
-*** delete trailing whitespaces before each save
-#+begin_src emacs-lisp
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+end_src
 *** add final newline before each save
 #+begin_src emacs-lisp
   (setopt require-final-newline t)
@@ -386,6 +382,15 @@ https://github.com/szermatt/visual-replace
   :config
   (define-key visual-replace-mode-map (kbd "M-%")
               visual-replace-secondary-mode-map))
+#+end_src
+*** ws-butler
+Load ws-butler as per instructions on
+https://github.com/lewang/ws-butler
+#+begin_src emacs-lisp
+  (use-package ws-butler
+  	:hook
+  	(prog-mode . ws-butler-mode)
+  	(text-mode . ws-butler-mode))
 #+end_src
 ** startup
 *** dashboard
