@@ -274,6 +274,14 @@ delete word without changing kill ring, alternative to kill-word
     (delete-region (point) (progn (forward-word arg) (point))))
   (global-set-key (kbd "M-d") 'my-delete-word)
 #+end_src
+**** my-backward-kill-word (M-DEL)
+delete word without changing kill ring, alternative to backward-kill-word
+#+begin_src emacs-lisp
+  (defun my-backward-kill-word (arg)
+    (interactive "p")
+    (my-delete-word (- arg)))
+  (global-set-key (kbd "C-<backspace>") 'my-backward-kill-word)
+#+end_src
 ** searching
 *** show number of hits in modeline
 #+begin_src emacs-lisp
