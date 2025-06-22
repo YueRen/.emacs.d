@@ -156,12 +156,12 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 #+end_src
 *** enable transparency
 #+begin_src emacs-lisp
-  (set-frame-parameter nil 'alpha-background 90)              ;; for current frame
-  (add-to-list 'default-frame-alist '(alpha-background . 90)) ;; for new frames henceforth
+  (set-frame-parameter nil 'alpha-background 92)              ;; for current frame
+  (add-to-list 'default-frame-alist '(alpha-background . 92)) ;; for new frames henceforth
   (defun yr/toggle-window-transparency ()
     "Toggle current frame's background transparency."
     (interactive)
-    (let* ((desired-alpha 90)
+    (let* ((desired-alpha 92)
            (current-alpha (frame-parameter nil 'alpha-background)))
       (if (equal current-alpha desired-alpha)
           (progn
@@ -169,7 +169,7 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
             (setq default-frame-alist (assq-delete-all 'alpha-background default-frame-alist))) ;; Update default to opaque
         (progn
           (set-frame-parameter nil 'alpha-background desired-alpha) ;; Set current frame to transparent
-          (add-to-list 'default-frame-alist '(alpha-background . 85)))))) ;; Update default to transparent
+          (add-to-list 'default-frame-alist '(alpha-background . 92)))))) ;; Update default to transparent
 #+end_src
 ** modeline
 *** display column number
