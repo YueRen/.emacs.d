@@ -646,6 +646,9 @@ https://github.com/oantolin/embark
     (setq prefix-help-command #'embark-prefix-help-command)
 
     :config
+  	;; make C-h trigger embark powered search under partially entered commands
+  	(setq prefix-help-command #'embark-prefix-help-command)
+
     ;; Hide the mode line of the Embark live/completions buffers
     (add-to-list 'display-buffer-alist
                  '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
