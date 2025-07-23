@@ -368,7 +368,9 @@ Load ace-window for switching between windows and frames
 #+begin_src emacs-lisp
   (use-package ace-window
     :bind
-    (("M-o" . ace-window)))
+    (("M-o" . ace-window))
+  	:config
+  	(ace-window-posframe-mode))
 #+end_src
 ** editing
 *** visual-replace
