@@ -1400,4 +1400,29 @@ https://github.com/karthink/gptel
   														 (chat        . "You are a large language model and a conversation partner. Provide comprehensive answers and use examples where appropriate."))))
 #+end_src
 * Server
+** Initialisation
 No config necessary.  To use emacs in daemon mode, just start emacs with `emacsclient -c -a=""` instead of `emacs`, e.g., by mapping it to some hotkey.  The command is short for `emacsclient --create-frame --alternate-editor="emacs --daemon"`.
+** Shutdown
+Make sure that recent file list etc get updated when shutting down system.
+#+begin_src emacs-lisp
+  (use-package dbus
+  	:config
+    (defun my-inhibit-logout--on-query-end-session (&rest _)
+      "Handler for GNOME session QueryEndSession signal."
+  		;; (do-auto-save)
+  		;; (when (fboundp 'savehist-autosave) (savehist-autosave))
+  		;; (when (fboundp 'desktop-auto-save) (desktop-auto-save))
+      ;; (when (fboundp 'recentf-save-list) (recentf-save-list))
+  		(call-interactively #'do-auto-save)
+  		(call-interactively #'kill-emacs)
+  		)
+
+  	(dbus-register-signal
+     :session
+     "org.gnome.SessionManager"
+     "/org/gnome/SessionManager/Client1"
+     "org.gnome.SessionManager.ClientPrivate"
+     "QueryEndSession"
+     #'my-inhibit-logout--on-query-end-session)
+  	)
+#+end_src
