@@ -369,8 +369,9 @@ Load ace-window for switching between windows and frames
   (use-package ace-window
     :bind
     (("M-o" . ace-window))
-  	:config
-  	(ace-window-posframe-mode))
+    :config
+    (ace-window-posframe-mode) ;; enable posframes
+    (setq aw-posframe-position-handler #'posframe-poshandler-window-top-left-corner)) ;; position posframes top left as in default
 #+end_src
 ** editing
 *** visual-replace
