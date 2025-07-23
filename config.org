@@ -394,6 +394,16 @@ https://github.com/lewang/ws-butler
   	(prog-mode . ws-butler-mode)
   	(text-mode . ws-butler-mode))
 #+end_src
+*** move-text
+Load move-text as per instructions on
+https://github.com/emacsfodder/move-text
+Enables moving current line or region up and down via `M-<up>` and `M-<down>`,
+similar to moving bullet points in org-mode.
+#+begin_src emacs-lisp
+  (use-package move-text
+  	:config
+  	(move-text-default-bindings))
+#+end_src
 ** startup
 *** dashboard
 Set up dashboard as per instructions on:
