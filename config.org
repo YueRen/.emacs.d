@@ -1424,9 +1424,10 @@ https://github.com/karthink/gptel
 #+end_src
 * Server
 ** Initialisation
-No config necessary.  To use emacs in daemon mode, just start emacs with `emacsclient -c -a=""` instead of `emacs`, e.g., by mapping it to some hotkey.
+No config necessary.  To use emacs in daemon mode, just start emacs with `emacsclient -c -a="" --eval "(select-frame-set-input-focus (selected-frame))"` instead of `emacs`, e.g., by mapping it to some hotkey.
 - `-c` is short for `--create-frame` and will create a new frame
 - `-a=""` is short for --alternate-editor="emacs --daemon"` and will start emacs daemon if it is not already running
+- `--eval "(select-frame-set-input-focus (selected-frame))"` focuses on the newly created frame
 ** Shutdown
 Make sure that recent file list etc get updated when shutting down system.
 #+begin_src emacs-lisp
