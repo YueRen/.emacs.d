@@ -643,6 +643,15 @@ https://github.com/minad/consult
   	;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
   )
 #+end_src
+*** consult-flyspell
+Load consult flyspell as per instructions on
+https://gitlab.com/OlMon/consult-flyspell
+#+begin_src emacs-lisp
+  (use-package consult-flyspell
+    :command consult-flyspell
+    :custom
+  	(consult-flyspell-always-check-buffer t)) ;; automatically run flyspell-buffer
+#+end_src
 ** embark
 *** Basic setup
 Load embark as per instructions on
