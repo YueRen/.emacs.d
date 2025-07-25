@@ -277,6 +277,7 @@ delete word without changing kill ring, alternative to backward-kill-word
     (interactive "p")
     (my-delete-word (- arg)))
   (global-set-key (kbd "C-<backspace>") 'my-backward-kill-word)
+  (global-set-key (kbd "M-DEL") 'my-backward-kill-word)
 #+end_src
 ** searching
 *** show number of hits in modeline
