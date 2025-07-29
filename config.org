@@ -926,7 +926,7 @@ Load org when opening .org files.
     :hook
     (org-mode . indent-bars-mode) ;; enable indent bars
     :bind
-  	(("C-c l" . org-store-link) ;; officially suggested keybindings
+  	(("C-c l" . org-store-link) ;; recommended keybindings
   	 ("C-c c" . org-capture)
   	 :map org-mode-map
      ("C-c C-x M-w" . my/org-copy-special))
@@ -998,17 +998,17 @@ https://protesilaos.com/emacs/denote
 #+begin_src emacs-lisp
   (use-package denote
     :bind
-    (("C-c n n" . denote-open-or-create)
+    (("C-c n n" . denote-open-or-create) ;; recommended keybindings
      ("C-c n r" . denote-rename-file)
      ("C-c n l" . denote-link)
      ("C-c n b" . denote-backlinks)
      ("C-c n d" . denote-sort-dired))
     :hook
-    (dired-mode . denote-dired-mode)    ;; file highlighting in dired
+    (dired-mode . denote-dired-mode) ;; better file highlighting for denote notes in dired
     :custom
     (denote-directory "~/notes/")
     :config
-    (denote-rename-buffer-mode 1))
+    (denote-rename-buffer-mode)) ;; better buffer names for denote notes
 #+end_src
 ** denote-org
 Load denote-org for note taking as per instructions on
@@ -1079,12 +1079,12 @@ https://github.com/alphapapa/magit-todos
     :config
   	(magit-todos-mode 1))
 #+end_src
-** forge (disabled)
+** forge
 Load forge as per instructions on
 https://github.com/magit/forge
 #+begin_src emacs-lisp
   (use-package forge
-    :after magit) ;; defer loading until magit is loaded
+    :after magit) ;; defer loading after magit
   (setq auth-sources '("~/.authinfo.gpg"))
 #+end_src
 * Latex
