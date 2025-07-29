@@ -194,10 +194,10 @@ Use C-x <arrow> to switch windows.
 #+begin_src emacs-lisp
   (use-package windmove
     :bind
-    ( ("C-x <up>"    . windmove-up)
-      ("C-x <down>"  . windmove-down)
-      ("C-x <left>"  . windmove-left)
-      ("C-x <right>" . windmove-right)))
+    (("C-x <up>"    . windmove-up)
+     ("C-x <down>"  . windmove-down)
+     ("C-x <left>"  . windmove-left)
+     ("C-x <right>" . windmove-right)))
 #+end_src
 *** prefer vertical splits over horizontal splits
 https://github.com/jamescherti/minimal-emacs.d
@@ -369,7 +369,7 @@ Load ace-window for switching between windows and frames
 #+begin_src emacs-lisp
   (use-package ace-window
     :bind
-    (("M-o" . ace-window))
+    ("M-o" . ace-window)
     :config
     (ace-window-posframe-mode) ;; enable posframes
     (setq aw-posframe-position-handler #'posframe-poshandler-window-top-left-corner)) ;; position posframes top left as in default
@@ -830,7 +830,7 @@ https://github.com/jamescherti/outline-indent.el
 #+begin_src emacs-lisp
   (use-package outline-indent
     :bind
-    (("<backtab>" . yr/outline-indent-toggle-fold))
+    ("<backtab>" . yr/outline-indent-toggle-fold)
     :custom
     (outline-indent-ellipsis " ▼ ")
     :init
