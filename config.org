@@ -44,7 +44,7 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
     :custom
     (recentf-max-saved-items 1024 "increase number of saved files")
     :config
-    (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME"))) ;; exclude file from elpa
+    (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME"))) ;; exclude files from elpa
     (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory)) ;; exclude files from no-littering
     (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
     (recentf-mode))
