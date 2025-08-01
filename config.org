@@ -1010,8 +1010,8 @@ https://protesilaos.com/emacs/denote
     :config
     (denote-rename-buffer-mode)) ;; better buffer names for denote notes
 #+end_src
-** denote-org
-Load denote-org for note taking as per instructions on
+*** denote-org
+Load denote-org for features such as denote-links as per instructions on
 https://protesilaos.com/emacs/denote-org
 #+begin_src emacs-lisp
   (use-package denote-org
