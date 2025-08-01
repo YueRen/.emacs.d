@@ -649,7 +649,7 @@ Load consult flyspell as per instructions on
 https://gitlab.com/OlMon/consult-flyspell
 #+begin_src emacs-lisp
   (use-package consult-flyspell
-    :command consult-flyspell
+    :commands consult-flyspell
     :custom
   	(consult-flyspell-always-check-buffer t)) ;; automatically run flyspell-buffer
 #+end_src
