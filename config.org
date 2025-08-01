@@ -760,7 +760,7 @@ Load wgrep to make grep buffers editable (`C-c C-p` to make editable, `C-x C-q` 
 as per instructions on https://github.com/mhayashi1120/Emacs-wgrep
 #+begin_src emacs-lisp
   (use-package wgrep
-  	:config
+  	:custom
   	(wgrep-auto-save-buffer t)) ;; automatically save on exit
 #+end_src
 * Posframes
