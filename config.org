@@ -1017,6 +1017,13 @@ https://protesilaos.com/emacs/denote-org
   (use-package denote-org
   	:after denote)
 #+end_src
+*** denote-explore
+Load denote-explore to explore notes as per instructions on
+https://github.com/pprevos/denote-explore
+#+begin_src emacs-lisp
+  (use-package denote-explore
+  	:after denote)
+#+end_src
 * Presentations
 Packages and customizations for presentations
 ** org-present
