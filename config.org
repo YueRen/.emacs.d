@@ -756,7 +756,7 @@ as per instructions on https://github.com/lorniu/go-translate
       :render  (gt-buffer-render))))
 #+end_src
 ** wgrep
-Load wgrep to make grep buffers editable (`C-c C-p` to make editable, `C-x C-q` to save and exit, `C-c C-k` to discard changes and exit)
+Load wgrep to make grep buffers editable (`C-c C-p` to make editable, `C-c C-c` to save and exit, `C-c C-k` to discard changes and exit)
 as per instructions on https://github.com/mhayashi1120/Emacs-wgrep
 #+begin_src emacs-lisp
   (use-package wgrep
