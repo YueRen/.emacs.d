@@ -44,8 +44,8 @@ Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/
     :custom
     (recentf-max-saved-items 1024 "increase number of saved files")
     :config
-    (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME"))) ;; exclude files from elpa
-    (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory)) ;; exclude files from no-littering
+    (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME")))    ; exclude files from elpa
+    (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory)) ; exclude files from no-littering
     (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
     (recentf-mode))
 #+end_src
@@ -139,15 +139,14 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
     :init
     (defun yr/electric-pair-conservative-inhibit (char)
       (or
-       ;; I find it more often preferable not to pair when the
-       ;; same char is next.
+       ;; don't pair when same char is next
        (eq char (char-after))
-       ;; Don't pair up when we insert the second of "" or of ((.
+       ;; don't pair when we insert the second of "" or of ((
        (and (eq char (char-before))
             (eq char (char-before (1- (point)))))
-       ;; I also find it often preferable not to pair next to a word.
+       ;; don't pair at the start of a word
        (eq (char-syntax (following-char)) ?w)
-       ;; Don't pair at the end of a word, unless parens.
+       ;; don't pair at the end of a word unless parens
        (and
         (eq (char-syntax (char-before (1- (point)))) ?w)
         (eq (preceding-char) char)
@@ -156,8 +155,8 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 #+end_src
 *** enable transparency
 #+begin_src emacs-lisp
-  (set-frame-parameter nil 'alpha-background 92)              ;; for current frame
-  (add-to-list 'default-frame-alist '(alpha-background . 92)) ;; for new frames henceforth
+  (set-frame-parameter nil 'alpha-background 92)              ; make current frame transparent
+  (add-to-list 'default-frame-alist '(alpha-background . 92)) ; make new frames transparent
   (defun yr/toggle-window-transparency ()
     "Toggle current frame's background transparency."
     (interactive)
@@ -165,11 +164,11 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
            (current-alpha (frame-parameter nil 'alpha-background)))
       (if (equal current-alpha desired-alpha)
           (progn
-            (set-frame-parameter nil 'alpha-background nil) ;; Set current frame to opaque
-            (setq default-frame-alist (assq-delete-all 'alpha-background default-frame-alist))) ;; Update default to opaque
+            (set-frame-parameter nil 'alpha-background nil)
+            (setq default-frame-alist (assq-delete-all 'alpha-background default-frame-alist)))
         (progn
-          (set-frame-parameter nil 'alpha-background desired-alpha) ;; Set current frame to transparent
-          (add-to-list 'default-frame-alist '(alpha-background . 92)))))) ;; Update default to transparent
+          (set-frame-parameter nil 'alpha-background desired-alpha)
+          (add-to-list 'default-frame-alist '(alpha-background . 92))))))
 #+end_src
 ** modeline
 *** display column number
@@ -324,7 +323,7 @@ Load dracula-pro-theme as per instructions in readme
 #+begin_src emacs-lisp
   (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
   ;; (load-theme 'dracula-pro-alucard t) ; light theme
-  ;; (load-theme 'dracula-pro-pro t) ; dark theme
+  ;; (load-theme 'dracula-pro-pro t)     ; dark theme
 #+end_src
 *** nerd-icons
 Load nerd-icons as per instructions on
@@ -371,8 +370,8 @@ Load ace-window for switching between windows and frames
     :bind
     ("M-o" . ace-window)
     :config
-    (ace-window-posframe-mode) ;; enable posframes
-    (setq aw-posframe-position-handler #'posframe-poshandler-window-top-left-corner)) ;; position posframes top left as in default
+    (ace-window-posframe-mode)                                                        ; enable posframes
+    (setq aw-posframe-position-handler #'posframe-poshandler-window-top-left-corner)) ; position posframes top left as default
 #+end_src
 ** editing
 *** visual-replace
@@ -413,16 +412,18 @@ https://github.com/emacs-dashboard/emacs-dashboard
 #+begin_src emacs-lisp
   (use-package dashboard
     :custom
-    (dashboard-center-content t) ;; center dashboard
-    (dashboard-startupify-list '(dashboard-insert-items)) ;; only show items in dashboard
-    (dashboard-items '((bookmarks . 12)  ;; show 12 bookmarks
-                       (recents  . 36))) ;; show 36 recent files
-    (dashboard-icon-type 'nerd-icons)    ;; show icons
-    (dashboard-set-heading-icons t)
-    (dashboard-set-file-icons t)
-  	(initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name))) ;; make dashboard the initial buffer
+    (dashboard-center-content t)         ; center dashboard
+    (dashboard-startupify-list '(dashboard-insert-items)) ; only show items in dashboard
+    (dashboard-items '((bookmarks . 12)  ; show 12 bookmarks
+                       (recents  . 36))) ; show 36 recent files
+    (dashboard-icon-type 'nerd-icons)    ; use nerd-icons
+    (dashboard-set-heading-icons t)      ; use heading icons
+    (dashboard-set-file-icons t)         ; use file icons
+  	(initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name))) ; make dashboard the initial buffer
+    :init
+    (add-hook 'window-setup-hook (lambda () (dashboard-refresh-buffer)))
     :config
-    (dashboard-setup-startup-hook))    ;; open dashboard on startup
+    (dashboard-setup-startup-hook))      ; open dashboard on startup
 #+end_src
 * Completion framework
 Customizations that affect completions
@@ -432,7 +433,7 @@ https://github.com/minad/vertico
 #+begin_src emacs-lisp
   (use-package vertico
     ;; :custom
-    ;; (vertico-count 6)  ;; Customize number of candidates shown
+    ;; (vertico-count 6)  ; number of candidates shown
     :config
     (vertico-mode))
 #+end_src
@@ -467,7 +468,7 @@ https://github.com/justbur/emacs-which-key
 #+begin_src emacs-lisp
   (use-package which-key
     :custom
-    (which-key-separator ": ") ;; change seperator to fix vertical spacing issues
+    (which-key-separator ": ") ; change seperator to fix vertical spacing issues
     :config
     (which-key-mode))
 #+end_src
@@ -477,8 +478,8 @@ https://github.com/minad/corfu
 #+begin_src emacs-lisp
   (use-package corfu
     :custom
-    (corfu-auto t)  ;; Enable showing autocompletion automatically
-    (corfu-cycle t) ;; Enable cycling for `corfu-next/previous'
+    (corfu-auto t)  ; Enable showing autocompletion automatically
+    (corfu-cycle t) ; Enable cycling for `corfu-next/previous'
     :config
     (global-corfu-mode))
 #+end_src
@@ -553,30 +554,30 @@ https://github.com/minad/consult
            ("C-c i" . consult-info)
            ([remap Info-search] . consult-info)
            ;; C-x bindings in `ctl-x-map'
-           ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-           ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-           ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-           ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-           ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-           ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+           ("C-x M-:" . consult-complex-command)     ; orig. repeat-complex-command
+           ("C-x b" . consult-buffer)                ; orig. switch-to-buffer
+           ("C-x 4 b" . consult-buffer-other-window) ; orig. switch-to-buffer-other-window
+           ("C-x 5 b" . consult-buffer-other-frame)  ; orig. switch-to-buffer-other-frame
+           ("C-x r b" . consult-bookmark)            ; orig. bookmark-jump
+           ("C-x p b" . consult-project-buffer)      ; orig. project-switch-to-buffer
            ;; Custom M-# bindings for fast register access
            ("M-#" . consult-register-load)
-           ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+           ("M-'" . consult-register-store)          ; orig. abbrev-prefix-mark (unrelated)
            ("C-M-#" . consult-register)
            ;; Other custom bindings
-           ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+           ("M-y" . consult-yank-pop)                ; orig. yank-pop
            ;; M-g bindings in `goto-map'
            ("M-g e" . consult-compile-error)
-           ("M-g f" . consult-flycheck)              ;; Alternative: consult-flymake
-           ("M-g g" . consult-goto-line)             ;; orig. goto-line
-           ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-           ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+           ("M-g f" . consult-flycheck)              ; Alternative: consult-flymake
+           ("M-g g" . consult-goto-line)             ; orig. goto-line
+           ("M-g M-g" . consult-goto-line)           ; orig. goto-line
+           ("M-g o" . consult-outline)               ; Alternative: consult-org-heading
            ("M-g m" . consult-mark)
            ("M-g k" . consult-global-mark)
            ("M-g i" . consult-imenu)
            ("M-g I" . consult-imenu-multi)
            ;; M-s bindings in `search-map'
-           ("M-s d" . consult-fd)                    ;; Alternative: consult-find
+           ("M-s d" . consult-fd)                    ; Alternative: consult-find
            ("M-s D" . consult-locate)
            ("M-s g" . consult-grep)
            ("M-s G" . consult-git-grep)
@@ -588,14 +589,14 @@ https://github.com/minad/consult
            ;; Isearch integration
            ("M-s e" . consult-isearch-history)
            :map isearch-mode-map
-           ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-           ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-           ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-           ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+           ("M-e" . consult-isearch-history)         ; orig. isearch-edit-string
+           ("M-s e" . consult-isearch-history)       ; orig. isearch-edit-string
+           ("M-s l" . consult-line)                  ; needed by consult-line to detect isearch
+           ("M-s L" . consult-line-multi)            ; needed by consult-line to detect isearch
            ;; Minibuffer history
            :map minibuffer-local-map
-           ("M-s" . consult-history)                 ;; orig. next-matching-history-element
-           ("M-r" . consult-history))                ;; orig. previous-matching-history-element
+           ("M-s" . consult-history)                 ; orig. next-matching-history-element
+           ("M-r" . consult-history))                ; orig. previous-matching-history-element
 
     ;; Enable automatic preview at point in the *Completions* buffer. This is
     ;; relevant when you use the default completion UI.
@@ -637,7 +638,7 @@ https://github.com/minad/consult
 
     ;; Optionally configure the narrowing key.
     ;; Both < and C-+ work reasonably well.
-    (setq consult-narrow-key "<") ;; "C-+"
+    (setq consult-narrow-key "<") ; "C-+"
 
   	;; Optionally make narrowing help available in the minibuffer.
   	;; You may want to use `embark-prefix-help-command' or which-key instead.
@@ -651,7 +652,7 @@ https://gitlab.com/OlMon/consult-flyspell
   (use-package consult-flyspell
     :commands consult-flyspell
     :custom
-  	(consult-flyspell-always-check-buffer t)) ;; automatically run flyspell-buffer
+  	(consult-flyspell-always-check-buffer t)) ; automatically run flyspell-buffer
 #+end_src
 ** embark
 *** Basic setup
@@ -660,9 +661,9 @@ https://github.com/oantolin/embark
 #+begin_src emacs-lisp
   (use-package embark
     :bind
-    (("C-." . embark-act)         ;; pick some comfortable binding
-     ("C-;" . embark-dwim)        ;; good alternative: M-.
-     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+    (("C-." . embark-act)         ; pick some comfortable binding
+     ("C-;" . embark-dwim)        ; good alternative: M-.
+     ("C-h B" . embark-bindings)) ; alternative for `describe-bindings'
 
     :init
     ;; Optionally replace the key help with a completing-read interface
@@ -739,14 +740,14 @@ Load powerthesaurus for looking up synonyms, antonyms and related terms as per i
 https://github.com/SavchenkoValeriy/emacs-powerthesaurus
 #+begin_src emacs-lisp
   (use-package powerthesaurus
-    :commands powerthesaurus-transient) ;; defer loading after powerthesaurus-transient is called
+    :commands powerthesaurus-transient) ; defer loading after powerthesaurus-transient is called
 #+end_src
 ** go-translate
 Load go-translate to translate between German and English (C-n / C-p to switch direction),
 as per instructions on https://github.com/lorniu/go-translate
 #+begin_src emacs-lisp
   (use-package go-translate
-    :commands gt-do-translate  ;; defer loading until gts-do-translate is called
+    :commands gt-do-translate  ; defer loading until gts-do-translate is called
     :custom
     (gt-langs '(de en))
     (gt-default-translator
@@ -761,7 +762,7 @@ as per instructions on https://github.com/mhayashi1120/Emacs-wgrep
 #+begin_src emacs-lisp
   (use-package wgrep
   	:custom
-  	(wgrep-auto-save-buffer t)) ;; automatically save on exit
+  	(wgrep-auto-save-buffer t)) ; automatically save on exit
 #+end_src
 * Posframes
 Packages and customizations for posframes
@@ -849,9 +850,9 @@ https://github.com/jdtsmith/indent-bars
 #+begin_src emacs-lisp
   (use-package indent-bars
     :custom
-    (indent-bars-color '(highlight :face-bg t :blend 0.2)) ; decreasing visibility of bars
+    (indent-bars-color '(highlight :face-bg t :blend 0.2)) ; decrease visibility of bars
     :init
-    (defun yr/indent-bars-tex-setup () ; correcting bar spacing for tex files
+    (defun yr/indent-bars-tex-setup () ; correct bar spacing for tex files
       (when (derived-mode-p 'tex-mode)
         (setq-local indent-bars-spacing-override 2)
         (indent-bars-reset)))
@@ -862,7 +863,7 @@ Packages and customizations for dired
 ** basic setup
 #+begin_src emacs-lisp
   (use-package dired
-    :ensure nil ; do not load, it is built-in and no such package exist
+    :ensure nil ; do not load, it is built-in
   	:bind
   	(:map dired-mode-map
   				("C-c C-p" . dired-toggle-read-only))  ; add keybinding for uniformity with wgrep
@@ -887,7 +888,7 @@ https://www.youtube.com/watch?v=vm-FvNdYFcc
                 ("<S-tab>" . dired-subtree-toggle)
                 ("<C-tab>" . dired-subtree-cycle))
     :custom
-    (dired-subtree-use-backgrounds . nil)) ;; no special background for dired-subtree
+    (dired-subtree-use-backgrounds . nil)) ; no special background for dired-subtree
 #+end_src
 ** dired-open
 Load dired-open as per instructions on
@@ -922,21 +923,21 @@ Load org when opening .org files.
 #+begin_src emacs-lisp
   (use-package org
     :mode
-    ("\\.org\\'" . org-mode) ;; defer loading and auto-activate when .org file is opened
+    ("\\.org\\'" . org-mode) ; defer loading and auto-activate when .org file is opened
     :hook
-    (org-mode . indent-bars-mode) ;; enable indent bars
+    (org-mode . indent-bars-mode) ; enable indent bars
     :bind
-  	(("C-c l" . org-store-link) ;; recommended keybindings
+  	(("C-c l" . org-store-link) ; recommended keybindings
   	 ("C-c c" . org-capture)
   	 :map org-mode-map
      ("C-c C-x M-w" . my/org-copy-special))
     :custom
-    (org-startup-indented t)            ;; on startup indent lines
-    (org-startup-truncated nil)         ;; on startup disable truncate
-    (org-support-shift-select 'always)  ;; allow shift select
-    (org-image-actual-width nil)        ;; allow custom sizesof images
-    (org-ellipsis " ▼")                 ;; use this symbol instead of the default "..."
-    (org-default-notes-file "~/notes/20250729T143140--captures__meta.org") ;; file for org-captures
+    (org-startup-indented t)            ; on startup indent lines
+    (org-startup-truncated nil)         ; on startup disable truncate
+    (org-support-shift-select 'always)  ; allow shift select
+    (org-image-actual-width nil)        ; allow custom sizesof images
+    (org-ellipsis " ▼")                 ; use ▼ instead of default "..."
+    (org-default-notes-file "~/notes/20250729T143140--captures__meta.org") ; file for org-captures
     (org-capture-templates '(("n" "Note" entry (file+headline org-default-notes-file "Notes")
   														"* %U %?")))
     (org-capture-bookmark nil)
@@ -978,9 +979,9 @@ Load org-modern as per instructions on
 https://github.com/minad/org-modern
 #+begin_src emacs-lisp
   (use-package org-modern
-    :after org                    ;; defer loading after org
+    :after org                    ; defer loading after org
     :hook
-    (org-mode . org-modern-mode)) ;; auto-activate in org-mode
+    (org-mode . org-modern-mode)) ; auto-activate in org-mode
 #+end_src
 *** org-pdftools
 Load org-pdftools as per instructions on
@@ -998,17 +999,17 @@ https://protesilaos.com/emacs/denote
 #+begin_src emacs-lisp
   (use-package denote
     :bind
-    (("C-c n n" . denote-open-or-create) ;; recommended keybindings
+    (("C-c n n" . denote-open-or-create) ; recommended keybindings
      ("C-c n r" . denote-rename-file)
      ("C-c n l" . denote-link)
      ("C-c n b" . denote-backlinks)
      ("C-c n d" . denote-sort-dired))
     :hook
-    (dired-mode . denote-dired-mode) ;; better file highlighting for denote notes in dired
+    (dired-mode . denote-dired-mode) ; better file highlighting for denote notes in dired
     :custom
     (denote-directory "~/notes/")
     :config
-    (denote-rename-buffer-mode)) ;; better buffer names for denote notes
+    (denote-rename-buffer-mode)) ; better buffer names for denote notes
 #+end_src
 *** denote-org
 Load denote-org for features such as denote-links as per instructions on
@@ -1033,10 +1034,10 @@ https://systemcrafters.net/emacs-tips/presentations-with-org-present/
   (use-package org-present
     :after org
     :config
-    (define-key org-present-mode-keymap [right] nil) ;; undo binding right key
-    (define-key org-present-mode-keymap [left] nil)  ;; undo binding left key
-    (define-key org-present-mode-keymap (kbd "<next>") 'org-present-next)   ;; bind next slide to pageup
-    (define-key org-present-mode-keymap (kbd "<prior>") 'org-present-prev)) ;; bind previous slide to pagedown
+    (define-key org-present-mode-keymap [right] nil) ; undo binding right key
+    (define-key org-present-mode-keymap [left] nil)  ; undo binding left key
+    (define-key org-present-mode-keymap (kbd "<next>") 'org-present-next)   ; bind next slide to pageup
+    (define-key org-present-mode-keymap (kbd "<prior>") 'org-present-prev)) ; bind previous slide to pagedown
 #+end_src
 ** visual-fill-column
 Load visual-fill-column to pad and center text (in org-present) as per instructions on
@@ -1073,7 +1074,7 @@ Load magit as per instructions on
 https://github.com/magit/magit
 #+begin_src emacs-lisp
   (use-package magit
-    :commands magit-status ;; defer loading until magit-status is called
+    :commands magit-status ; defer loading until magit-status is called
     :custom
     (magit-format-file-function #'magit-format-file-nerd-icons))
 #+end_src
@@ -1091,7 +1092,7 @@ Load forge as per instructions on
 https://github.com/magit/forge
 #+begin_src emacs-lisp
   (use-package forge
-    :after magit) ;; defer loading after magit
+    :after magit) ; defer loading after magit
   (setq auth-sources '("~/.authinfo.gpg"))
 #+end_src
 * Latex
@@ -1104,16 +1105,16 @@ Load auctex, reftex, and flyspell when opening .tex files.
     :mode
     ("\\.tex\\'" . latex-mode)
     :hook
-    (LaTeX-mode . reftex-mode)      ;; enable referencing
-    (LaTeX-mode . turn-on-flyspell) ;; enable spellchecking
-    (LaTeX-mode . outline-indent-minor-mode) ;; enable folding
-    (LaTeX-mode . indent-bars-mode) ;; enable indentation highlighting
+    (LaTeX-mode . reftex-mode)               ; enable referencing
+    (LaTeX-mode . turn-on-flyspell)          ; enable spellchecking
+    (LaTeX-mode . outline-indent-minor-mode) ; enable folding
+    (LaTeX-mode . indent-bars-mode)          ; enable indentation highlighting
     :init
-    (setq TeX-parse-self t ;; auto-parse tex file on load
-          TeX-auto-save t  ;; auto-parse tex file on save
-          TeX-master nil)  ;; always query for master file
+    (setq TeX-parse-self t ; auto-parse tex file on load
+          TeX-auto-save t  ; auto-parse tex file on save
+          TeX-master nil)  ; always query for master file
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-    (add-hook 'TeX-update-style-hook 'hl-todo-mode) ;; fix for hl-todo-mode
+    (add-hook 'TeX-update-style-hook 'hl-todo-mode) ; fix for hl-todo-mode
     :config
     (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
           TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
@@ -1298,7 +1299,7 @@ https://github.com/vedang/pdf-tools
   (use-package pdf-tools
     :mode "\\.pdf\\'"
     :custom
-    (pdf-view-resize-factor 1.05) ;; decrease resizing factor for better control
+    (pdf-view-resize-factor 1.05) ; decrease resizing factor for better control
     :init
     (pdf-loader-install))
 #+end_src
@@ -1317,7 +1318,7 @@ https://www.emacswiki.org/emacs/TeXInputMethod
 #+begin_src emacs-lisp
   (setopt default-input-method "TeX")
   (with-temp-buffer
-    (activate-input-method "TeX") ;; the input method has to be triggered for `quail-package-alist' to be non-nil
+    (activate-input-method "TeX") ; the input method has to be triggered for `quail-package-alist' to be non-nil
     (let ((quail-current-package (assoc "TeX" quail-package-alist)))
       (quail-define-rules ((append . t))
                           ("^\\alpha" ?ᵅ)
@@ -1334,12 +1335,12 @@ Load julia-mode as per instructions on
 https://github.com/JuliaEditorSupport/julia-emacs
 #+begin_src emacs-lisp
   (use-package julia-mode
-    :mode "\\.jl\\'" ;; defer loading until and auto-activate when .jl files are opened
+    :mode "\\.jl\\'" ; defer loading until and auto-activate when .jl files are opened
     :hook
-    (julia-mode . outline-indent-minor-mode) ;; enable folding
-    (julia-mode . indent-bars-mode) ;; show indent bars
+    (julia-mode . outline-indent-minor-mode) ; enable folding
+    (julia-mode . indent-bars-mode)          ; show indent bars
     :init
-    (with-eval-after-load 'julia-mode ;; disable <backtack> shortcut, it is reserved for folding
+    (with-eval-after-load 'julia-mode ; disable <backtack> shortcut, it is reserved for folding
       (define-key julia-mode-map (kbd "<backtab>") nil)))
 #+end_src
 ** julia-repl
@@ -1347,19 +1348,19 @@ Install julia-repl as per instructions on
 https://github.com/tpapp/julia-repl
 #+begin_src emacs-lisp
   (use-package julia-repl
-    :after julia-mode                    ;; defer loading until julia-mode is started
-    :hook (julia-mode . julia-repl-mode) ;; auto-activate when julia-mode is started
+    :after julia-mode                    ; defer loading until julia-mode is started
+    :hook (julia-mode . julia-repl-mode) ; auto-activate when julia-mode is started
     :config
-    (julia-repl-set-terminal-backend 'vterm)) ;; use vterm (recommended)
+    (julia-repl-set-terminal-backend 'vterm)) ; use vterm (recommended)
 #+end_src
 ** eglot-jl
 Load eglot-js for language server support as per instructions on
 https://github.com/non-Jedi/eglot-jl
 #+begin_src emacs-lisp
   (use-package eglot-jl
-    :after julia-mode            ;; defer loading until julia-mode is started
+    :after julia-mode            ; defer loading until julia-mode is started
     :hook
-    (julia-mode . eglot-ensure)  ;; auto-activate when julia-mode is started
+    (julia-mode . eglot-ensure)  ; auto-activate when julia-mode is started
     (julia-mode . eglot-jl-init)
     :custom
     (eldoc-echo-area-use-multiline-p nil)
@@ -1370,7 +1371,7 @@ Install vterm as per instructions on
 https://github.com/akermu/emacs-libvterm
 #+begin_src emacs-lisp
   (use-package vterm
-    :after julia-mode) ;; defer loading until julia-mode is started
+    :after julia-mode) ; defer loading until julia-mode is started
 #+end_src
 ** prism
 Install prism as per instructions on
@@ -1378,14 +1379,14 @@ https://github.com/alphapapa/prism.el
 #+begin_src emacs-lisp
   (use-package prism
     :after julia-mode
-    :hook (julia-mode . prism-whitespace-mode)) ;; auto-activate in julia-mode
+    :hook (julia-mode . prism-whitespace-mode)) ; auto-activate in julia-mode
 #+end_src
 ** symbol-overlay
 Install symbol overlay
 #+begin_src emacs-lisp
   (use-package symbol-overlay
-    :after julia-mode ;; defer loading until julia-mode is started
-    :hook (julia-mode . symbol-overlay-mode)) ;; auto-activate in julia-mode
+    :after julia-mode                         ; defer loading until julia-mode is started
+    :hook (julia-mode . symbol-overlay-mode)) ; auto-activate in julia-mode
 #+end_src
 * C++
 Packages and customizations for C++
@@ -1408,11 +1409,11 @@ Installing copilot as per the instructions on
 https://github.com/copilot-emacs/copilot.el
 #+begin_src emacs-lisp
   (use-package copilot
-    :after julia-mode ;; defer loading after julia-mode has started
+    :after julia-mode ; defer loading after julia-mode has started
     :hook (julia-mode . copilot-mode)
     :custom
     (copilot--base-dir "~/.emacs.d/straight/repos/copilot.el/")
-    (copilot-indent-offset-warning-disable t) ;; disables a warning that always arises in tex-mode
+    (copilot-indent-offset-warning-disable t) ; disables a warning that always arises in tex-mode
     :bind (:map copilot-completion-map
            ("C-<tab>" . copilot-accept-completion)))
 #+end_src
@@ -1421,7 +1422,7 @@ Installing GPTel as per instructions on
 https://github.com/karthink/gptel
 #+begin_src emacs-lisp
   (use-package gptel
-    :commands gptel ;; defer loading after gptel is called
+    :commands gptel ; defer loading after gptel is called
   	:config
   	;; the following setq has to be in :config, putting it in :custom does not work
   	(setopt
