@@ -15,14 +15,9 @@ Load package, add prominent repositories, and update package data.
   (unless package-archive-contents (package-refresh-contents))
 #+end_src
 ** use-package
-Add imenu-support (needs to be loaded before use-package)
+Add imenu-support and auto-install packages hereon
 #+begin_src emacs-lisp
   (setopt use-package-enable-imenu-support t)
-#+end_src
-Install use-package if necessary, load it, and set it to auto-install packages hereon.
-#+begin_src emacs-lisp
-  (unless (package-installed-p 'use-package) (package-install 'use-package))
-  (require 'use-package)
   (setopt use-package-always-ensure t)
 #+end_src
 * Fundamentals (basics)
