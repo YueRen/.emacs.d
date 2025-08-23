@@ -215,7 +215,7 @@ default is 8, which is too much
 #+end_src
 *** use spaces instead of tabs
 #+begin_src emacs-lisp
-  (indent-tabs-mode 1)
+  (setq-default indent-tabs-mode nil)
 #+end_src
 *** overwrite selected text when typing over it
 #+begin_src emacs-lisp
