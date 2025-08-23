@@ -1432,6 +1432,15 @@ https://github.com/karthink/gptel
   														 (writing     . "You are a large language model and a writing assistant. Provide comprehensive answers and use examples where appropriate.")
   														 (chat        . "You are a large language model and a conversation partner. Provide comprehensive answers and use examples where appropriate."))))
 #+end_src
+** gptel-aibo
+Installing gptel-aibo as per instructions on
+https://github.com/dolmens/gptel-aibo
+#+begin_src emacs-lisp
+  (use-package gptel-aibo
+    :after (gptel flycheck)
+    :bind (:map prog-mode-map
+                ("C-i" . gptel-aibo-summon)))
+#+end_src
 * Server
 ** Initialisation
 No config necessary.  To use emacs in daemon mode, just start emacs with `emacsclient -c -a="" --eval "(select-frame-set-input-focus (selected-frame))"` instead of `emacs`, e.g., by mapping it to some hotkey.
