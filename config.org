@@ -729,27 +729,6 @@ Load helpful for better help packages
      ("C-h k" . helpful-key)
      ("C-h v" . helpful-variable)))
 #+end_src
-** powerthesaurus
-Load powerthesaurus for looking up synonyms, antonyms and related terms as per instructions on
-https://github.com/SavchenkoValeriy/emacs-powerthesaurus
-#+begin_src emacs-lisp
-  (use-package powerthesaurus
-    :commands powerthesaurus-transient) ; defer loading after powerthesaurus-transient is called
-#+end_src
-** go-translate
-Load go-translate to translate between German and English (C-n / C-p to switch direction),
-as per instructions on https://github.com/lorniu/go-translate
-#+begin_src emacs-lisp
-  (use-package go-translate
-    :commands gt-do-translate  ; defer loading until gts-do-translate is called
-    :custom
-    (gt-langs '(de en))
-    (gt-default-translator
-     (gt-translator
-      :taker (gt-taker :prompt t)
-      :engines (gt-google-engine)
-      :render  (gt-buffer-render))))
-#+end_src
 ** wgrep
 Load wgrep to make grep buffers editable (`C-c C-p` to make editable, `C-c C-c` to save and exit, `C-c C-k` to discard changes and exit)
 as per instructions on https://github.com/mhayashi1120/Emacs-wgrep
