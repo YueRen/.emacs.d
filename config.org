@@ -120,9 +120,9 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
     :hook
     (prog-mode . show-paren-mode))
 #+end_src
-*** set fill-column width to 100
+*** set fill-column width to 80
 #+begin_src emacs-lisp
-  (setq-default fill-column 100)
+  (setq-default fill-column 80)
 #+end_src
 *** enable pairing of parenthesis in programming modes
 #+begin_src emacs-lisp
