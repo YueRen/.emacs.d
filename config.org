@@ -284,22 +284,22 @@ delete word without changing kill ring, alternative to backward-kill-word
 ** spellchecking
 Load appropriate personal dictionary based on ispell-local-dictionary.
 #+begin_src emacs-lisp
-(defun yr/setup-flyspell-personal-dictionary ()
-  "Set ispell-personal-dictionary based on ispell-local-dictionary. Does nothing if ispell-local-dictionary is not set."
-  (when (and (boundp 'ispell-local-dictionary) ispell-local-dictionary)
-    (let* ((dict ispell-local-dictionary)
-           (personal-dict (expand-file-name (format ".aspell.%s.pws" dict) (getenv "HOME")))
-           (lang-name (if (string-match "_" dict)
-                          (substring dict 0 (match-beginning 0)) ; Use the name up to the first `_` if it exists
-                        dict)))                                  ; Use the entire name otherwise
-      ;; Check if the personal dictionary file exists; if not, create it
-      (unless (file-exists-p personal-dict)
-        (with-temp-file personal-dict
-          (insert (format "personal_ws-1.1 %s 0\n" lang-name))))
-      ;; Set ispell-personal-dictionary
-      (setq ispell-local-pdict personal-dict))))
+  (defun yr/setup-flyspell-personal-dictionary ()
+    "Set ispell-personal-dictionary based on ispell-local-dictionary. Does nothing if ispell-local-dictionary is not set."
+    (when (and (boundp 'ispell-local-dictionary) ispell-local-dictionary)
+      (let* ((dict ispell-local-dictionary)
+             (personal-dict (expand-file-name (format ".aspell.%s.pws" dict) (getenv "HOME")))
+             (lang-name (if (string-match "_" dict)
+                            (substring dict 0 (match-beginning 0)) ; Use the name up to the first `_` if it exists
+                          dict)))                                  ; Use the entire name otherwise
+        ;; Check if the personal dictionary file exists; if not, create it
+        (unless (file-exists-p personal-dict)
+          (with-temp-file personal-dict
+            (insert (format "personal_ws-1.1 %s 0\n" lang-name))))
+        ;; Set ispell-personal-dictionary
+        (setq ispell-local-pdict personal-dict))))
 
-(add-hook 'hack-local-variables-hook 'yr/setup-flyspell-personal-dictionary)
+  (add-hook 'hack-local-variables-hook 'yr/setup-flyspell-personal-dictionary)
 #+end_src
 * Fundamentals (advanced)
 Customizations that affect everything and require packages
@@ -372,13 +372,13 @@ Load ace-window for switching between windows and frames
 Load visual-replace as per instructions on
 https://github.com/szermatt/visual-replace
 #+begin_src emacs-lisp
-(use-package visual-replace
-  :bind (("M-%" . visual-replace)
-         :map isearch-mode-map
-         ("M-%" . visual-replace-from-isearch))
-  :config
-  (define-key visual-replace-mode-map (kbd "M-%")
-              visual-replace-secondary-mode-map))
+  (use-package visual-replace
+    :bind (("M-%" . visual-replace)
+           :map isearch-mode-map
+           ("M-%" . visual-replace-from-isearch))
+    :config
+    (define-key visual-replace-mode-map (kbd "M-%")
+                visual-replace-secondary-mode-map))
 #+end_src
 *** ws-butler
 Load ws-butler as per instructions on
@@ -439,7 +439,7 @@ https://github.com/minad/marginalia
     ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
     ;; available in the *Completions* buffer, add it to `completion-list-mode-map'.
     :bind (:map minibuffer-local-map
-           ("M-A" . marginalia-cycle))
+                ("M-A" . marginalia-cycle))
     ;; The :init configuration is always executed (Not lazy!)
     :init
     ;; Must be in the :init section of use-package such that the mode gets
@@ -490,21 +490,21 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 Load cape to use company backends for corfu as per instructions on
 https://github.com/minad/cape
 #+begin_src emacs-lisp
-(use-package cape
-  ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
-  ;; Press C-c p ? to for help.
-  :bind ("C-c p" . cape-prefix-map)
-  :config
-  ;; Add to the global default value of `completion-at-point-functions' which is
-  ;; used by `completion-at-point'.  The order of the functions matters, the
-  ;; first function returning a result wins.  Note that the list of buffer-local
-  ;; completion functions takes precedence over the global list.
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block)
-  ;; (add-hook 'completion-at-point-functions #'cape-history)
-  ;; ...
-)
+  (use-package cape
+    ;; Bind prefix keymap providing all Cape commands under a mnemonic key.
+    ;; Press C-c p ? to for help.
+    :bind ("C-c p" . cape-prefix-map)
+    :config
+    ;; Add to the global default value of `completion-at-point-functions' which is
+    ;; used by `completion-at-point'.  The order of the functions matters, the
+    ;; first function returning a result wins.  Note that the list of buffer-local
+    ;; completion functions takes precedence over the global list.
+    (add-hook 'completion-at-point-functions #'cape-dabbrev)
+    (add-hook 'completion-at-point-functions #'cape-file)
+    (add-hook 'completion-at-point-functions #'cape-elisp-block)
+    ;; (add-hook 'completion-at-point-functions #'cape-history)
+    ;; ...
+    )
 #+end_src
 ** orderless
 Load orderless for completion with space-seperated components as per instructions on
@@ -637,7 +637,7 @@ https://github.com/minad/consult
   	;; Optionally make narrowing help available in the minibuffer.
   	;; You may want to use `embark-prefix-help-command' or which-key instead.
   	;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
-  )
+    )
 #+end_src
 *** consult-flyspell
 Load consult flyspell as per instructions on
@@ -759,18 +759,18 @@ https://github.com/yanghaoxie/which-key-posframe
 Use workaround for transient-posframe to show transients in a posframe as per instructions on
 https://github.com/yanghaoxie/transient-posframe/pull/7
 #+begin_src emacs-lisp
-(setq transient-mode-line-format nil)
-(setq transient-display-buffer-action
-      (list
-       (lambda (buffer _)
-         (posframe-show
-          buffer
-          :poshandler #'posframe-poshandler-frame-center
-          :min-width transient-minimal-frame-width
-          :lines-truncate t
-          :internal-border-color (transient--prefix-color)
-          :internal-border-width 1)
-         (get-buffer-window transient--buffer t))))
+  (setq transient-mode-line-format nil)
+  (setq transient-display-buffer-action
+        (list
+         (lambda (buffer _)
+           (posframe-show
+            buffer
+            :poshandler #'posframe-poshandler-frame-center
+            :min-width transient-minimal-frame-width
+            :lines-truncate t
+            :internal-border-color (transient--prefix-color)
+            :internal-border-width 1)
+           (get-buffer-window transient--buffer t))))
 #+end_src
 * Transients
 Packages for transient shortcuts
@@ -785,17 +785,17 @@ https://github.com/kickingvegas/casual/discussions/78
     (require 'casual-ibuffer)
     (require 'casual-info)
     :bind (:map calc-mode-map
-           ("?" . 'casual-calc-tmenu)
-           :map dired-mode-map
-           ("?" . 'casual-dired-tmenu)
-           ("s"   . 'casual-dired-sort-by-tmenu)
-           ("/"   . 'casual-dired-search-replace-tmenu)
-           :map ibuffer-mode-map
-           ("?" . 'casual-ibuffer-tmenu)
-           ("F"   . 'casual-ibuffer-filter-tmenu)
-           ("s"   . 'casual-ibuffer-sortby-tmenu)
-           :map Info-mode-map
-           ("?" . 'casual-info-tmenu)))
+                ("?" . 'casual-calc-tmenu)
+                :map dired-mode-map
+                ("?" . 'casual-dired-tmenu)
+                ("s"   . 'casual-dired-sort-by-tmenu)
+                ("/"   . 'casual-dired-search-replace-tmenu)
+                :map ibuffer-mode-map
+                ("?" . 'casual-ibuffer-tmenu)
+                ("F"   . 'casual-ibuffer-filter-tmenu)
+                ("s"   . 'casual-ibuffer-sortby-tmenu)
+                :map Info-mode-map
+                ("?" . 'casual-info-tmenu)))
 #+end_src
 * Folding
 ** outline-indent
@@ -960,9 +960,9 @@ https://github.com/minad/org-modern
 Load org-pdftools as per instructions on
 https://github.com/fuxialexander/org-pdftools
 #+begin_src emacs-lisp
-    (use-package org-pdftools
-      :after (:any org pdf-tools)
-      :hook (org-mode . org-pdftools-setup-link))
+  (use-package org-pdftools
+    :after (:any org pdf-tools)
+    :hook (org-mode . org-pdftools-setup-link))
 #+end_src
 ** denote
 Customizations for denote
@@ -1035,10 +1035,10 @@ https://systemcrafters.net/emacs-tips/presentations-with-org-present/
     (add-hook 'org-present-mode-hook 'my/org-present-start)
     (add-hook 'org-present-mode-quit-hook 'my/org-present-end))
 
-    ;; Register hooks with org-present
-    ;; :hook
-    ;; (org-present-mode-hook . my/org-present-start)
-    ;; (org-present-mode-quit-hook . my/org-present-end))
+  ;; Register hooks with org-present
+  ;; :hook
+  ;; (org-present-mode-hook . my/org-present-start)
+  ;; (org-present-mode-quit-hook . my/org-present-end))
 #+end_src
 * Git
 Packages and customizations for git
@@ -1207,11 +1207,11 @@ By default, `reftex-goto-label` does not `push-mark` at the point of departure, 
 This function fixes this issue
 #+name: tex-custom-reftex-goto-label
 #+begin_src emacs-lisp :tangle no
-(defun yr/reftex-goto-label ()
-  "Wrapper around reftex-goto-label with jump back functionality."
-  (interactive)
-  (push-mark)
-  (reftex-goto-label))
+  (defun yr/reftex-goto-label ()
+    "Wrapper around reftex-goto-label with jump back functionality."
+    (interactive)
+    (push-mark)
+    (reftex-goto-label))
 #+end_src
 ** Custom bibtool-current-file
 Custom command for running bibtool on a currently opened .bib file
@@ -1389,10 +1389,10 @@ https://github.com/copilot-emacs/copilot.el
     (copilot--base-dir "~/.emacs.d/straight/repos/copilot.el/")
     (copilot-indent-offset-warning-disable t) ; disables a warning that always arises in tex-mode
     :bind (:map copilot-completion-map
-           ("C-<tab>" . copilot-accept-completion)))
+                ("C-<tab>" . copilot-accept-completion)))
 #+end_src
 ** GPTel
-Installing GPTel as per instructions on
+Installing gptel as per instructions on
 https://github.com/karthink/gptel
 #+begin_src emacs-lisp
   (use-package gptel
