@@ -81,6 +81,15 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
 #+begin_src emacs-lisp
   (pixel-scroll-precision-mode 1)
 #+end_src
+*** list items end at paragraph
+The following makes is so that items in a list count as their own paragraphs.  That way, they are not accidentally wrapped when invoking `M-x fill-paragraph` on a large chunk of text followed by a list
+- like
+- this
+- very
+- text
+#+begin_src emacs-lisp
+  (setq-default paragraph-start "\\f\\|[ \t]*$\\|[ \t]*[-+*.] ")
+#+end_src
 ** visuals
 *** empty startup screen
 #+begin_src emacs-lisp
