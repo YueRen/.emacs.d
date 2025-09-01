@@ -377,6 +377,16 @@ Load ace-window for switching between windows and frames
     (ace-window-posframe-mode)                                                        ; enable posframes
     (setq aw-posframe-position-handler #'posframe-poshandler-window-top-left-corner)) ; position posframes top left as default
 #+end_src
+*** transpose-frame
+Load transpose-frame for more convencient frame layout switching
+#+begin_src emacs-lisp
+  (use-package transpose-frame
+    :commands (transpose-frame
+               flip-frame
+               flop-frame
+               rotate-frame-clockwise
+               rotate-frame-anticlockwise))
+#+end_src
 ** editing
 *** visual-replace
 Load visual-replace as per instructions on
