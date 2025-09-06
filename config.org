@@ -835,7 +835,11 @@ https://github.com/jamescherti/outline-indent.el
         (outline-back-to-heading)
         (if (not (outline-invisible-p (line-end-position)))
             (outline-indent-close-fold)
-          (outline-indent-open-fold-rec)))))
+          (outline-indent-open-fold-rec))))
+    (defun yr/outline-indent-tex-setup () ; correct bar spacing for tex files
+      (when (derived-mode-p 'tex-mode)
+        (setq-local outline-indent-default-offset 2)))
+    (add-hook 'TeX-mode-hook 'yr/outline-indent-tex-setup))
 #+end_src
 ** indent-bars
 Load indent-bars as per instructions on
@@ -849,7 +853,7 @@ https://github.com/jdtsmith/indent-bars
       (when (derived-mode-p 'tex-mode)
         (setq-local indent-bars-spacing-override 2)
         (indent-bars-reset)))
-    (add-hook 'indent-bars-mode-hook 'yr/indent-bars-tex-setup))
+    (add-hook 'TeX-mode-hook 'yr/indent-bars-tex-setup))
 #+end_src
 * Dired
 Packages and customizations for dired
