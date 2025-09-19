@@ -98,7 +98,7 @@ The following makes is so that items in a list count as their own paragraphs.  T
 *** empty scratch buffer and make it fundamental mode
 #+begin_src emacs-lisp
   (setopt initial-scratch-message nil
-  				initial-major-mode 'fundamental-mode)
+          initial-major-mode 'fundamental-mode)
 #+end_src
 *** remove top menu bar
 #+begin_src emacs-lisp
@@ -206,7 +206,7 @@ Use C-x <arrow> to switch windows.
 https://github.com/jamescherti/minimal-emacs.d
 #+begin_src emacs-lisp
   (setopt split-width-threshold 170
-  				split-height-threshold nil)
+          split-height-threshold nil)
 #+end_src
 ** editing
 *** add final newline before each save
@@ -405,9 +405,9 @@ Load ws-butler as per instructions on
 https://github.com/lewang/ws-butler
 #+begin_src emacs-lisp
   (use-package ws-butler
-  	:hook
-  	(prog-mode . ws-butler-mode)
-  	(text-mode . ws-butler-mode))
+    :hook
+    (prog-mode . ws-butler-mode)
+    (text-mode . ws-butler-mode))
 #+end_src
 *** move-text
 Load move-text as per instructions on
@@ -416,8 +416,8 @@ Enables moving current line or region up and down via `M-<up>` and `M-<down>`,
 similar to moving bullet points in org-mode.
 #+begin_src emacs-lisp
   (use-package move-text
-  	:config
-  	(move-text-default-bindings))
+    :config
+    (move-text-default-bindings))
 #+end_src
 ** startup
 *** dashboard
@@ -616,12 +616,12 @@ https://github.com/minad/consult
     ;; The :init configuration is always executed (Not lazy)
     :init
 
-  	;; Tweak the register preview for `consult-register-load',
-  	;; `consult-register-store' and the built-in commands.  This improves the
-  	;; register formatting, adds thin separator lines, register sorting and hides
-  	;; the window mode line.
-  	(advice-add #'register-preview :override #'consult-register-window)
-  	(setq register-preview-delay 0.5)
+    ;; Tweak the register preview for `consult-register-load',
+    ;; `consult-register-store' and the built-in commands.  This improves the
+    ;; register formatting, adds thin separator lines, register sorting and hides
+    ;; the window mode line.
+    (advice-add #'register-preview :override #'consult-register-window)
+    (setq register-preview-delay 0.5)
 
     ;; Use Consult to select xref locations with preview
     (setq xref-show-xrefs-function #'consult-xref
@@ -651,9 +651,9 @@ https://github.com/minad/consult
     ;; Both < and C-+ work reasonably well.
     (setq consult-narrow-key "<") ; "C-+"
 
-  	;; Optionally make narrowing help available in the minibuffer.
-  	;; You may want to use `embark-prefix-help-command' or which-key instead.
-  	;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
+    ;; Optionally make narrowing help available in the minibuffer.
+    ;; You may want to use `embark-prefix-help-command' or which-key instead.
+    ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
     )
 #+end_src
 *** consult-flyspell
@@ -663,7 +663,7 @@ https://gitlab.com/OlMon/consult-flyspell
   (use-package consult-flyspell
     :commands consult-flyspell
     :custom
-  	(consult-flyspell-always-check-buffer t)) ; automatically run flyspell-buffer
+    (consult-flyspell-always-check-buffer t)) ; automatically run flyspell-buffer
 #+end_src
 ** embark
 *** Basic setup
@@ -681,8 +681,8 @@ https://github.com/oantolin/embark
     (setq prefix-help-command #'embark-prefix-help-command)
 
     :config
-  	;; make C-h trigger embark powered search under partially entered commands
-  	(setq prefix-help-command #'embark-prefix-help-command)
+    ;; make C-h trigger embark powered search under partially entered commands
+    (setq prefix-help-command #'embark-prefix-help-command)
 
     ;; Hide the mode line of the Embark live/completions buffers
     (add-to-list 'display-buffer-alist
@@ -751,8 +751,14 @@ Load wgrep to make grep buffers editable (`C-c C-p` to make editable, `C-c C-c` 
 as per instructions on https://github.com/mhayashi1120/Emacs-wgrep
 #+begin_src emacs-lisp
   (use-package wgrep
-  	:custom
-  	(wgrep-auto-save-buffer t)) ; automatically save on exit
+    :custom
+    (wgrep-auto-save-buffer t)) ; automatically save on exit
+#+end_src
+** expand-region
+Load expand-region as per instructions on https://github.com/magnars/expand-region.el
+#+begin_src emacs-lisp
+  (use-package expand-region
+    :bind ("C-=" . er/expand-region))
 #+end_src
 * Posframes
 Packages and customizations for posframes
@@ -858,9 +864,9 @@ Packages and customizations for dired
 #+begin_src emacs-lisp
   (use-package dired
     :ensure nil ; do not load, it is built-in
-  	:bind
-  	(:map dired-mode-map
-  				("C-c C-p" . dired-toggle-read-only))  ; add keybinding for uniformity with wgrep
+    :bind
+    (:map dired-mode-map
+          ("C-c C-p" . dired-toggle-read-only))  ; add keybinding for uniformity with wgrep
     :custom
     (dired-listing-switches "-alFh")             ; all files, list, add / to folders, human readable sizes
     (dired-kill-when-opening-new-dired-buffer t) ; open folders in existing buffer instead of a new buffer
@@ -921,9 +927,9 @@ Load org when opening .org files.
     :hook
     (org-mode . indent-bars-mode) ; enable indent bars
     :bind
-  	(("C-c l" . org-store-link) ; recommended keybindings
-  	 ("C-c c" . org-capture)
-  	 :map org-mode-map
+    (("C-c l" . org-store-link) ; recommended keybindings
+     ("C-c c" . org-capture)
+     :map org-mode-map
      ("C-c C-x M-w" . my/org-copy-special))
     :custom
     (org-startup-indented t)            ; on startup indent lines
@@ -933,7 +939,7 @@ Load org when opening .org files.
     (org-ellipsis " ▼")                 ; use ▼ instead of default "..."
     (org-default-notes-file "~/notes/20250729T143140--captures__meta.org") ; file for org-captures
     (org-capture-templates '(("n" "Note" entry (file+headline org-default-notes-file "Notes")
-  														"* %U %?")))
+                              "* %U %?")))
     (org-capture-bookmark nil)
     :config
     (setq org-preview-latex-default-process 'dvisvgm)
@@ -1010,14 +1016,14 @@ Load denote-org for features such as denote-links as per instructions on
 https://protesilaos.com/emacs/denote-org
 #+begin_src emacs-lisp
   (use-package denote-org
-  	:after denote)
+    :after denote)
 #+end_src
 *** denote-explore
 Load denote-explore to explore notes as per instructions on
 https://github.com/pprevos/denote-explore
 #+begin_src emacs-lisp
   (use-package denote-explore
-  	:after denote)
+    :after denote)
 #+end_src
 * Presentations
 Packages and customizations for presentations
@@ -1079,7 +1085,7 @@ https://github.com/alphapapa/magit-todos
   (use-package magit-todos
     :after magit
     :config
-  	(magit-todos-mode 1))
+    (magit-todos-mode 1))
 #+end_src
 ** forge
 Load forge as per instructions on
@@ -1103,7 +1109,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
     (LaTeX-mode . turn-on-flyspell)          ; enable spellchecking
     (LaTeX-mode . outline-indent-minor-mode) ; enable folding
     (LaTeX-mode . indent-bars-mode)          ; enable indentation highlighting
-  	:custom
+    :custom
     (TeX-view-program-selection '((output-pdf "PDF Tools")))
     (TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
     (TeX-source-correlate-mode t)
@@ -1415,19 +1421,19 @@ https://github.com/karthink/gptel
 #+begin_src emacs-lisp
   (use-package gptel
     :commands gptel ; defer loading after gptel is called
-  	:config
-  	;; the following setq has to be in :config, putting it in :custom does not work
-  	(setopt
-  	 gptel-model 'gemini-2.0-flash
-  	 gptel-backend (gptel-make-gemini "Gemini"
-  									 :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
-  									 :stream t))
-  	:init
-  	;; the following has to be in :init, putting it in :config does not work
-  	(setopt gptel-directives '((default     . "You are a large language model living in Emacs and a helpful assistant. Provide comprehensive answers and use examples where appropriate.")
-  														 (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
-  														 (writing     . "You are a large language model and a writing assistant. Provide comprehensive answers and use examples where appropriate.")
-  														 (chat        . "You are a large language model and a conversation partner. Provide comprehensive answers and use examples where appropriate."))))
+    :config
+    ;; the following setq has to be in :config, putting it in :custom does not work
+    (setopt
+     gptel-model 'gemini-2.0-flash
+     gptel-backend (gptel-make-gemini "Gemini"
+                     :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
+                     :stream t))
+    :init
+    ;; the following has to be in :init, putting it in :config does not work
+    (setopt gptel-directives '((default     . "You are a large language model living in Emacs and a helpful assistant. Provide comprehensive answers and use examples where appropriate.")
+                               (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
+                               (writing     . "You are a large language model and a writing assistant. Provide comprehensive answers and use examples where appropriate.")
+                               (chat        . "You are a large language model and a conversation partner. Provide comprehensive answers and use examples where appropriate."))))
 #+end_src
 ** gptel-aibo
 Installing gptel-aibo as per instructions on
@@ -1448,23 +1454,21 @@ No config necessary.  To use emacs in daemon mode, just start emacs with `emacsc
 Make sure that recent file list etc get updated when shutting down system.
 #+begin_src emacs-lisp
   (use-package dbus
-  	:config
+    :config
     (defun my-inhibit-logout--on-query-end-session (&rest _)
       "Handler for GNOME session QueryEndSession signal."
-  		;; (do-auto-save)
-  		;; (when (fboundp 'savehist-autosave) (savehist-autosave))
-  		;; (when (fboundp 'desktop-auto-save) (desktop-auto-save))
+      ;; (do-auto-save)
+      ;; (when (fboundp 'savehist-autosave) (savehist-autosave))
+      ;; (when (fboundp 'desktop-auto-save) (desktop-auto-save))
       ;; (when (fboundp 'recentf-save-list) (recentf-save-list))
-  		(call-interactively #'do-auto-save)
-  		(call-interactively #'kill-emacs)
-  		)
+      (call-interactively #'do-auto-save)
+      (call-interactively #'kill-emacs)
 
-  	(dbus-register-signal
+    (dbus-register-signal
      :session
      "org.gnome.SessionManager"
      "/org/gnome/SessionManager/Client1"
      "org.gnome.SessionManager.ClientPrivate"
      "QueryEndSession"
-     #'my-inhibit-logout--on-query-end-session)
-  	)
+     #'my-inhibit-logout--on-query-end-session))
 #+end_src
