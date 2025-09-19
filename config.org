@@ -433,9 +433,6 @@ https://github.com/emacs-dashboard/emacs-dashboard
     (dashboard-icon-type 'nerd-icons)    ; use nerd-icons
     (dashboard-set-heading-icons t)      ; use heading icons
     (dashboard-set-file-icons t)         ; use file icons
-  	(initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name))) ; make dashboard the initial buffer
-    :init
-    (add-hook 'window-setup-hook (lambda () (dashboard-refresh-buffer)))
     :config
     (dashboard-setup-startup-hook))      ; open dashboard on startup
 #+end_src
