@@ -1470,5 +1470,5 @@ Make sure that recent file list etc get updated when shutting down system.
      "/org/gnome/SessionManager/Client1"
      "org.gnome.SessionManager.ClientPrivate"
      "QueryEndSession"
-     #'my-inhibit-logout--on-query-end-session))
+     #'my-inhibit-logout--on-query-end-session)))
 #+end_src
