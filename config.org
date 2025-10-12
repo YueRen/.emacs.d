@@ -155,7 +155,14 @@ The following makes is so that items in a list count as their own paragraphs.  T
         (eq (char-syntax (char-before (1- (point)))) ?w)
         (eq (preceding-char) char)
         (not (eq (char-syntax (preceding-char)) ?\()
-             )))))
+             ))))
+    (define-advice electric-pair-post-self-insert-function
+        (:around (orig) advice-to-preserve-point)
+      "Preserve point when electric-pair wraps a region."
+      (and electric-pair-mode
+           (electric-pair--save-literal-point-excursion
+            (funcall orig))))
+    )
 #+end_src
 *** enable transparency
 #+begin_src emacs-lisp
