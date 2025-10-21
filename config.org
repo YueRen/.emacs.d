@@ -1028,6 +1028,18 @@ https://protesilaos.com/emacs/denote-org
   (use-package denote-org
     :after denote)
 #+end_src
+*** consult-denote
+Load consult-denote for better integration between consult and denote as per instructions on
+https://protesilaos.com/emacs/consult-denote
+#+begin_src emacs-lisp
+  (use-package consult-denote
+    :after denote
+    :bind
+    (("C-c n f" . consult-denote-find)
+     ("C-c n g" . consult-denote-grep))
+    :config
+    (consult-denote-mode 1))
+#+end_src
 *** denote-explore
 Load denote-explore to explore notes as per instructions on
 https://github.com/pprevos/denote-explore
