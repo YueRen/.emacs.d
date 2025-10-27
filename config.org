@@ -499,7 +499,8 @@ https://github.com/minad/corfu
     (corfu-auto t)  ; Enable showing autocompletion automatically
     (corfu-cycle t) ; Enable cycling for `corfu-next/previous'
     :config
-    (global-corfu-mode))
+    (global-corfu-mode)
+    (corfu-popupinfo-mode))
 #+end_src
 ** nerd-icons-corfu
 Load nerd-icons-corfu for nerd icons in corfu as per instructions on
