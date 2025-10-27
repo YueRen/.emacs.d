@@ -1447,7 +1447,7 @@ https://github.com/karthink/gptel
     :config
     ;; the following setq has to be in :config, putting it in :custom does not work
     (setopt
-     gptel-model 'gemini-2.0-flash
+     gptel-model 'gemini-2.5-flash
      gptel-backend (gptel-make-gemini "Gemini"
                      :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
                      :stream t))
