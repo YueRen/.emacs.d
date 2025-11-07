@@ -376,7 +376,7 @@ https://github.com/lukhas/buffer-move
 #+end_src
 *** ace-window
 Load ace-window for switching between windows and frames
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package ace-window
     :bind
     ("M-o" . ace-window)
