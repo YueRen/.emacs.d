@@ -928,10 +928,10 @@ Packages and customizations for note taking
 Customizations for org
 *** basic setup
 Load org when opening .org files.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb tangle
   (use-package org
     :mode
-    ("\\.org\\'" . org-mode) ; defer loading and auto-activate when .org file is opened
+    ("\\.org\\'" . org-mode)
     :hook
     (org-mode . indent-bars-mode) ; enable indent bars
     :bind
@@ -947,43 +947,87 @@ Load org when opening .org files.
     (org-hide-emphasis-markers t)       ; hide emphasis markers
     (org-ellipsis " ▼")                 ; use ▼ instead of default "..."
     (org-directory "~/notes")
-    (org-default-notes-file "~/notes/20250729T143140--captures__meta.org") ; file for org-captures
-    (org-capture-templates '(("n" "Note" entry (file+headline org-default-notes-file "Notes")
-                              "* %U %?")))
-    (org-capture-bookmark nil)
-    (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+    <<org-custom-capture>>
+    <<org-custom-agenda>>
     :config
-    (setq org-preview-latex-default-process 'dvisvgm)
-    (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
-    (defun my/text-scale-adjust-latex-previews ()
-      "Adjust the size of latex preview fragments when changing the buffer's text scale."
-      (pcase major-mode
-        ('latex-mode
-         (dolist (ov (overlays-in (point-min) (point-max)))
-           (if (eq (overlay-get ov 'category)
-                   'preview-overlay)
-               (my/text-scale--resize-fragment ov))))
-        ('org-mode
-         (dolist (ov (overlays-in (point-min) (point-max)))
-           (if (eq (overlay-get ov 'org-overlay-type)
-                   'org-latex-overlay)
-               (my/text-scale--resize-fragment ov))))))
-
-    (defun my/text-scale--resize-fragment (ov)
-      (overlay-put
-       ov 'display
-       (cons 'image
-             (plist-put
-              (cdr (overlay-get ov 'display))
-              :scale (+ 1.0 (* 0.3 text-scale-mode-amount))))))
-
-    (add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews)
+    <<org-custom-file-opening>>
+    <<org-custom-latex-preview-scaling>>
     :init
     (defun my/org-copy-special ()
       "Copy the current region using `org-copy-special` and deactivate the mark."
       (interactive)
       (org-copy-special)
       (deactivate-mark)))
+#+end_src
+*** customizing org-capture
+- set correct file for captures
+- create a template for basic notes (automatically adds date and time only)
+- disable automatic creation of bookmarks
+#+name: org-custom-capture
+#+begin_src emacs-lisp :tangle no
+  (org-default-notes-file "~/notes/20250729T143140--captures__meta.org")
+  (org-capture-templates '(("n" "Note" entry (file+headline org-default-notes-file "Notes")
+                            "* %U %?")))
+  (org-capture-bookmark nil)
+#+end_src
+*** customizing org-agenda
+- scan all org files for agenda items
+- sort todos by timestamp
+#+name: org-custom-agenda
+#+begin_src emacs-lisp :tangle no
+    (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+    (org-agenda-sorting-strategy
+     '((agenda habit-down time-up urgency-down category-keep)
+       (todo urgency-down timestamp-up category-keep)
+       (tags urgency-down category-keep) (search category-keep)))
+#+end_src
+*** customizing file opening
+Make org-mode open certain files using ~xdg-open~ instead of emacs.
+#+name: org-custom-file-opening
+#+begin_src emacs-lisp :tangle no
+(dolist (rule
+         '(("\\.odt\\'"  . "xdg-open %s")   ;; LibreOffice Writer
+           ("\\.ods\\'"  . "xdg-open %s")   ;; LibreOffice Calc
+           ("\\.odp\\'"  . "xdg-open %s")   ;; LibreOffice Impress
+           ("\\.doc\\'"  . "xdg-open %s")   ;; MS Word
+           ("\\.docx\\'" . "xdg-open %s")   ;; MS Word
+           ("\\.xls\\'"  . "xdg-open %s")   ;; MS Excel
+           ("\\.xlsx\\'" . "xdg-open %s")   ;; MS Excel
+           ("\\.ppt\\'"  . "xdg-open %s")   ;; MS PowerPoint
+           ("\\.pptx\\'" . "xdg-open %s"))) ;; MS PowerPoint
+  (add-to-list 'org-file-apps rule))
+#+end_src
+*** customizing latex preview scaling
+Make org-mode scale latex preview images as you scale the text.  Taken from
+https://karthinks.com/software/scaling-latex-previews-in-emacs/
+#+name: org-custom-latex-preview-scaling
+#+begin_src emacs-lisp :tangle no
+  (setq org-preview-latex-default-process 'dvisvgm)
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
+
+  (defun my/text-scale-adjust-latex-previews ()
+    "Adjust the size of latex preview fragments when changing the buffer's text scale."
+    (pcase major-mode
+      ('latex-mode
+       (dolist (ov (overlays-in (point-min) (point-max)))
+         (if (eq (overlay-get ov 'category)
+                 'preview-overlay)
+             (my/text-scale--resize-fragment ov))))
+      ('org-mode
+       (dolist (ov (overlays-in (point-min) (point-max)))
+         (if (eq (overlay-get ov 'org-overlay-type)
+                 'org-latex-overlay)
+             (my/text-scale--resize-fragment ov))))))
+
+  (defun my/text-scale--resize-fragment (ov)
+    (overlay-put
+     ov 'display
+     (cons 'image
+           (plist-put
+            (cdr (overlay-get ov 'display))
+            :scale (+ 1.0 (* 0.3 text-scale-mode-amount))))))
+
+  (add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews)
 #+end_src
 *** org-modern
 Load org-modern as per instructions on
