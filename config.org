@@ -1067,6 +1067,7 @@ Load visual-fill-column to pad and center text (in org-present) as per instructi
 https://systemcrafters.net/emacs-tips/presentations-with-org-present/
 #+begin_src emacs-lisp
   (use-package visual-fill-column
+    :after org-present
     :init
     ;; Configure fill width
     (setq visual-fill-column-width 120
