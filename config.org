@@ -388,11 +388,10 @@ Load ace-window for switching between windows and frames
 Load transpose-frame for more convencient frame layout switching
 #+begin_src emacs-lisp
   (use-package transpose-frame
-    :commands (transpose-frame
-               flip-frame
-               flop-frame
-               rotate-frame-clockwise
-               rotate-frame-anticlockwise))
+    :bind
+    (("C-x C-t" . transpose-frame)
+     ("C-x C-<prior>" . flip-frame)
+     ("C-x C-<next>" . flop-frame)))
 #+end_src
 ** editing
 *** visual-replace
