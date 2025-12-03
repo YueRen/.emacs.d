@@ -299,7 +299,7 @@ delete word without changing kill ring, alternative to backward-kill-word
   (setopt isearch-allow-scroll t)
 #+end_src
 ** spellchecking
-Load appropriate personal dictionary based on ispell-local-dictionary.
+Load appropriate personal dictionary based on ~ispell-local-dictionary~ variable.
 #+begin_src emacs-lisp
   (defun yr/setup-flyspell-personal-dictionary ()
     "Set ispell-personal-dictionary based on ispell-local-dictionary. Does nothing if ispell-local-dictionary is not set."
@@ -419,7 +419,7 @@ https://github.com/lewang/ws-butler
 *** move-text
 Load move-text as per instructions on
 https://github.com/emacsfodder/move-text
-Enables moving current line or region up and down via `M-<up>` and `M-<down>`,
+Enables moving current line or region up and down via ~M-<up>~ and ~M-<down>~,
 similar to moving bullet points in org-mode.
 #+begin_src emacs-lisp
   (use-package move-text
@@ -755,7 +755,7 @@ Load helpful for better help packages
      ("C-h v" . helpful-variable)))
 #+end_src
 ** wgrep
-Load wgrep to make grep buffers editable (`C-c C-p` to make editable, `C-c C-c` to save and exit, `C-c C-k` to discard changes and exit)
+Load wgrep to make grep buffers editable (~C-c C-p~ to make editable, ~C-c C-c~ to save and exit, ~C-c C-k~ to discard changes and exit)
 as per instructions on https://github.com/mhayashi1120/Emacs-wgrep
 #+begin_src emacs-lisp
   (use-package wgrep
@@ -806,7 +806,7 @@ https://github.com/yanghaoxie/transient-posframe/pull/7
 * Transients
 Packages for transient shortcuts
 ** casual
-Load casual and bind it to `?` as per instructions in
+Load casual and bind it to ~?~ as per instructions in
 https://github.com/kickingvegas/casual/discussions/78
 #+begin_src emacs-lisp
   (use-package casual
@@ -1253,7 +1253,7 @@ Disable custom face when temporarily showing folded text
    '(TeX-fold-unfolded-face ((t nil))))
 #+end_src
 ** Custom reftex-goto-label
-By default, `reftex-goto-label` does not `push-mark` at the point of departure, so you cannot jump back by using `C-u C-SPC`.
+By default, ~reftex-goto-label~ does not ~push-mark~ at the point of departure, so you cannot jump back by using ~C-u C-SPC~.
 This function fixes this issue
 #+name: tex-custom-reftex-goto-label
 #+begin_src emacs-lisp :tangle no
@@ -1469,10 +1469,10 @@ https://github.com/dolmens/gptel-aibo
 #+end_src
 * Server
 ** Initialisation
-No config necessary.  To use emacs in daemon mode, just start emacs with `emacsclient -c -a="" --eval "(select-frame-set-input-focus (selected-frame))"` instead of `emacs`, e.g., by mapping it to some hotkey.
-- `-c` is short for `--create-frame` and will create a new frame
-- `-a=""` is short for --alternate-editor="emacs --daemon"` and will start emacs daemon if it is not already running
-- `--eval "(select-frame-set-input-focus (selected-frame))"` focuses on the newly created frame
+No config necessary.  To use emacs in daemon mode, just start emacs with ~emacsclient -c -a="" --eval "(select-frame-set-input-focus (selected-frame))"~ instead of ~emacs~, e.g., by mapping it to some hotkey.
+- ~-c~ is short for ~--create-frame~ and will create a new frame
+- ~-a=""~ is short for ~--alternate-editor="emacs --daemon"~ and will start emacs daemon if it is not already running
+- ~--eval "(select-frame-set-input-focus (selected-frame))"~ focuses on the newly created frame
 ** Shutdown
 Make sure that recent file list etc get updated when shutting down system.
 #+begin_src emacs-lisp
