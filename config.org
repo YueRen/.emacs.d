@@ -373,7 +373,6 @@ https://github.com/protesilaos/pulsar
   (use-package pulsar
     :custom
     (pulsar-face 'pulsar-magenta)
-    (pulsar-pulse-region-functions pulsar-pulse-region-common-functions)
     :config
     (pulsar-global-mode 1))
 #+end_src
