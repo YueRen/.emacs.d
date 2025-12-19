@@ -1407,17 +1407,21 @@ https://github.com/emacs-citar/citar
 Customizing latex input method as per instructions on
 https://www.emacswiki.org/emacs/TeXInputMethod
 #+begin_src emacs-lisp
-  (setopt default-input-method "TeX")
-  (with-temp-buffer
-    (activate-input-method "TeX") ; the input method has to be triggered for `quail-package-alist' to be non-nil
-    (let ((quail-current-package (assoc "TeX" quail-package-alist)))
-      (quail-define-rules ((append . t))
-                          ("^\\alpha" ?ᵅ)
-                          ("\\NN" ?ℕ)
-                          ("\\ZZ" ?ℤ)
-                          ("\\QQ" ?ℚ)
-                          ("\\RR" ?ℝ)
-                          ("\\CC" ?ℂ))))
+    (setopt default-input-method "TeX")
+    (with-temp-buffer
+      (activate-input-method "TeX") ; the input method has to be triggered for `quail-package-alist' to be non-nil
+      (let ((quail-current-package (assoc "TeX" quail-package-alist)))
+        (quail-define-rules ((append . t))
+                            ("^\\alpha" ?ᵅ)
+                            ("\\NN" ?ℕ)
+                            ("\\ZZ" ?ℤ)
+                            ("\\QQ" ?ℚ)
+                            ("\\RR" ?ℝ)
+                            ("\\CC" ?ℂ))))
+    ;; the following fixes the problem that on Ubuntu some fonts are rendered incorrectly
+    ;; https://emacs.stackexchange.com/questions/79681/unicode-displayed-incorrectly
+    (set-fontset-font t 'symbol
+                    (font-spec :family "Noto Sans Mono") nil 'prepend)
 #+end_src
 * Julia
 Packages and customizations for julia
