@@ -969,7 +969,7 @@ Packages and customizations for note taking
 ** org
 Customizations for org
 *** basic setup
-Load org when opening .org files.
+Load org when opening org files.
 #+begin_src emacs-lisp :noweb tangle
   (use-package org
     :mode
