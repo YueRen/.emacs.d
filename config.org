@@ -1063,6 +1063,9 @@ https://github.com/minad/org-modern
 *** org-pdftools
 Load org-pdftools as per instructions on
 https://github.com/fuxialexander/org-pdftools
+It allows for the following:
+- `C-c l` with a highlighted passage in the pdf to copy the highlighted text and leave a mark in the pdf
+- `C-c C-l` in an org file to paste the highlighted text and make it a link to the mark in the pdf
 #+begin_src emacs-lisp
   (use-package org-pdftools
     :after (:any org pdf-tools)
