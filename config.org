@@ -957,6 +957,13 @@ https://github.com/vedang/pdf-tools
     :init
     (pdf-loader-install))
 #+end_src
+** saveplace-pdf-view
+Load saveplace-pdf-view to remember last visited page in pdfs as per instructions on
+https://github.com/nicolaisingh/saveplace-pdf-view
+#+begin_src emacs-lisp
+  (use-package saveplace-pdf-view
+    :after (:any doc-view pdf-tools))
+#+end_src
 * Notes
 Packages and customizations for note taking
 ** org
