@@ -944,6 +944,19 @@ https://github.com/rainstormstudio/nerd-icons-dired
     :hook
     (dired-mode . nerd-icons-dired-mode))
 #+end_src
+* PDFs
+PDFs play an important role in my note taking (boand
+** pdf-tools
+Load pdf-tools to view pdfs as per instructions on
+https://github.com/vedang/pdf-tools
+#+begin_src emacs-lisp
+  (use-package pdf-tools
+    :mode "\\.pdf\\'"
+    :custom
+    (pdf-view-resize-factor 1.05) ; decrease resizing factor for better control
+    :init
+    (pdf-loader-install))
+#+end_src
 * Notes
 Packages and customizations for note taking
 ** org
@@ -1385,17 +1398,6 @@ Load various company latex backends via cape for corfu (for autocomplete)
       (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-auctex-environments)))
     :hook
     (LaTeX-mode . auctex-setup-capf))
-#+end_src
-** pdf-tools
-Load pdf-tools to view pdfs as per instructions on
-https://github.com/vedang/pdf-tools
-#+begin_src emacs-lisp
-  (use-package pdf-tools
-    :mode "\\.pdf\\'"
-    :custom
-    (pdf-view-resize-factor 1.05) ; decrease resizing factor for better control
-    :init
-    (pdf-loader-install))
 #+end_src
 ** citar
 Load citar to handle global bibliography in all.bib (exported from zotero) as per instructions on
