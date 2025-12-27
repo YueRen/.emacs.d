@@ -1423,7 +1423,7 @@ https://github.com/emacs-citar/citar
   (use-package citar
     :after tex
     :custom
-    (citar-bibliography '("~/all.bib")))
+    (citar-bibliography '("~/zotero/all.bib")))
 #+end_src
 ** Latex input
 Customizing latex input method as per instructions on
