@@ -90,9 +90,8 @@ The following makes is so that items in a list count as their own paragraphs.  T
 #+begin_src emacs-lisp
   (setq-default paragraph-start "\\f\\|[ \t]*$\\|[ \t]*[-+*.] ")
 #+end_src
-*** if region active, use content as default for minibuffer input
-The following make the following commands the content of an active region as
-default inputs:
+*** customize functions to use content of active region as initial input for minibuffer
+customized functions:
 - ~quick-calc~
 #+begin_src emacs-lisp
   (defun advice-minibuffer-seed-with-region (orig-fun &rest args)
