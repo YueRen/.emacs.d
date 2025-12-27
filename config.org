@@ -114,6 +114,16 @@ default inputs:
         (apply orig-fun args))))
   (advice-add 'quick-calc :around #'advice-minibuffer-seed-with-region)
 #+end_src
+*** customize functions to copy the last minibuffer message to kill ring
+customized functions:
+- ~pwd~
+  #+begin_src emacs-lisp
+    (defun pwd-copy--after (&rest _)
+      "Copy the directory shown by `pwd` to the kill ring."
+      (kill-new (expand-file-name default-directory)))
+
+    (advice-add 'pwd :after #'pwd-copy--after)
+  #+end_src
 ** visuals
 *** empty startup screen
 #+begin_src emacs-lisp
