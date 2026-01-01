@@ -1543,13 +1543,7 @@ https://github.com/karthink/gptel
      gptel-model 'gemini-3-flash-preview
      gptel-backend (gptel-make-gemini "Gemini"
                      :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
-                     :stream t))
-    :init
-    ;; the following has to be in :init, putting it in :config does not work
-    (setopt gptel-directives '((default     . "You are a large language model living in Emacs and a helpful assistant. Provide comprehensive answers and use examples where appropriate.")
-                               (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
-                               (writing     . "You are a large language model and a writing assistant. Provide comprehensive answers and use examples where appropriate.")
-                               (chat        . "You are a large language model and a conversation partner. Provide comprehensive answers and use examples where appropriate."))))
+                     :stream t)))
 #+end_src
 ** gptel-aibo
 Installing gptel-aibo as per instructions on
