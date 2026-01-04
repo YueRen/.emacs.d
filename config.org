@@ -224,6 +224,7 @@ customized functions:
   (use-package time
     :custom
     (display-time-24hr-format t "display time in 24h format")
+    (display-time-default-load-average nil)
     :config
     (display-time-mode))
 #+end_src
@@ -391,6 +392,9 @@ Load doom-modeline as per instructions on
 https://github.com/seagle0128/doom-modeline
 #+begin_src emacs-lisp
   (use-package doom-modeline
+    :custom
+    (doom-modeline-buffer-encoding 1)
+    (doom-modeline-time-icon nil)
     :config
     (doom-modeline-mode 1))
 #+end_src
