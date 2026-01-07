@@ -410,16 +410,6 @@ https://github.com/lukhas/buffer-move
      ("C-x C-<left>" . buf-move-left)
      ("C-x C-<right>" . buf-move-right)))
 #+end_src
-*** ace-window
-Load ace-window for switching between windows and frames
-#+begin_src emacs-lisp :tangle no
-  (use-package ace-window
-    :bind
-    ("M-o" . ace-window)
-    :config
-    (ace-window-posframe-mode)                                                        ; enable posframes
-    (setq aw-posframe-position-handler #'posframe-poshandler-window-top-left-corner)) ; position posframes top left as default
-#+end_src
 *** transpose-frame
 Load transpose-frame for more convencient frame layout switching
 #+begin_src emacs-lisp
