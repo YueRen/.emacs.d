@@ -814,7 +814,7 @@ https://github.com/yanghaoxie/which-key-posframe
 #+end_src
 ** transient-posframe
 Use workaround for transient-posframe to show transients in a posframe as per instructions on
-https://github.com/yanghaoxie/transient-posframe/pull/7
+https://github.com/emacsorphanage/transient-posframe/wiki
 #+begin_src emacs-lisp
   (setq transient-mode-line-format nil)
   (setq transient-display-buffer-action
