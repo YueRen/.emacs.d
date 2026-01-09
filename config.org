@@ -176,14 +176,18 @@ customized functions:
     :init
     (defun yr/electric-pair-conservative-inhibit (char)
       (or
-       ;; don't pair when same char is next
-       (eq char (char-after))
-       ;; don't pair when we insert the second of "" or of ((
-       (and (eq char (char-before))
-            (eq char (char-before (1- (point)))))
-       ;; don't pair at the start of a word
+       ;; don't pair at the start of a word or on a backslash
+       ;; (often functionally same as a word in latex)
        (eq (char-syntax (following-char)) ?w)
+       (eq (char-after) ?\\)
+       ;; don't pair when same char is next or before
+       ;; to avoid pairing when writing nested parenthesis
+       ;; e.g., when point is here: (|()
+       (eq char (char-after))
+       (eq char (char-before (1- (point))))
        ;; don't pair at the end of a word unless parens
+       ;; enables pairing when writing a function: `function foo|`
+       ;; disables pairing when closing a quotation: `"hello world|`
        (and
         (eq (char-syntax (char-before (1- (point)))) ?w)
         (eq (preceding-char) char)
