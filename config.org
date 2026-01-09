@@ -1081,8 +1081,8 @@ https://github.com/minad/org-modern
 #+begin_src emacs-lisp
   (use-package org-modern
     :after org                    ; defer loading after org
-    :hook
-    (org-mode . org-modern-mode)) ; auto-activate in org-mode
+    :config
+    (global-org-modern-mode)) ; auto-activate in org-mode
 #+end_src
 *** org-pdftools
 Load org-pdftools as per instructions on
