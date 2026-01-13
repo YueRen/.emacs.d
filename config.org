@@ -1025,11 +1025,16 @@ Load org when opening org files.
 - sort todos by timestamp
 #+name: org-custom-agenda
 #+begin_src emacs-lisp :tangle no
-    (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
-    (org-agenda-sorting-strategy
-     '((agenda habit-down time-up urgency-down category-keep)
-       (todo urgency-down timestamp-up category-keep)
-       (tags urgency-down category-keep) (search category-keep)))
+  (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+  (org-agenda-sorting-strategy
+   '((agenda habit-down time-up urgency-down category-keep)
+     (todo urgency-down timestamp-up category-keep)
+     (tags urgency-down category-keep) (search category-keep)))
+  (org-agenda-prefix-format
+   '((agenda . " %i %-15(org-get-title)%?-12t% s")
+     (todo   . " %i %-15(org-get-title) ")
+     (tags   . " %i %-15(org-get-title) ")
+     (search . " %i %-15(org-get-title) ")))
 #+end_src
 *** customizing file opening
 Make org-mode open certain files using ~xdg-open~ instead of emacs.
