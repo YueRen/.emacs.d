@@ -1117,7 +1117,10 @@ https://protesilaos.com/emacs/denote
     :custom
     (denote-directory org-directory)
     :config
-    (denote-rename-buffer-mode)) ; better buffer names for denote notes
+    (denote-rename-buffer-mode) ; better buffer names for denote notes
+    (add-hook 'org-mode-hook    ; update all dynamic blocks upon saving
+          (lambda ()
+            (add-hook 'before-save-hook #'org-update-all-dblocks nil t))))
 #+end_src
 *** denote-org
 Load denote-org for features such as denote-links as per instructions on
