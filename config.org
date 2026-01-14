@@ -54,6 +54,15 @@ custom advices to change the behaviour of functions
         ;; region inactive: do nothing
         (apply orig-fun args))))
 #+end_src
+*** disable recentf
+#+begin_src emacs-lisp
+  (defun advice-disable-recentf (orig-fun &rest args)
+    "Advice: disable recentf-mode."
+    (let ((find-file-hook (if (boundp 'find-file-hook)
+                              (remq 'recentf-track-opened-file find-file-hook)
+                            find-file-hook)))
+      (apply orig-fun args)))
+#+end_src
 ** behaviour
 *** remember recently opened files
 #+begin_src emacs-lisp
@@ -1000,10 +1009,11 @@ Load org when opening org files.
     (org-ellipsis " ▼")                 ; use ▼ instead of default "..."
     (org-directory "~/notes")
     <<org-custom-capture>>
-    <<org-custom-agenda>>
+    <<org-custom-agenda-variables>>
     :config
     <<org-custom-file-opening>>
     <<org-custom-latex-preview-scaling>>
+    <<org-custom-agenda-advices>>
     :init
     (defun my/org-copy-special ()
       "Copy the current region using `org-copy-special` and deactivate the mark."
@@ -1025,7 +1035,8 @@ Load org when opening org files.
 *** customizing org-agenda
 - scan all org files for agenda items
 - sort todos by timestamp
-#+name: org-custom-agenda
+- use titles for agenda items
+#+name: org-custom-agenda-variables
 #+begin_src emacs-lisp :tangle no
   (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (org-agenda-sorting-strategy
@@ -1037,6 +1048,12 @@ Load org when opening org files.
      (todo   . " %i %-15(org-get-title) ")
      (tags   . " %i %-15(org-get-title) ")
      (search . " %i %-15(org-get-title) ")))
+#+end_src
+- disable ~recentf~ when using ~org-agenda~ so that all visited files are not added
+  to the recent files list
+#+name: org-custom-agenda-advices
+#+begin_src emacs-lisp :tangle no
+  (advice-add 'org-agenda :around #'advice-disable-recentf)
 #+end_src
 *** customizing file opening
 Make org-mode open certain files using ~xdg-open~ instead of emacs.
