@@ -1172,6 +1172,19 @@ https://github.com/pprevos/denote-explore
   (use-package denote-explore
     :after denote)
 #+end_src
+** citar
+Load citar to handle global bibliography in all.bib (exported from zotero) as per instructions on
+https://github.com/emacs-citar/citar
+#+begin_src emacs-lisp
+  (use-package citar
+    :after (:any org tex)
+    :custom
+    (citar-bibliography '("~/zotero/all.bib"))
+    (org-cite-insert-processor 'citar)
+    (org-cite-follow-processor 'citar)
+    (org-cite-activate-processor 'citar)
+    (org-cite-global-bibliography citar-bibliography))
+#+end_src
 * Presentations
 Packages and customizations for presentations
 ** org-present
@@ -1440,15 +1453,6 @@ Load various company latex backends via cape for corfu (for autocomplete)
       (add-to-list 'completion-at-point-functions (cape-company-to-capf #'company-auctex-environments)))
     :hook
     (LaTeX-mode . auctex-setup-capf))
-#+end_src
-** citar
-Load citar to handle global bibliography in all.bib (exported from zotero) as per instructions on
-https://github.com/emacs-citar/citar
-#+begin_src emacs-lisp
-  (use-package citar
-    :after tex
-    :custom
-    (citar-bibliography '("~/zotero/all.bib")))
 #+end_src
 ** Latex input
 Customizing latex input method as per instructions on
