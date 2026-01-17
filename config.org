@@ -1185,10 +1185,10 @@ https://github.com/emacs-citar/citar
     :after (:any org tex)
     :custom
     (citar-bibliography '("~/zotero/all.bib"))
+    (org-cite-global-bibliography '("~/zotero/all.bib"))
     (org-cite-insert-processor 'citar)
     (org-cite-follow-processor 'citar)
-    (org-cite-activate-processor 'citar)
-    (org-cite-global-bibliography citar-bibliography))
+    (org-cite-activate-processor 'citar))
 #+end_src
 * Presentations
 Packages and customizations for presentations
