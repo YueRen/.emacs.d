@@ -1279,6 +1279,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
     (TeX-parse-self t) ; auto-parse tex file on load
     (TeX-auto-save t)  ; auto-parse tex file on save
     (TeX-master nil)   ; always query for master file
+    (citar-bibtex-no-export-fields '("abstract" "copyright" "file" "keywords" "langid" "urldate"))
     :init
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
     (add-hook 'TeX-update-style-hook 'hl-todo-mode) ; fix for hl-todo-mode
