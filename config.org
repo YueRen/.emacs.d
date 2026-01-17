@@ -269,10 +269,6 @@ https://github.com/jamescherti/minimal-emacs.d
 #+begin_src emacs-lisp
   (setopt require-final-newline t)
 #+end_src
-*** auto-refresh files
-#+begin_src emacs-lisp
-  (global-auto-revert-mode)
-#+end_src
 *** set tab width
 default is 8, which is too much
 #+begin_src emacs-lisp
