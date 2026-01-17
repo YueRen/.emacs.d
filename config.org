@@ -1570,10 +1570,10 @@ https://github.com/karthink/gptel
     :commands gptel ; defer loading after gptel is called
     :custom
     (gptel-default-mode 'org-mode)
+    (gptel-model 'gemini-3-flash-preview)
     :config
     ;; the following setq has to be in :config, putting it in :custom does not work
     (setopt
-     gptel-model 'gemini-3-flash-preview
      gptel-backend (gptel-make-gemini "Gemini"
                      :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
                      :stream t)))
