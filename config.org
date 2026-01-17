@@ -1268,6 +1268,9 @@ Load auctex, reftex, and flyspell when opening .tex files.
     (LaTeX-mode . turn-on-flyspell)          ; enable spellchecking
     (LaTeX-mode . outline-indent-minor-mode) ; enable folding
     (LaTeX-mode . indent-bars-mode)          ; enable indentation highlighting
+    :bind
+    (:map bibtex-mode-map
+          ("C-c C-e" . citar-insert-bibtex)) ; use citar to insert bibtex entries
     :custom
     (TeX-view-program-selection '((output-pdf "PDF Tools")))
     (TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
