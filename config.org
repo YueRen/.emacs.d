@@ -967,6 +967,8 @@ https://github.com/vedang/pdf-tools
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :mode "\\.pdf\\'"
+    :hook
+    (pdf-view-mode . pdf-view-roll-minor-mode) ; enable continuous scrolling
     :custom
     (pdf-view-resize-factor 1.05) ; decrease resizing factor for better control
     :init
