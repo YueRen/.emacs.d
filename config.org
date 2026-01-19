@@ -1296,8 +1296,6 @@ Load auctex, reftex, and flyspell when opening .tex files.
     <<tex-custom-spellcheck-blacklist-macros>>
     <<tex-custom-spellcheck-blacklist-environments>>
     <<tex-custom-query-labels>>
-    <<tex-custom-folding>>
-    <<tex-custom-folding-face>>
     <<tex-custom-reftex-goto-label>>
     <<tex-custom-bibtool-current-file>>
     )
@@ -1373,31 +1371,6 @@ Load auctex, reftex, and flyspell when opening .tex files.
               (add-to-list 'LaTeX-label-alist '("proposition" . "prop:"))
               (add-to-list 'LaTeX-label-alist '("remark" . "rem:"))
               (add-to-list 'LaTeX-label-alist '("theorem" . "thm:"))))
-#+end_src
-** Custom folding
-Enable folding and unfolding
-#+name: tex-custom-folding
-#+begin_src emacs-lisp :tangle no
-  (defun yr/TeX-fold-all ()
-    (interactive)
-    (let ((env (read-from-minibuffer "Environment: ")))
-      (save-excursion
-        (goto-char (point-min))
-        (while (search-forward (format "begin{%s}" env) nil t)
-          (TeX-fold-env)))))
-  (defun yr/TeX-unfold-all ()
-    (interactive)
-    (let ((env (read-from-minibuffer "Environment: ")))
-      (save-excursion
-        (goto-char (point-min))
-        (while (search-forward (format "begin{%s}" env) nil t)
-          (TeX-fold-clearout-item)))))
-#+end_src
-Disable custom face when temporarily showing folded text
-#+name: tex-custom-folding-face
-#+begin_src emacs-lisp :tangle no
-  (custom-set-faces
-   '(TeX-fold-unfolded-face ((t nil))))
 #+end_src
 ** Custom reftex-goto-label
 By default, ~reftex-goto-label~ does not ~push-mark~ at the point of departure, so you cannot jump back by using ~C-u C-SPC~.
