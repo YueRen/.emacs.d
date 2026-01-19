@@ -93,14 +93,6 @@ custom advices to change the behaviour of functions
 #+begin_src emacs-lisp
   (setopt confirm-kill-emacs 'y-or-n-p)
 #+end_src
-*** disable compiliation warnings
-#+begin_src emacs-lisp
-  (setopt native-comp-async-report-warnings-errors 'silent)
-#+end_src
-*** disable warning popups unless error
-#+begin_src emacs-lisp
-  (setopt warning-minimum-level :error)
-#+end_src
 *** custom-file
 Change custom-file as per instructions on
 https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
@@ -1286,6 +1278,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
     (TeX-parse-self t) ; auto-parse tex file on load
     (TeX-auto-save t)  ; auto-parse tex file on save
     (TeX-master nil)   ; always query for master file
+    (LaTeX-item-indent 0) ; indent \item
     (citar-bibtex-no-export-fields '("abstract" "copyright" "file" "keywords" "langid" "urldate"))
     :init
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
