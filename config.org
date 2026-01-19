@@ -63,6 +63,12 @@ custom advices to change the behaviour of functions
                             find-file-hook)))
       (apply orig-fun args)))
 #+end_src
+*** push mark
+#+begin_src emacs-lisp
+  (defun advice-push-mark (&rest _)
+    "Advice: push a mark."
+    (push-mark))
+#+end_src
 ** behaviour
 *** remember recently opened files
 #+begin_src emacs-lisp
@@ -1367,14 +1373,10 @@ Load auctex, reftex, and flyspell when opening .tex files.
 #+end_src
 ** Custom reftex-goto-label
 By default, ~reftex-goto-label~ does not ~push-mark~ at the point of departure, so you cannot jump back by using ~C-u C-SPC~.
-This function fixes this issue
+The following advice fixes this issue.
 #+name: tex-custom-reftex-goto-label
 #+begin_src emacs-lisp :tangle no
-  (defun yr/reftex-goto-label ()
-    "Wrapper around reftex-goto-label with jump back functionality."
-    (interactive)
-    (push-mark)
-    (reftex-goto-label))
+  (advice-add 'reftex-goto-label :before #'advice-push-mark)
 #+end_src
 ** Custom bibtool-current-file
 Custom command for running bibtool on a currently opened .bib file
