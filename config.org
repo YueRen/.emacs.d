@@ -469,10 +469,7 @@ https://github.com/emacs-dashboard/emacs-dashboard
     :hook
     ;; trigger manual refresh whenever a new emacsclient frame is created
     ;; (required for displaying nerd-icons correctly)
-    (server-after-make-frame . (lambda ()
-                                 (when (get-buffer "*dashboard*")
-                                   (with-current-buffer "*dashboard*"
-                                     (dashboard-refresh-buffer)))))
+    (server-after-make-frame . dashboard-open)
     :custom
     (dashboard-center-content t)         ; center dashboard
     (dashboard-startupify-list '(dashboard-insert-items)) ; only show items in dashboard
@@ -481,7 +478,7 @@ https://github.com/emacs-dashboard/emacs-dashboard
     (dashboard-icon-type 'nerd-icons)    ; use nerd-icons
     (dashboard-set-heading-icons t)      ; use heading icons
     (dashboard-set-file-icons t)         ; use file icons
-    (initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
+    (initial-buffer-choice . 'dashboard-open)
     :config
     (dashboard-setup-startup-hook))      ; open dashboard on startup
 #+end_src
