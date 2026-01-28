@@ -69,6 +69,12 @@ custom advices to change the behaviour of functions
     "Advice: push a mark."
     (push-mark))
 #+end_src
+*** move to end of line
+#+begin_src emacs-lisp
+  (defun advice-end-of-line (&rest _args)
+  "Advice: move point to end of the line."
+  (end-of-line))
+#+end_src
 ** behaviour
 *** remember recently opened files
 #+begin_src emacs-lisp
@@ -1014,6 +1020,7 @@ Load org when opening org files.
     <<org-custom-file-opening>>
     <<org-custom-latex-preview-scaling>>
     <<org-custom-agenda-advices>>
+    <<org-custom-toggle-heading>>
     :init
     (defun my/org-copy-special ()
       "Copy the current region using `org-copy-special` and deactivate the mark."
@@ -1070,6 +1077,13 @@ Make org-mode open certain files using ~xdg-open~ instead of emacs.
            ("\\.ppt\\'"  . "xdg-open %s")   ;; MS PowerPoint
            ("\\.pptx\\'" . "xdg-open %s"))) ;; MS PowerPoint
   (add-to-list 'org-file-apps rule))
+#+end_src
+*** customizing toggling
+Move point to end of line after toggling heading.  Default behaviour is moving
+point to beginning of line, which I find of very limited use.
+#+name: org-custom-toggle-heading
+#+begin_src emacs-lisp :tangle no
+  (advice-add 'org-toggle-heading :after #'advice-end-of-line)
 #+end_src
 *** customizing latex preview scaling
 Make org-mode scale latex preview images as you scale the text.  Taken from
