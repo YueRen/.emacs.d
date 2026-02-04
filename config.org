@@ -1001,6 +1001,7 @@ Load org when opening org files.
     ("\\.org\\'" . org-mode)
     :hook
     (org-mode . indent-bars-mode) ; enable indent bars
+    (org-mode . turn-on-flyspell) ; enable spellchecking
     :bind
     (("C-c l" . org-store-link) ; recommended keybindings
      ("C-c c" . org-capture)
