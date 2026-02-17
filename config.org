@@ -521,9 +521,10 @@ https://github.com/rainstormstudio/nerd-icons-completion
 #+begin_src emacs-lisp
   (use-package nerd-icons-completion
     :after marginalia
+    :hook
+    (marginalia-mode . nerd-icons-completion-marginalia-setup)
     :config
-    (nerd-icons-completion-mode)
-    (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+    (nerd-icons-completion-mode))
 #+end_src
 ** which-key
 Load which-key as per instructions on
