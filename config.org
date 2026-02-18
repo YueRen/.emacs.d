@@ -472,10 +472,6 @@ Set up dashboard as per instructions on:
 https://github.com/emacs-dashboard/emacs-dashboard
 #+begin_src emacs-lisp
   (use-package dashboard
-    :hook
-    ;; trigger manual refresh whenever a new emacsclient frame is created
-    ;; (required for displaying nerd-icons correctly)
-    (server-after-make-frame . dashboard-open)
     :custom
     (dashboard-center-content t)         ; center dashboard
     (dashboard-startupify-list '(dashboard-insert-items)) ; only show items in dashboard
@@ -484,9 +480,18 @@ https://github.com/emacs-dashboard/emacs-dashboard
     (dashboard-icon-type 'nerd-icons)    ; use nerd-icons
     (dashboard-set-heading-icons t)      ; use heading icons
     (dashboard-set-file-icons t)         ; use file icons
-    (initial-buffer-choice . 'dashboard-open)
+    (initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
     :config
-    (dashboard-setup-startup-hook))      ; open dashboard on startup
+    (dashboard-setup-startup-hook)       ; open dashboard on startup
+
+    (defun my/dashboard-fix-icons (frame)
+      (when (display-graphic-p frame)
+        (with-selected-frame frame
+          (when (get-buffer "*dashboard*") ; Only refresh if the buffer actually exists
+            (dashboard-refresh-buffer)))
+        (remove-hook 'after-make-frame-functions #'my/dashboard-fix-icons)))
+
+    (add-hook 'after-make-frame-functions #'my/dashboard-fix-icons))
 #+end_src
 * Completion framework
 Customizations that affect completions
