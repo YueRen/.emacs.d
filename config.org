@@ -79,17 +79,18 @@ custom advices to change the behaviour of functions
 *** remember recently opened files
 #+begin_src emacs-lisp
   (use-package recentf
+    :ensure nil         ; built-in
+    :after no-littering ; to automatically exclude no-littering folders
     :custom
     (recentf-max-saved-items 1024 "increase number of saved files")
     :config
-    (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME")))    ; exclude files from elpa
-    (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory)) ; exclude files from no-littering
-    (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
+    (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME"))) ; exclude files from elpa
     (recentf-mode))
 #+end_src
 *** remember recently visited line in files
 #+begin_src emacs-lisp
   (use-package saveplace
+    :ensure nil ; built-in
     :custom
     (save-place-limit 1024 "increase number of saved file lines")
     :config
@@ -167,12 +168,14 @@ The following makes is so that items in a list count as their own paragraphs.  T
 *** enable highlighting of current line in sources and texts
 #+begin_src emacs-lisp
   (use-package hl-line
+    :ensure nil ; built-in
     :hook
     ((prog-mode text-mode) . hl-line-mode))
 #+end_src
 *** enable highlighting of parenthesis at point in programming modes
 #+begin_src emacs-lisp
   (use-package paren
+    :ensure nil ; built-in
     :hook
     (prog-mode . show-paren-mode))
 #+end_src
@@ -183,6 +186,7 @@ The following makes is so that items in a list count as their own paragraphs.  T
 *** enable pairing of parenthesis in programming modes
 #+begin_src emacs-lisp
   (use-package elec-pair
+    :ensure nil ; built-in
     :custom
     (electric-pair-inhibit-predicate 'yr/electric-pair-conservative-inhibit)
     :hook
@@ -240,6 +244,7 @@ The following makes is so that items in a list count as their own paragraphs.  T
 *** display time
 #+begin_src emacs-lisp
   (use-package time
+    :ensure nil ; built-in
     :custom
     (display-time-24hr-format t "display time in 24h format")
     (display-time-default-load-average nil)
@@ -255,6 +260,7 @@ The following makes is so that items in a list count as their own paragraphs.  T
 Use C-x <arrow> to switch windows.
 #+begin_src emacs-lisp
   (use-package windmove
+    :ensure nil ; built-in
     :bind
     (("C-x <up>"    . windmove-up)
      ("C-x <down>"  . windmove-down)
@@ -284,6 +290,7 @@ default is 8, which is too much
 *** overwrite selected text when typing over it
 #+begin_src emacs-lisp
   (use-package delsel
+    :ensure nil ; built-in
     :config
     (delete-selection-mode 1))
 #+end_src
