@@ -1258,11 +1258,23 @@ https://github.com/magit/magit
 ** magit-todos
 Load magit-todos as per instructions on
 https://github.com/alphapapa/magit-todos
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb tangle
   (use-package magit-todos
     :after magit
     :config
+    <<magit-todos-custom-keywords>>
     (magit-todos-mode 1))
+#+end_src
+Note that magit-todos:
+1. treats entries of `magit-todos-keywords-list` as strings
+2. requires that the entries to be preceded by a space
+This is unfortunate for latex files where TODOs are usually wrapped around a
+macro. As a band-aid, let us add the most common macros for my todos to its
+list.
+#+name: magit-todos-custom-keywords
+#+begin_src emacs-lisp :tangle no
+  (add-to-list 'magit-todos-keywords-list "\\yue{TODO") ; for TODOs in latex files
+  (add-to-list 'magit-todos-keywords-list "\yr{TODO")
 #+end_src
 ** forge
 Load forge as per instructions on
