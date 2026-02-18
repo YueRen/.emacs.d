@@ -138,7 +138,6 @@ The following makes is so that items in a list count as their own paragraphs.  T
     (kill-new (expand-file-name default-directory)))
   (advice-add 'pwd :after #'advice-pwd-copy--after)
 #+end_src
-
 ** visuals
 *** empty startup screen
 #+begin_src emacs-lisp
