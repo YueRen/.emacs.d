@@ -884,6 +884,8 @@ Load outline-indent as per instructions on
 https://github.com/jamescherti/outline-indent.el
 #+begin_src emacs-lisp
   (use-package outline-indent
+    :hook
+    ((prog-mode text-mode) . outline-indent-minor-mode)
     :bind
     ("<backtab>" . yr/outline-indent-toggle-fold)
     :custom
@@ -907,6 +909,8 @@ Load indent-bars as per instructions on
 https://github.com/jdtsmith/indent-bars
 #+begin_src emacs-lisp
   (use-package indent-bars
+    :hook
+    ((prog-mode text-mode) . indent-bars-mode)
     :custom
     (indent-bars-color '(highlight :face-bg t :blend 0.2)) ; decrease visibility of bars
     :init
@@ -1019,7 +1023,6 @@ Load org when opening org files.
     :mode
     ("\\.org\\'" . org-mode)
     :hook
-    (org-mode . indent-bars-mode) ; enable indent bars
     (org-mode . turn-on-flyspell) ; enable spellchecking
     :bind
     (("C-c l" . org-store-link) ; recommended keybindings
@@ -1326,8 +1329,6 @@ Load auctex, reftex, and flyspell when opening .tex files.
     :hook
     (LaTeX-mode . reftex-mode)               ; enable referencing
     (LaTeX-mode . turn-on-flyspell)          ; enable spellchecking
-    (LaTeX-mode . outline-indent-minor-mode) ; enable folding
-    (LaTeX-mode . indent-bars-mode)          ; enable indentation highlighting
     :bind
     (:map bibtex-mode-map
           ("C-c C-e" . citar-insert-bibtex)) ; use citar to insert bibtex entries
@@ -1514,9 +1515,6 @@ https://github.com/JuliaEditorSupport/julia-emacs
 #+begin_src emacs-lisp
   (use-package julia-mode
     :mode "\\.jl\\'" ; defer loading until and auto-activate when .jl files are opened
-    :hook
-    (julia-mode . outline-indent-minor-mode) ; enable folding
-    (julia-mode . indent-bars-mode)          ; show indent bars
     :init
     (with-eval-after-load 'julia-mode ; disable <backtack> shortcut, it is reserved for folding
       (define-key julia-mode-map (kbd "<backtab>") nil)))
