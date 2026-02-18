@@ -1039,6 +1039,7 @@ Load org when opening org files.
     <<org-custom-agenda-variables>>
     :config
     <<org-custom-file-opening>>
+    <<org-custom-latex-macros>>
     <<org-custom-latex-preview-scaling>>
     <<org-custom-agenda-advices>>
     <<org-custom-toggle-heading>>
@@ -1105,6 +1106,17 @@ point to beginning of line, which I find of very limited use.
 #+name: org-custom-toggle-heading
 #+begin_src emacs-lisp :tangle no
   (advice-add 'org-toggle-heading :after #'advice-end-of-line)
+#+end_src
+*** customizing latex macros
+Make org-mode scale latex preview images as you scale the text.  Taken from
+https://karthinks.com/software/scaling-latex-previews-in-emacs/
+#+name: org-custom-latex-macros
+#+begin_src emacs-lisp :tangle no
+  (add-to-list 'org-latex-packages-alist '("" "amsmath" t))
+  (add-to-list 'org-latex-packages-alist '("" "amssymb" t)) ; for \mathbb
+  (add-to-list 'org-latex-packages-alist '("" "mathtools" t)) ; for \coloneqq
+  (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\RR}{\\mathbb{R}}"))
+  (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\calF}{\\mathcal{F}}"))
 #+end_src
 *** customizing latex preview scaling
 Make org-mode scale latex preview images as you scale the text.  Taken from
