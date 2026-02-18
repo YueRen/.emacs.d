@@ -168,8 +168,7 @@ The following makes is so that items in a list count as their own paragraphs.  T
 #+begin_src emacs-lisp
   (use-package hl-line
     :hook
-    (prog-mode . hl-line-mode)
-    (text-mode . hl-line-mode))
+    ((prog-mode text-mode) . hl-line-mode))
 #+end_src
 *** enable highlighting of parenthesis at point in programming modes
 #+begin_src emacs-lisp
