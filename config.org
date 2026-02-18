@@ -20,7 +20,7 @@ Auto-install packages hereon
   (require 'use-package-ensure)
   (setopt use-package-always-ensure t)
 #+end_src
-* Fundamentals (basics)
+* Fundamentals (built-in)
 Customizations that affect everything and require no external packages
 ** no-littering (early loading required)
 Load no-littering, move auto-save files from current to '.emacs.d/var/auto-save/'.
@@ -367,7 +367,7 @@ Load appropriate personal dictionary based on ~ispell-local-dictionary~ variable
 
   (add-hook 'hack-local-variables-hook 'yr/setup-flyspell-personal-dictionary)
 #+end_src
-* Fundamentals (advanced)
+* Fundamentals (packages)
 Customizations that affect everything and require packages
 ** visuals
 *** dracula-theme
