@@ -978,10 +978,24 @@ https://github.com/vedang/pdf-tools
     :mode "\\.pdf\\'"
     :hook
     (pdf-view-mode . pdf-view-roll-minor-mode) ; enable continuous scrolling
+    :bind (:map pdf-view-mode-map
+                ("C-n" . my/pdf-roll-fast-forward)
+                ("C-p" . my/pdf-roll-fast-backward)
+                ("C-<down>" . my/pdf-roll-fast-forward)
+                ("C-<up>"   . my/pdf-roll-fast-backward))
     :custom
     (pdf-view-resize-factor 1.05) ; decrease resizing factor for better control
     :init
-    (pdf-loader-install))
+    (pdf-loader-install)
+    (defun my/pdf-roll-fast-forward ()
+      "Scroll forward by exactly 10 lines."
+      (interactive)
+      (pdf-roll-scroll-forward 10))
+
+    (defun my/pdf-roll-fast-backward ()
+      "Scroll backward by exactly 10 lines."
+      (interactive)
+      (pdf-roll-scroll-backward 10)))
 #+end_src
 ** saveplace-pdf-view
 Load saveplace-pdf-view to remember last visited page in pdfs as per instructions on
