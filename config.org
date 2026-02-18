@@ -112,9 +112,9 @@ https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   (setopt custom-file (locate-user-emacs-file "custom.el"))
   (load custom-file :no-error-if-file-is-missing)
 #+end_src
-*** smooth scrolling
+*** preserve screen position while scrolling
 #+begin_src emacs-lisp
-  (pixel-scroll-precision-mode 1)
+  (setq scroll-preserve-screen-position t)
 #+end_src
 *** list items end at paragraph
 The following makes is so that items in a list count as their own paragraphs.  That way, they are not accidentally wrapped when invoking `M-x fill-paragraph` on a large chunk of text followed by a list
