@@ -891,7 +891,7 @@ https://github.com/jamescherti/outline-indent.el
 #+begin_src emacs-lisp
   (use-package outline-indent
     :hook
-    ((prog-mode text-mode) . outline-indent-minor-mode)
+    (prog-mode . outline-indent-minor-mode)
     :bind
     ("<backtab>" . yr/outline-indent-toggle-fold)
     :custom
@@ -1335,6 +1335,7 @@ Load auctex, reftex, and flyspell when opening .tex files.
     :hook
     (LaTeX-mode . reftex-mode)               ; enable referencing
     (LaTeX-mode . turn-on-flyspell)          ; enable spellchecking
+    (LaTex-mode . outline-indent-minor-mode) ; enable folding
     :bind
     (:map bibtex-mode-map
           ("C-c C-e" . citar-insert-bibtex)) ; use citar to insert bibtex entries
