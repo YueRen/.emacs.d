@@ -258,7 +258,7 @@ The following makes is so that items in a list count as their own paragraphs.  T
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
-*** switching windows
+*** windmove
 Use C-x <arrow> to switch windows.
 #+begin_src emacs-lisp
   (use-package windmove
