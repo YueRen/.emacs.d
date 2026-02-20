@@ -352,33 +352,35 @@ delete word without changing kill ring, alternative to backward-kill-word
   (global-set-key (kbd "M-DEL") 'my-backward-kill-word)
 #+end_src
 ** searching
-*** show number of hits in modeline
+*** isearch
 #+begin_src emacs-lisp
-  (setopt isearch-lazy-count t)
-#+end_src
-*** do not cancel search when scrolling
-#+begin_src emacs-lisp
-  (setopt isearch-allow-scroll t)
+  (use-package isearch
+    :ensure nil ; built-in
+    :custom
+    (isearch-lazy-count t)    ; show number of hits in modeline
+    (isearch-allow-scroll t)) ; allow scrolling during search
 #+end_src
 ** spellchecking
 Load appropriate personal dictionary based on ~ispell-local-dictionary~ variable.
 #+begin_src emacs-lisp
-  (defun yr/setup-flyspell-personal-dictionary ()
-    "Set ispell-personal-dictionary based on ispell-local-dictionary. Does nothing if ispell-local-dictionary is not set."
-    (when (and (boundp 'ispell-local-dictionary) ispell-local-dictionary)
-      (let* ((dict ispell-local-dictionary)
-             (personal-dict (expand-file-name (format ".aspell.%s.pws" dict) (getenv "HOME")))
-             (lang-name (if (string-match "_" dict)
-                            (substring dict 0 (match-beginning 0)) ; Use the name up to the first `_` if it exists
-                          dict)))                                  ; Use the entire name otherwise
-        ;; Check if the personal dictionary file exists; if not, create it
-        (unless (file-exists-p personal-dict)
-          (with-temp-file personal-dict
-            (insert (format "personal_ws-1.1 %s 0\n" lang-name))))
-        ;; Set ispell-personal-dictionary
-        (setq ispell-local-pdict personal-dict))))
-
-  (add-hook 'hack-local-variables-hook 'yr/setup-flyspell-personal-dictionary)
+    (use-package ispell
+      :ensure nil ; built-in
+      :hook (hack-local-variables . yr/setup-flyspell-personal-dictionary)
+      :config
+      (defun yr/setup-flyspell-personal-dictionary ()
+        "Set ispell-personal-dictionary based on ispell-local-dictionary. Does nothing if ispell-local-dictionary is not set."
+        (when (and (boundp 'ispell-local-dictionary) ispell-local-dictionary)
+          (let* ((dict ispell-local-dictionary)
+                 (personal-dict (expand-file-name (format ".aspell.%s.pws" dict) (getenv "HOME")))
+                 (lang-name (if (string-match "_" dict)
+                                (substring dict 0 (match-beginning 0)) ; Use the name up to the first `_` if it exists
+                              dict)))                                  ; Use the entire name otherwise
+            ;; Check if the personal dictionary file exists; if not, create it
+            (unless (file-exists-p personal-dict)
+              (with-temp-file personal-dict
+                (insert (format "personal_ws-1.1 %s 0\n" lang-name))))
+            ;; Set ispell-personal-dictionary
+            (setq ispell-local-pdict personal-dict)))))
 #+end_src
 * Fundamentals (packages)
 Customizations that affect everything and require packages
