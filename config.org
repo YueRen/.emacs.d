@@ -128,7 +128,10 @@ The following makes is so that items in a list count as their own paragraphs.  T
 #+end_src
 *** make quick-calc use content of active region as initial input
 #+begin_src emacs-lisp
-  (advice-add 'quick-calc :around #'advice-minibuffer-seed-with-region)
+  (use-package calc
+    :ensure nil ; built-in
+    :config
+    (advice-add 'quick-calc :around #'advice-minibuffer-seed-with-region))
 #+end_src
 *** make pwd copy the path to kill ring
 (cannot use generic copy last message advice as it contains more than the path)
