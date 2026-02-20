@@ -76,7 +76,8 @@ custom advices to change the behaviour of functions
   (end-of-line))
 #+end_src
 ** behaviour
-*** remember recently opened files
+*** recentf
+remember recently visited files
 #+begin_src emacs-lisp
   (use-package recentf
     :ensure nil         ; built-in
@@ -87,7 +88,8 @@ custom advices to change the behaviour of functions
     (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/elpa/.*" (getenv "HOME"))) ; exclude files from elpa
     (recentf-mode))
 #+end_src
-*** remember recently visited line in files
+*** saveplace
+remember recently visited lines in files
 #+begin_src emacs-lisp
   (use-package saveplace
     :ensure nil ; built-in
@@ -96,7 +98,8 @@ custom advices to change the behaviour of functions
     :config
     (save-place-mode))
 #+end_src
-*** remember minibuffer history
+*** savehist
+remember minibuffer history
 #+begin_src emacs-lisp
   (use-package savehist
     :ensure nil ; built-in
@@ -127,7 +130,8 @@ The following makes is so that items in a list count as their own paragraphs.  T
 #+begin_src emacs-lisp
   (setq-default paragraph-start "\\f\\|[ \t]*$\\|[ \t]*[-+*.] ")
 #+end_src
-*** make quick-calc use content of active region as initial input
+*** calc
+make quick-calc use content of active region as initial input
 #+begin_src emacs-lisp
   (use-package calc
     :ensure nil ; built-in
@@ -168,14 +172,16 @@ The following makes is so that items in a list count as their own paragraphs.  T
 #+begin_src emacs-lisp
   (add-to-list 'default-frame-alist '(undecorated . t))
 #+end_src
-*** enable highlighting of current line in sources and texts
+*** hl-line
+enable highlighting of current line in sources and texts
 #+begin_src emacs-lisp
   (use-package hl-line
     :ensure nil ; built-in
     :hook
     ((prog-mode text-mode) . hl-line-mode))
 #+end_src
-*** enable highlighting of parenthesis at point in programming modes
+*** paren
+enable highlighting of parenthesis at point in programming modes
 #+begin_src emacs-lisp
   (use-package paren
     :ensure nil ; built-in
@@ -186,7 +192,8 @@ The following makes is so that items in a list count as their own paragraphs.  T
 #+begin_src emacs-lisp
   (setq-default fill-column 80)
 #+end_src
-*** enable pairing of parenthesis in programming modes
+*** elec-pair
+enable pairing of parenthesis in programming modes
 #+begin_src emacs-lisp
   (use-package elec-pair
     :ensure nil ; built-in
@@ -244,7 +251,8 @@ The following makes is so that items in a list count as their own paragraphs.  T
 #+begin_src emacs-lisp
   (column-number-mode)
 #+end_src
-*** display time
+*** time
+display time in modeline
 #+begin_src emacs-lisp
   (use-package time
     :ensure nil ; built-in
@@ -294,7 +302,8 @@ default is 8, which is too much
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil)
 #+end_src
-*** overwrite selected text when typing over it
+*** delsel
+overwrite selected text when typing over it
 #+begin_src emacs-lisp
   (use-package delsel
     :ensure nil ; built-in
@@ -351,17 +360,18 @@ delete word without changing kill ring, alternative to backward-kill-word
   (global-set-key (kbd "C-<backspace>") 'my-backward-kill-word)
   (global-set-key (kbd "M-DEL") 'my-backward-kill-word)
 #+end_src
-** searching
-*** isearch
+** isearch
+- show number of search hits in modeline
+- allow scrolling during search
 #+begin_src emacs-lisp
   (use-package isearch
     :ensure nil ; built-in
     :custom
-    (isearch-lazy-count t)    ; show number of hits in modeline
-    (isearch-allow-scroll t)) ; allow scrolling during search
+    (isearch-lazy-count t)
+    (isearch-allow-scroll t))
 #+end_src
-** spellchecking
-Load appropriate personal dictionary based on ~ispell-local-dictionary~ variable.
+** ispell
+Load appropriate personal dictionary based on file local ~ispell-local-dictionary~ variable.
 #+begin_src emacs-lisp
     (use-package ispell
       :ensure nil ; built-in
