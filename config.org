@@ -269,11 +269,15 @@ Use C-x <arrow> to switch windows.
      ("C-x <left>"  . windmove-left)
      ("C-x <right>" . windmove-right)))
 #+end_src
-*** prefer vertical splits over horizontal splits
+*** window
+prefer vertical splits over horizontal splits
 https://github.com/jamescherti/minimal-emacs.d
 #+begin_src emacs-lisp
-  (setopt split-width-threshold 170
-          split-height-threshold nil)
+  (use-package window
+    :ensure nil ; built-in
+    :custom
+    (split-width-threshold 170)
+    (split-height-threshold nil))
 #+end_src
 ** editing
 *** add final newline before each save
