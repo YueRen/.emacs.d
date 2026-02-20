@@ -99,6 +99,7 @@ custom advices to change the behaviour of functions
 *** remember minibuffer history
 #+begin_src emacs-lisp
   (use-package savehist
+    :ensure nil ; built-in
     :config
     (savehist-mode))
 #+end_src
