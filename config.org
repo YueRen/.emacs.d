@@ -146,6 +146,11 @@ make quick-calc use content of active region as initial input
     (kill-new (expand-file-name default-directory)))
   (advice-add 'pwd :after #'advice-pwd-copy--after)
 #+end_src
+*** disable warnings and warning popups
+#+begin_src emacs-lisp
+  (setopt native-comp-async-report-warnings-errors 'silent)
+  (setopt warning-minimum-level :error)
+#+end_src
 ** visuals
 *** empty startup screen
 #+begin_src emacs-lisp
