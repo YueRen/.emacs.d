@@ -890,26 +890,15 @@ https://github.com/kickingvegas/casual/discussions/78
 #+begin_src emacs-lisp
   (use-package casual
     :config
-    (require 'casual-calc)
     (require 'casual-dired)
-    (require 'casual-ibuffer)
-    (require 'casual-info)
     (require 'casual-org)
     :bind
-    (:map calc-mode-map
-          ("?" . 'casual-calc-tmenu)
-          :map dired-mode-map
-          ("?" . 'casual-dired-tmenu)
-          ("s"   . 'casual-dired-sort-by-tmenu)
-          ("/"   . 'casual-dired-search-replace-tmenu)
-          :map ibuffer-mode-map
-          ("?" . 'casual-ibuffer-tmenu)
-          ("F"   . 'casual-ibuffer-filter-tmenu)
-          ("s"   . 'casual-ibuffer-sortby-tmenu)
-          :map Info-mode-map
-          ("?" . 'casual-info-tmenu)
-          :map org-mode-map
-          ("M-o" . 'casual-org-tmenu)))
+    ( :map dired-mode-map
+      ("?" . 'casual-dired-tmenu)
+      ("s"   . 'casual-dired-sort-by-tmenu)
+      ("/"   . 'casual-dired-search-replace-tmenu)
+      :map org-mode-map
+      ("M-o" . 'casual-org-tmenu)))
 #+end_src
 * Folding
 ** outline-indent
