@@ -1579,14 +1579,8 @@ Make sure that recent file list etc get updated when shutting down system.
   (use-package dbus
     :config
     (defun my-inhibit-logout--on-query-end-session (&rest _)
-      "Handler for GNOME session QueryEndSession signal."
-      ;; (do-auto-save)
-      ;; (when (fboundp 'savehist-autosave) (savehist-autosave))
-      ;; (when (fboundp 'desktop-auto-save) (desktop-auto-save))
-      ;; (when (fboundp 'recentf-save-list) (recentf-save-list))
       (call-interactively #'do-auto-save)
       (call-interactively #'kill-emacs)
-
     (dbus-register-signal
      :session
      "org.gnome.SessionManager"
