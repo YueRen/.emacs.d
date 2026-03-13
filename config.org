@@ -530,9 +530,7 @@ Load vertico for vertical minibuffer completion UI as per instructions on
 https://github.com/minad/vertico
 #+begin_src emacs-lisp
   (use-package vertico
-    ;; :custom
-    ;; (vertico-count 6)  ; number of candidates shown
-    :config
+    :init
     (vertico-mode))
 #+end_src
 ** marginalia
