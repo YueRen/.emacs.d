@@ -1225,11 +1225,6 @@ https://systemcrafters.net/emacs-tips/presentations-with-org-present/
 
     (add-hook 'org-present-mode-hook 'my/org-present-start)
     (add-hook 'org-present-mode-quit-hook 'my/org-present-end))
-
-  ;; Register hooks with org-present
-  ;; :hook
-  ;; (org-present-mode-hook . my/org-present-start)
-  ;; (org-present-mode-quit-hook . my/org-present-end))
 #+end_src
 * Git
 Packages and customizations for git
