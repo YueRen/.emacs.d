@@ -1629,14 +1629,16 @@ https://github.com/karthink/gptel
                      :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
                      :stream t)))
 #+end_src
-** gptel-aibo
-Installing gptel-aibo as per instructions on
-https://github.com/dolmens/gptel-aibo
+** agent-shell
+Installing agent-shell as per instructions on
+https://github.com/xenodium/agent-shell
 #+begin_src emacs-lisp
-  (use-package gptel-aibo
-    :after (gptel flycheck)
-    :bind (:map prog-mode-map
-                ("C-i" . gptel-aibo-summon)))
+  (use-package agent-shell)
+  (setq agent-shell-anthropic-authentication
+        (agent-shell-anthropic-make-authentication
+         :api-key (lambda ()
+                  (let ((secret (auth-source-pick-first-password :host "api.anthropic.com")))
+                    (if (functionp secret) (funcall secret) secret)))))
 #+end_src
 * Server
 ** Initialisation
