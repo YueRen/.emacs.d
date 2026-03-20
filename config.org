@@ -1023,7 +1023,7 @@ Load org when opening org files.
 - use titles for agenda items
 #+name: org-custom-agenda-variables
 #+begin_src emacs-lisp :tangle no
-  (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
+  (org-agenda-files (directory-files-recursively org-directory "_active_.*\\.org$"))
   (org-agenda-sorting-strategy
    '((agenda habit-down time-up urgency-down category-keep)
      (todo urgency-down timestamp-up category-keep)
