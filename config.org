@@ -1,7 +1,6 @@
 #+title: GNU Emacs config
 #+author: Yue Ren
 #+description: config with main usecase latex and julialang, optimized for screen efficiency, requires up-to-date Emacs
-#+STARTUP: show2levels
 
 * Package management
 ** package archives
@@ -985,7 +984,8 @@ Load org when opening org files.
      ("C-c C-x M-w" . my/org-copy-special))
     :custom
     (org-startup-indented t)            ; indent lines
-    (org-startup-truncated nil)         ; make lines wrap, disable truncation
+    (org-startup-truncated nil)         ; disable truncation, wrap lines instead
+    (org-startup-folded t)              ; fold items, showing only top level headers
     (org-support-shift-select 'always)  ; allow shift select
     (org-image-actual-width nil)        ; allow custom image sizes
     (org-hide-emphasis-markers t)       ; hide emphasis markers
