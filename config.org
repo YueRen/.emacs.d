@@ -1115,6 +1115,17 @@ https://github.com/minad/org-modern
     :config
     (global-org-modern-mode)) ; auto-activate in org-mode
 #+end_src
+*** org-appear
+Load org-appear as per instructions on
+https://github.com/awth13/org-appear
+#+begin_src emacs-lisp
+  (use-package org-appear
+    :after org
+    :hook
+    (org-mode . org-appear-mode)
+    :custom
+    (org-appear-autolinks t))
+#+end_src
 *** org-pdftools
 Load org-pdftools as per instructions on
 https://github.com/fuxialexander/org-pdftools
