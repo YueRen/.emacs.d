@@ -1134,6 +1134,14 @@ https://github.com/io12/org-fragtog
     :after org
     :hook (org-mode . org-fragtog-mode))
 #+end_src
+*** org-autolist
+Load org-autolist as per instructions on
+https://github.com/calvinwyoung/org-autolist
+#+begin_src emacs-lisp
+  (use-package org-autolist
+    :after org
+    :hook (org-mode . org-autolist-mode))
+#+end_src
 *** org-pdftools
 Load org-pdftools as per instructions on
 https://github.com/fuxialexander/org-pdftools
