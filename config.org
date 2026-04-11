@@ -1126,6 +1126,14 @@ https://github.com/awth13/org-appear
     :custom
     (org-appear-autolinks t))
 #+end_src
+*** org-fragtog
+Load org-fragtog as per instructions on
+https://github.com/io12/org-fragtog
+#+begin_src emacs-lisp
+  (use-package org-fragtog
+    :after org
+    :hook (org-mode . org-fragtog-mode))
+#+end_src
 *** org-pdftools
 Load org-pdftools as per instructions on
 https://github.com/fuxialexander/org-pdftools
