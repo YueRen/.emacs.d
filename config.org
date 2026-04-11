@@ -423,12 +423,53 @@ https://github.com/rainstormstudio/nerd-icons.el
 *** pulsar
 Load pulsar as per instructions on
 https://github.com/protesilaos/pulsar
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb tangle
   (use-package pulsar
     :custom
     (pulsar-face 'pulsar-magenta)
     :config
+    <<pulsar-hl-line-fix>>
     (pulsar-global-mode 1))
+#+end_src
+Fix pulsing under ~hl-line-mode~ as per instructions on
+https://github.com/protesilaos/pulsar/issues/1
+#+name: pulsar-hl-line-fix
+#+begin_src emacs-lisp :tangle no
+  (defun pulse-momentary-highlight-overlay (o &optional face)
+    "Pulse the overlay O, unhighlighting before next command.
+  Optional argument FACE specifies the face to do the highlighting."
+    ;; We don't support simultaneous highlightings.
+    (pulse-momentary-unhighlight)
+    (overlay-put o 'original-face (overlay-get o 'face))
+    ;; Make this overlay take priority over the `transient-mark-mode'
+    ;; overlay.
+    (overlay-put o 'original-priority (overlay-get o 'priority))
+    (overlay-put o 'priority 1)
+    (setq pulse-momentary-overlay o)
+    (if (eq pulse-flag 'never)
+        nil
+      (if (or (not pulse-flag) (not (pulse-available-p)))
+  	      ;; Provide a face... clear on next command
+  	      (progn
+  	        (overlay-put o 'face (or face 'pulse-highlight-start-face))
+  	        (add-hook 'pre-command-hook
+  		                #'pulse-momentary-unhighlight))
+        ;; Pulse it.
+        (overlay-put o 'face 'pulse-highlight-face)
+        ;; The pulse function puts FACE onto 'pulse-highlight-face.
+        ;; Thus above we put our face on the overlay, but pulse
+        ;; with a reference face needed for the color.
+        (pulse-reset-face face)
+        (let* ((start (color-name-to-rgb
+                       (face-background 'pulse-highlight-face nil 'default)))
+               (stop (color-name-to-rgb (face-background hl-line-face nil 'default))) ; I changed this
+               (colors (mapcar (apply-partially 'apply 'color-rgb-to-hex)
+                               (color-gradient start stop pulse-iterations))))
+          (setq pulse-momentary-timer
+                (run-with-timer 0 pulse-delay #'pulse-tick
+                                colors
+                                (time-add nil
+                                          (* pulse-delay pulse-iterations))))))))
 #+end_src
 ** modeline
 *** doom-modeline
