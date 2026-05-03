@@ -1620,7 +1620,7 @@ https://github.com/karthink/gptel
     ;; the following setq has to be in :config, putting it in :custom does not work
     (setopt
      gptel-backend (gptel-make-gemini "Gemini"
-                     :key (gptel-api-key-from-auth-source "gemini.googleapi.com")
+                     :key (lambda () (gptel-api-key-from-auth-source "gemini.googleapi.com"))
                      :stream t)))
 #+end_src
 ** agent-shell
