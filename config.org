@@ -937,12 +937,14 @@ https://www.youtube.com/watch?v=vm-FvNdYFcc
   (use-package dired-subtree
     :after dired
     :bind (:map dired-mode-map
-                ("<tab>" . dired-subtree-toggle)
-                ("<S-tab>" . dired-subtree-toggle)
-                ("<C-tab>" . dired-subtree-cycle))
+                ("<tab>" . dired-subtree-toggle))
     :custom
-    (dired-subtree-use-backgrounds . nil)) ; no special background for dired-subtree
+    (dired-subtree-use-backgrounds nil) ; no special background for dired-subtree
+    (dired-subtree-line-prefix "    "))  ; extra spacing to increase indendation
 #+end_src
+The increased ~dired-subtree-line-prefix~ is because ~ls -lht~ has variable spacing
+between columns, which frequently causes the filenames in subfolders to appear
+left of the filenames in the main folder.
 ** dired-open
 Load dired-open as per instructions on
 https://github.com/Fuco1/dired-hacks/tree/master?tab=readme-ov-file#dired-open
