@@ -793,9 +793,7 @@ https://github.com/oantolin/embark
 Load embark-consult as per instructions on
 https://github.com/oantolin/embark
 #+begin_src emacs-lisp
-  (use-package embark-consult
-    :hook
-    (embark-collect-mode . consult-preview-at-point-mode))
+  (use-package embark-consult)
 #+end_src
 ** helpful
 Load helpful for better help packages
