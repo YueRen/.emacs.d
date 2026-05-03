@@ -586,9 +586,6 @@ Load nerd-icons-completions for nerd icons in marginalia as per instructions on
 https://github.com/rainstormstudio/nerd-icons-completion
 #+begin_src emacs-lisp
   (use-package nerd-icons-completion
-    :after marginalia
-    :hook
-    (marginalia-mode . nerd-icons-completion-marginalia-setup)
     :config
     (nerd-icons-completion-mode))
 #+end_src
