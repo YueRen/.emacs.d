@@ -723,9 +723,15 @@ https://gitlab.com/OlMon/consult-flyspell
 #+begin_src emacs-lisp
   (use-package consult-flyspell
     :commands consult-flyspell
-    :custom
-    (consult-flyspell-always-check-buffer t)) ; automatically run flyspell-buffer
+    :config
+    (setq consult-flyspell-select-function 'ispell-word) ; automatically show corrections when selecting typo
+    (defun my/consult-flyspell ()
+      "Run `flyspell-buffer' to update overlays, then call `consult-flyspell'."
+      (interactive)
+      (flyspell-buffer)
+      (consult-flyspell)))
 #+end_src
+Note: setting variables with ~:custom~ does not work
 ** embark
 *** Basic setup
 Load embark as per instructions on
