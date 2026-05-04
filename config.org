@@ -396,6 +396,14 @@ Load appropriate personal dictionary based on file local ~ispell-local-dictionar
             ;; Set ispell-personal-dictionary
             (setq ispell-local-pdict personal-dict)))))
 #+end_src
+** bookmark
+#+begin_src emacs-lisp
+  (use-package bookmark
+    :ensure nil ; built-in
+    :custom
+    (bookmark-fringe-mark nil) ; disable bookmark fringe marks
+    (bookmark-save-flag 1))    ; immediately save bookmark changes
+#+end_src
 * Fundamentals (packages)
 Customizations that affect everything and require packages
 ** visuals
