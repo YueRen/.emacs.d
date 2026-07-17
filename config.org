@@ -1058,6 +1058,23 @@ Load org when opening org files.
     <<org-custom-latex-preview-scaling>>
     <<org-custom-agenda-advices>>
     <<org-custom-toggle-heading>>
+    (defun my/org-files-with-todos ()
+      (let* ((dir (expand-file-name org-directory))
+             (cmd (format "rg -l -g '*.org' -g '!*_games_*' -g '!*_private_*' '^\\*+\\s+TODO' %s"
+                          (shell-quote-argument dir))))
+        (split-string (shell-command-to-string cmd) "[\r\n]+" t)))
+
+    (setq org-agenda-files (my/org-files-with-todos))
+
+    (defun my/update-org-agenda-files ()
+      (when (eq major-mode 'org-mode)
+        (save-excursion
+          (goto-char (point-min))
+          (if (re-search-forward "^\\*+[ \t]+TODO" nil t)
+              (add-to-list 'org-agenda-files (buffer-file-name))
+            (setq org-agenda-files (delete (buffer-file-name) org-agenda-files))))))
+
+    (add-hook 'after-save-hook #'my/update-org-agenda-files)
     :init
     (defun my/org-copy-special ()
       "Copy the current region using `org-copy-special` and deactivate the mark."
@@ -1077,12 +1094,12 @@ Load org when opening org files.
   (org-capture-bookmark nil)
 #+end_src
 *** customizing org-agenda
-- scan all org files for agenda items
+- inhibit startup when preparing agenda buffers
 - sort todos by timestamp
 - use titles for agenda items
 #+name: org-custom-agenda-variables
 #+begin_src emacs-lisp :tangle no
-  (org-agenda-files (directory-files-recursively org-directory "_active_.*\\.org$"))
+  ; (org-agenda-inhibit-startup t)
   (org-agenda-sorting-strategy
    '((agenda habit-down time-up urgency-down category-keep)
      (todo urgency-down timestamp-up category-keep)
