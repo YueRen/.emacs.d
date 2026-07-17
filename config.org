@@ -516,12 +516,16 @@ Load transpose-frame for more convencient frame layout switching
 *** visual-replace
 Load visual-replace as per instructions on
 https://github.com/szermatt/visual-replace
+Some customization due to
+https://github.com/szermatt/visual-replace/issues/21
 #+begin_src emacs-lisp
   (use-package visual-replace
     :bind (("M-%" . visual-replace)
            :map isearch-mode-map
            ("M-%" . visual-replace-from-isearch))
     :config
+    (define-key visual-replace-mode-map [remap yank] nil)
+    (define-key visual-replace-mode-map [remap yank-pop] nil)
     (define-key visual-replace-mode-map (kbd "M-%")
                 visual-replace-secondary-mode-map))
 #+end_src
