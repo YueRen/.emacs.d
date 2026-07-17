@@ -735,14 +735,19 @@ https://gitlab.com/OlMon/consult-flyspell
   (use-package consult-flyspell
     :commands consult-flyspell
     :config
-    (setq consult-flyspell-select-function 'ispell-word) ; automatically show corrections when selecting typo
-    (defun my/consult-flyspell ()
+    (setq consult-flyspell-select-function 'ispell-word)) ; automatically show corrections when selecting typo
+  (defun my/consult-flyspell ()
       "Run `flyspell-buffer' to update overlays, then call `consult-flyspell'."
       (interactive)
       (flyspell-buffer)
-      (consult-flyspell)))
+      (consult-flyspell))
 #+end_src
-Note: setting variables with ~:custom~ does not work
+Notes:
+- customizing variables with ~:custom~ does not work
+- setting ~consult-flyspell-always-check-buffer~ to ~t~ to auto-run ~flyspell-buffer~
+  does not work nicely with ~embark~
+- ~my/consult-flyspell~ has to be defined outside the ~use-package~ block since the
+  content of the latter is only evaluated when ~consult-flyspell~ is run.
 ** embark
 *** Basic setup
 Load embark as per instructions on
