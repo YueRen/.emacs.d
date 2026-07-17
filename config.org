@@ -555,15 +555,29 @@ https://github.com/emacs-dashboard/emacs-dashboard
   (use-package dashboard
     :custom
     (dashboard-center-content t)         ; center dashboard
-    (dashboard-startupify-list '(dashboard-insert-items)) ; only show items in dashboard
+    (dashboard-startupify-list '(dashboard-insert-items))
     (dashboard-items '((bookmarks . 12)  ; show 12 bookmarks
-                       (recents  . 36))) ; show 36 recent files
+                       (recents   . 12)  ; show 12 recent files
+                       (agenda    . 12))); show 12 agenda items
     (dashboard-icon-type 'nerd-icons)    ; use nerd-icons
     (dashboard-set-heading-icons t)      ; use heading icons
     (dashboard-set-file-icons t)         ; use file icons
+    (dashboard-match-agenda-entry "TODO<>\"\"&TODO<>\"DONE\"")  ; show agenda items with TODO
+    (dashboard-filter-agenda-entry 'dashboard-no-filter-agenda) ; show agenda items beyond next week
+    (dashboard-agenda-sort-strategy '(time-up)) ; sort agenda items by time
+    (dashboard-item-names '(("Agenda for today:"           . "Agenda (today):")
+                            ("Agenda for the coming week:" . "Agenda:")))
     (initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
     :config
     (dashboard-setup-startup-hook)       ; open dashboard on startup
+
+    (defun my/dashboard-denote-shortener ()
+      "Extract the title from a Denote filename for the dashboard."
+      (let ((file (buffer-file-name)))
+        (if (and file (string-match "--\\([a-z0-9-]+\\)" file))
+            (format "%-24.24s: " (match-string 1 file)) ;; Show 10 chars of the title
+          (format "%-24.24s: " (or (org-get-category) "")))))
+    (setq dashboard-agenda-prefix-format " %i %(my/dashboard-denote-shortener)")
 
     (defun my/dashboard-fix-icons (frame)
       (when (display-graphic-p frame)
