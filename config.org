@@ -1161,8 +1161,14 @@ https://karthinks.com/software/scaling-latex-previews-in-emacs/
   (add-to-list 'org-latex-packages-alist '("" "amsmath" t))
   (add-to-list 'org-latex-packages-alist '("" "amssymb" t)) ; for \mathbb
   (add-to-list 'org-latex-packages-alist '("" "mathtools" t)) ; for \coloneqq
+  (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\FF}{\\mathbb{F}}"))
+  (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\QQ}{\\mathbb{Q}}"))
   (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\RR}{\\mathbb{R}}"))
+  (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\ZZ}{\\mathbb{Z}}"))
+  (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\calB}{\\mathcal{B}}"))
   (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\calF}{\\mathcal{F}}"))
+  (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\val}{{\\mathrm{val}}}"))
+  (setq org-format-latex-header (concat org-format-latex-header "\n\\newcommand{\\bigmid}{\\left.\\vphantom{\\Big\\{} \\suchthat \\vphantom{\\Big\\}}\\right.}"))
 #+end_src
 *** customizing latex preview scaling
 Make org-mode scale latex preview images as you scale the text.  Taken from
