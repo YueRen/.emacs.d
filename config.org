@@ -1072,6 +1072,7 @@ Load org when opening org files.
     <<org-custom-latex-preview-scaling>>
     <<org-custom-agenda-advices>>
     <<org-custom-toggle-heading>>
+    <<org-custom-pdf-links>>
     (defun my/org-files-with-todos ()
       (let* ((dir (expand-file-name org-directory))
              (cmd (format "rg -l -g '*.org' -g '!*_games_*' -g '!*_private_*' '^\\*+\\s+TODO' %s"
@@ -1202,6 +1203,51 @@ https://karthinks.com/software/scaling-latex-previews-in-emacs/
 
   (add-hook 'text-scale-mode-hook #'my/text-scale-adjust-latex-previews)
 #+end_src
+*** customizing pdf links
+Allows for the following:
+- `C-c l` with a highlighted passage in the pdf to copy the highlighted text and leave a mark in the pdf
+- `C-c C-l` in an org file to paste the highlighted text and make it a link to the mark in the pdf
+Like org-pdftools, but without the need to depend on org-noter:
+https://github.com/fuxialexander/org-pdftools
+#+name: org-custom-pdf-links
+#+begin_src emacs-lisp :tangle no
+  (defun my/org-pdf-store-link ()
+      "Store a link to a PDF selection. Raises an error if no region is highlighted."
+      (when (derived-mode-p 'pdf-view-mode)
+        (if (not (pdf-view-active-region-p))
+            (user-error "No region highlighted! Please select text to create an annotation link")
+          (let* ((file (buffer-file-name))
+                 (page (pdf-view-current-page))
+                 (raw-text (mapconcat #'identity (pdf-view-active-region-text) " "))
+                 (clean-text (replace-regexp-in-string "[ \t\n\r]+" " " raw-text))
+                 (annot (pdf-annot-add-highlight-markup-annotation (pdf-view-active-region)))
+                 (annot-id (pdf-annot-get-id annot))
+                 (link (format "pdf:%s::%d;;%s" file page annot-id))
+                 (description (format "Page %d: %s" page clean-text)))
+            (org-link-store-props
+             :type "pdf"
+             :link link
+             :description description)))))
+
+    (defun my/org-pdf-follow-link (link)
+      "Follow a PDF link by opening the file and jumping to the annotation ID."
+      (let* ((parts (split-string link "::"))
+             (file (expand-file-name (car parts)))
+             (rest (cadr parts))
+             (has-annot (string-match ";;" rest))
+             (page (string-to-number (if has-annot (substring rest 0 (match-beginning-0)) rest)))
+             (annot-id (when has-annot (substring rest (match-end 0)))))
+        (find-file file)
+        (pdf-view-goto-page page)
+        (when annot-id
+          (let ((annot (pdf-info-getannot annot-id)))
+            (pdf-annot-show-annotation annot t)))))
+
+    ;; Register the "pdf:" link type directly (wrapper removed)
+    (org-link-set-parameters "pdf"
+                             :follow #'my/org-pdf-follow-link
+                             :store #'my/org-pdf-store-link)
+#+end_src
 *** org-modern
 Load org-modern as per instructions on
 https://github.com/minad/org-modern
@@ -1237,17 +1283,6 @@ https://github.com/calvinwyoung/org-autolist
   (use-package org-autolist
     :after org
     :hook (org-mode . org-autolist-mode))
-#+end_src
-*** org-pdftools
-Load org-pdftools as per instructions on
-https://github.com/fuxialexander/org-pdftools
-It allows for the following:
-- `C-c l` with a highlighted passage in the pdf to copy the highlighted text and leave a mark in the pdf
-- `C-c C-l` in an org file to paste the highlighted text and make it a link to the mark in the pdf
-#+begin_src emacs-lisp
-  (use-package org-pdftools
-    :after (:any org pdf-tools)
-    :hook (org-mode . org-pdftools-setup-link))
 #+end_src
 ** denote
 Customizations for denote
