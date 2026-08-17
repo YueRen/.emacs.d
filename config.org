@@ -772,7 +772,25 @@ https://github.com/oantolin/embark
     (("C-." . embark-act)         ; pick some comfortable binding
      ("C-;" . embark-dwim)        ; good alternative: M-.
      ("C-h B" . embark-bindings)) ; alternative for `describe-bindings'
+    :preface
+    (defun embark-target-flymake-diagnostic ()
+      "Target the Flymake/Eglot diagnostic overlay at point, if any."
+      (when (bound-and-true-p flymake-mode)
+        (when-let* ((ov (seq-find (lambda (o) (overlay-get o 'flymake-diagnostic))
+                                  (overlays-at (point))))
+                    (diag (overlay-get ov 'flymake-diagnostic)))
+          `(flymake-diagnostic
+            ,(flymake-diagnostic-text diag)
+            ,(overlay-start ov) . ,(overlay-end ov)))))
 
+    (defun embark-target-flyspell-word ()
+      "Target the misspelled word at point, if any."
+      (when (bound-and-true-p flyspell-mode)
+        (when-let* ((ov (seq-find (lambda (o) (overlay-get o 'flyspell-overlay))
+                                  (overlays-at (point)))))
+          `(flyspell-word
+            ,(buffer-substring-no-properties (overlay-start ov) (overlay-end ov))
+            ,(overlay-start ov) . ,(overlay-end ov)))))
     :init
     ;; Optionally replace the key help with a completing-read interface
     (setq prefix-help-command #'embark-prefix-help-command)
@@ -789,9 +807,9 @@ https://github.com/oantolin/embark
 
     (defun embark-which-key-indicator ()
       "An embark indicator that displays keymaps using which-key.
-  The which-key help message will show the type and value of the
-  current target followed by an ellipsis if there are further
-  targets."
+      The which-key help message will show the type and value of the
+      current target followed by an ellipsis if there are further
+      targets."
       (lambda (&optional keymap targets prefix)
         (if (null keymap)
             (which-key--hide-popup-ignore-command)
@@ -823,7 +841,23 @@ https://github.com/oantolin/embark
         (apply fn args)))
 
     (advice-add #'embark-completing-read-prompter
-                :around #'embark-hide-which-key-indicator))
+                :around #'embark-hide-which-key-indicator)
+
+    (add-to-list 'embark-target-finders #'embark-target-flymake-diagnostic)
+    (add-to-list 'embark-target-finders #'embark-target-flyspell-word)
+
+    (defvar-keymap embark-flymake-diagnostic-map
+      :doc "Embark actions for a Flymake/Eglot diagnostic."
+      :parent embark-general-map
+      "RET" #'eldoc-doc-buffer)
+
+    (defvar-keymap embark-flyspell-word-map
+      :doc "Embark actions for a misspelled word."
+      :parent embark-general-map
+      "RET" #'ispell-word)
+
+    (add-to-list 'embark-keymap-alist '(flymake-diagnostic . embark-flymake-diagnostic-map))
+    (add-to-list 'embark-keymap-alist '(flyspell-word . embark-flyspell-word-map)))
 #+end_src
 *** embark-consult
 Load embark-consult as per instructions on
