@@ -1729,7 +1729,7 @@ Turn on C++-mode for files ending in ".sing" and ".lib" for Singular.
   (setq auto-mode-alist (cons '("\\.sing\\'" . c++-mode) auto-mode-alist))
   (setq auto-mode-alist (cons '("\\.lib\\'" .  c++-mode) auto-mode-alist))
 #+end_src
-* LLMs
+* AI
 Packages and customizations for LLMs
 ** Copilot
 Installing copilot as per the instructions on
