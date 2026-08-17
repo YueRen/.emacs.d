@@ -395,6 +395,15 @@ Load appropriate personal dictionary based on file local ~ispell-local-dictionar
           ;; Set ispell-personal-dictionary
           (setq ispell-local-pdict personal-dict)))))
 #+end_src
+** flyspell
+Unset ~C-.~ and ~C-;~ in flyspell to avoid clashing with ~embark~.
+#+begin_src emacs-lisp
+  (use-package flyspell
+    :ensure nil ; built-in
+    :config
+    (keymap-unset flyspell-mode-map "C-." t)
+    (keymap-unset flyspell-mode-map "C-;" t))
+#+end_src
 ** bookmark
 #+begin_src emacs-lisp
   (use-package bookmark
