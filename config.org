@@ -1760,12 +1760,15 @@ https://github.com/karthink/gptel
 Installing agent-shell as per instructions on
 https://github.com/xenodium/agent-shell
 #+begin_src emacs-lisp
-  (use-package agent-shell)
-  (setq agent-shell-anthropic-authentication
-        (agent-shell-anthropic-make-authentication
-         :api-key (lambda ()
-                  (let ((secret (auth-source-pick-first-password :host "api.anthropic.com")))
-                    (if (functionp secret) (funcall secret) secret)))))
+  (use-package agent-shell
+    :commands agent-shell
+    :ensure-system-package
+    ((claude-agent-acp . "npm install -g @agentclientprotocol/claude-agent-acp"))
+    :custom
+    (agent-shell-preferred-agent-config (agent-shell-anthropic-make-claude-code-config))
+    (agent-shell-anthropic-authentication (agent-shell-anthropic-make-authentication :login t))
+    (agent-shell-prefer-viewport-interaction t)
+    (agent-shell-header-style 'text))
 #+end_src
 * Server
 ** Initialisation
