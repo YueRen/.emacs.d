@@ -1768,7 +1768,8 @@ https://github.com/xenodium/agent-shell
     (agent-shell-preferred-agent-config (agent-shell-anthropic-make-claude-code-config))
     (agent-shell-anthropic-authentication (agent-shell-anthropic-make-authentication :login t))
     (agent-shell-prefer-viewport-interaction t)
-    (agent-shell-header-style 'text))
+    (agent-shell-header-style 'text)
+    (agent-shell-display-action nil))
 #+end_src
 * Server
 ** Initialisation
