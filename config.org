@@ -1406,6 +1406,33 @@ https://github.com/emacs-citar/citar
     (org-cite-follow-processor 'citar)
     (org-cite-activate-processor 'citar))
 #+end_src
+* Emails
+** notmuch
+Load notmuch.  Emails downloaded via lieer:
+https://github.com/gauteh/lieer
+#+begin_src emacs-lisp
+  (use-package notmuch
+    :custom
+    (notmuch-show-logo nil)
+    (notmuch-search-oldest-first nil)
+    (notmuch-message-headers '("Subject" "To" "Cc" "Date" "From")))
+#+end_src
+** consult-notmuch
+Load consult-notmuch as per instructions on:
+https://github.com/emacsmirror/consult-notmuch
+#+begin_src emacs-lisp
+  (use-package consult-notmuch
+    :after notmuch
+    :bind
+    (("C-c m m" . consult-notmuch)
+     ("C-c m t" . consult-notmuch-tree)))
+#+end_src
+** ol-notmuch
+Load ol-notmuch, to allow org-mode style links from and to notmuch via ~C-c l~ and ~C-c C-l~.
+#+begin_src emacs-lisp
+  (use-package ol-notmuch
+    :after (org notmuch))
+#+end_src
 * Presentations
 Packages and customizations for presentations
 ** org-present
