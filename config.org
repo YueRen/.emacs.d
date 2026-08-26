@@ -1806,6 +1806,17 @@ https://github.com/xenodium/agent-shell
 #+begin_src emacs-lisp
   (use-package agent-shell
     :commands agent-shell
+    :bind (:map agent-shell-mode-map
+           ("C-c C-c" . nil)
+           ("C-c C-k" . agent-shell-interrupt)
+           ("C-c C-o" . my/agent-shell-open-link-at-point)
+           :map agent-shell-viewport-view-mode-map
+           ("C-c C-k" . agent-shell-viewport-interrupt)
+           ("C-c C-o" . my/agent-shell-open-link-at-point)
+           :map agent-shell-viewport-edit-mode-map
+           ("C-c C-o" . my/agent-shell-open-link-at-point)
+           ("C-c C-f" . my/agent-shell-insert-file-path)
+           ("C-c C-b" . my/agent-shell-insert-buffer-file-path))
     :ensure-system-package
     ((claude-agent-acp . "npm install -g @agentclientprotocol/claude-agent-acp"))
     :custom
@@ -1813,7 +1824,31 @@ https://github.com/xenodium/agent-shell
     (agent-shell-anthropic-authentication (agent-shell-anthropic-make-authentication :login t))
     (agent-shell-prefer-viewport-interaction t)
     (agent-shell-header-style 'text)
-    (agent-shell-display-action nil))
+    (agent-shell-display-action nil)
+    :config
+    (defun my/agent-shell-insert-file-path ()
+      "Prompt for any file on disk and insert its path prefixed with @."
+      (interactive)
+      (insert "@" (read-file-name "File: ")))
+    (defun my/agent-shell-insert-buffer-file-path ()
+      "Prompt for an open buffer file and insert its path prefixed with @."
+      (interactive)
+      (let* ((files (delq nil (mapcar #'buffer-file-name (buffer-list))))
+             (choice (completing-read "Open buffer: " files nil t)))
+        (insert "@" choice)))
+    (defun my/agent-shell-open-link-at-point ()
+      "Follow the link at point in agent-shell output, like `C-c C-o' in org-mode."
+      (interactive)
+      (if-let* ((action (lookup-key (get-text-property (point) 'keymap) [mouse-1])))
+          (call-interactively action)
+        (message "No link at point")))
+    (advice-add 'agent-shell-markdown--make-ret-binding-map :filter-return
+                (lambda (map) (define-key map (kbd "RET") nil) map))
+    (advice-add 'agent-shell--make-button :filter-return
+                (lambda (button)
+                  (when-let* ((map (get-text-property 0 'keymap button)))
+                    (define-key map (kbd "RET") nil))
+                  button)))
 #+end_src
 * Server
 ** Initialisation
