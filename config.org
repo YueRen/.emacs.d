@@ -702,7 +702,7 @@ https://github.com/minad/consult
      ("C-c M-x" . consult-mode-command)
      ("C-c h" . consult-history)
      ("C-c k" . consult-kmacro)
-     ("C-c m" . consult-man)
+     ;; ("C-c m" . consult-man)                ; disabled to free up space for consult-notmuch
      ("C-c i" . consult-info)
      ([remap Info-search] . consult-info)
      ;; C-x bindings in `ctl-x-map'
@@ -1110,6 +1110,7 @@ Load org when opening org files.
     <<org-custom-capture>>
     <<org-custom-agenda-variables>>
     :config
+    <<org-custom-capture-defun>>
     <<org-custom-file-opening>>
     <<org-custom-latex-macros>>
     <<org-custom-latex-preview-scaling>>
@@ -1144,12 +1145,28 @@ Load org when opening org files.
 - set correct file for captures
 - create a template for basic notes (automatically adds date and time only)
 - disable automatic creation of bookmarks
+- prompt for denote file at capture time, defaulting to ~org-default-notes-file~
 #+name: org-custom-capture
 #+begin_src emacs-lisp :tangle no
   (org-default-notes-file "~/notes/20250729T143140--captures__meta.org")
-  (org-capture-templates '(("n" "Note" entry (file+headline org-default-notes-file "Notes")
-                            "* %U %?")))
+  (org-capture-templates '(("n" "Note" entry (file my/org-capture-select-file)
+                            "* %U %?")
+                           ("m" "Meeting" entry (file my/org-capture-select-file)
+                            "* Meeting %^T\n:PROPERTIES:\n:ATTENDEES: %^{Attendees}\n:LOCATION:  %^{Location/Room|Online}\n:END:\n\n** Key Decisions\n-\n\n** Action Items\n***\n\n** Discussion Notes\n- ")))
   (org-capture-bookmark nil)
+#+end_src
+
+#+name: org-custom-capture-defun
+#+begin_src emacs-lisp :tangle no
+  (defun my/org-capture-select-file ()
+    "Prompt for a denote note to capture into. Empty input uses `org-default-notes-file'."
+    (let ((file (denote-file-prompt nil
+                                    (format "Capture to (RET = %s)"
+                                            (abbreviate-file-name org-default-notes-file))
+                                    :no-require-match)))
+      (if (or (null file) (string-empty-p file))
+          org-default-notes-file
+        file)))
 #+end_src
 *** customizing org-agenda
 - inhibit startup when preparing agenda buffers
