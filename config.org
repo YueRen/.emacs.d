@@ -1723,7 +1723,39 @@ https://github.com/tpapp/julia-repl
     :after julia-mode                    ; defer loading until julia-mode is started
     :hook (julia-mode . julia-repl-mode) ; auto-activate when julia-mode is started
     :config
-    (julia-repl-set-terminal-backend 'vterm)) ; use vterm (recommended)
+    (julia-repl-set-terminal-backend 'vterm) ; use vterm (recommended)
+    (defvar-local julia-repl--keymap nil
+      "Buffer-local keymap for julia-repl REPL buffers.")
+    (add-hook 'julia-repl-hook
+              (lambda ()
+                (let ((map (make-sparse-keymap)))
+                  (set-keymap-parent map (current-local-map))
+                  (define-key map (kbd "C-c C-r") #'julia-repl-start-block-select)
+                  (use-local-map map)
+                  (setq julia-repl--keymap map))
+                (add-hook 'vterm-copy-mode-hook
+                          (lambda ()
+                            (unless vterm-copy-mode
+                              (use-local-map julia-repl--keymap)))
+                          nil t)))
+    (defun julia-repl-start-block-select ()
+      "Enter vterm-copy-mode and select the last Julia REPL block.
+Press C-r to extend selection to earlier blocks, then RET to exit
+isearch and RET again to copy the region."
+      (interactive)
+      (vterm-copy-mode 1)
+      (goto-char (point-max))
+      (unless (re-search-backward "^julia> " nil t)
+        (user-error "No Julia prompt found"))
+      (save-excursion
+        (forward-line -1)
+        (end-of-line)
+        (push-mark (point) nil t))
+      (isearch-mode nil t)
+      (setq isearch-string "^julia> "
+            isearch-message "^julia> "
+            isearch-regexp t)
+      (isearch-search-and-update)))
 #+end_src
 ** eglot-jl
 Load eglot-js for language server support as per instructions on
