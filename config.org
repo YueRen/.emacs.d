@@ -1,6 +1,7 @@
 #+title: GNU Emacs config
 #+author: Yue Ren
 #+description: config with main usecase latex and julialang, optimized for screen efficiency, requires up-to-date Emacs
+#+PROPERTY: header-args:emacs-lisp :lexical t :shebang ";; -*- lexical-binding: t; -*-"
 
 * Package management
 ** package archives
