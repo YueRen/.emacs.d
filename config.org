@@ -1071,15 +1071,24 @@ https://github.com/jamescherti/kirigami.el
 Packages and customizations for dired
 ** basic setup
 #+begin_src emacs-lisp
+  (use-package ls-lisp
+    :ensure nil
+    :demand t
+    :custom
+    (ls-lisp-use-insert-directory-program nil) ; use built-in ls-lisp instead of system ls
+    (ls-lisp-dirs-first t)                     ; list directories first
+    (ls-lisp-use-string-collate nil))          ; sort by raw byte value, respecting leading dots
+
   (use-package dired
     :ensure nil ; do not load, it is built-in
     :bind
     (:map dired-mode-map
           ("C-c C-p" . dired-toggle-read-only))  ; add keybinding for uniformity with wgrep
     :custom
-    (dired-listing-switches "-alFh")             ; all files, list, add / to folders, human readable sizes
+    (dired-listing-switches "-ahlF")             ; all files, list, add / to folders, human readable sizes
     (dired-kill-when-opening-new-dired-buffer t) ; open folders in existing buffer instead of a new buffer
     (dired-dwim-target t)                        ; if two dired buffers open, use other as default target
+    (dired-vc-rename-file t)                     ; use vc to rename file if present
     (wdired-allow-to-change-permissions t)       ; allow wdired to change permissions
     (wdired-allow-to-redirect-links t)           ; allow wdired to change symlinks
     :config
