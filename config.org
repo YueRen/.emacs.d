@@ -364,6 +364,12 @@ delete word without changing kill ring, alternative to backward-kill-word
   (global-set-key (kbd "C-<backspace>") 'my-backward-kill-word)
   (global-set-key (kbd "M-DEL") 'my-backward-kill-word)
 #+end_src
+*** paste without formatting
+remove formatting when pasting text, found on
+https://www.jamescherti.com/emacs-fix-org-mode-copy-paste-yank-bleed/
+#+begin_src emacs-lisp
+  (add-to-list 'yank-excluded-properties 'face)
+#+end_src
 ** isearch
 - show number of search hits in modeline
 - allow scrolling during search
