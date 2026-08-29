@@ -801,6 +801,29 @@ https://github.com/oantolin/embark
           `(flyspell-word
             ,(buffer-substring-no-properties (overlay-start ov) (overlay-end ov))
             ,(overlay-start ov) . ,(overlay-end ov)))))
+
+    (defun embark-target-julia-file-ref ()
+      "Target Julia error file:line references, handling vterm line wrapping."
+      (save-excursion
+        (beginning-of-line)
+        ;; If this line is just :NNN (vterm-wrapped line number), the path is above.
+        (when (looking-at ":[0-9]+$")
+          (forward-line -1))
+        (let ((line (buffer-substring-no-properties
+                     (line-beginning-position) (line-end-position))))
+          (when (string-match "\\([^ \t]+\\.jl\\)" line)
+            (let* ((file (match-string 1 line))
+                   (line-num
+                    (or (and (string-match "\\.jl:\\([0-9]+\\)" line)
+                             (match-string 1 line))
+                        (save-excursion
+                          (forward-line 1)
+                          (and (looking-at ":\\([0-9]+\\)$")
+                               (match-string 1)))))
+                   (ref (concat (expand-file-name file)
+                                (if line-num (concat ":" line-num) ""))))
+              `(julia-file-ref ,ref
+                ,(line-beginning-position) . ,(line-end-position)))))))
     :init
     ;; Optionally replace the key help with a completing-read interface
     (setq prefix-help-command #'embark-prefix-help-command)
@@ -867,7 +890,26 @@ https://github.com/oantolin/embark
       "RET" #'ispell-word)
 
     (add-to-list 'embark-keymap-alist '(flymake-diagnostic . embark-flymake-diagnostic-map))
-    (add-to-list 'embark-keymap-alist '(flyspell-word . embark-flyspell-word-map)))
+    (add-to-list 'embark-keymap-alist '(flyspell-word . embark-flyspell-word-map))
+
+    (defun my/open-julia-file-ref (ref)
+      "Visit file and line encoded in REF as \"/path/file.jl:LINE\"."
+      (interactive "sRef: ")
+      (if (string-match "\\`\\(.*\\):\\([0-9]+\\)\\'" ref)
+          (let ((file (match-string 1 ref))
+                (line (string-to-number (match-string 2 ref))))
+            (find-file-other-window file)
+            (goto-char (point-min))
+            (forward-line (1- line)))
+        (find-file-other-window ref)))
+
+    (defvar-keymap embark-julia-file-ref-map
+      :doc "Embark actions for Julia error file references."
+      :parent embark-general-map
+      "RET" #'my/open-julia-file-ref)
+
+    (add-to-list 'embark-target-finders #'embark-target-julia-file-ref)
+    (add-to-list 'embark-keymap-alist '(julia-file-ref . embark-julia-file-ref-map)))
 #+end_src
 *** embark-consult
 Load embark-consult as per instructions on
