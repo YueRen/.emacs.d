@@ -1820,6 +1820,8 @@ https://github.com/tpapp/julia-repl
   (use-package julia-repl
     :after julia-mode                    ; defer loading until julia-mode is started
     :hook (julia-mode . julia-repl-mode) ; auto-activate when julia-mode is started
+    :bind (:map julia-repl-mode-map
+                ("C-<return>" . julia-repl-send-region-or-line))
     :config
     (julia-repl-set-terminal-backend 'vterm) ; use vterm (recommended)
     (defvar-local julia-repl--keymap nil
