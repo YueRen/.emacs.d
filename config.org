@@ -1248,13 +1248,22 @@ Load org when opening org files.
 #+begin_src emacs-lisp :tangle no
   (defun my/org-capture-select-file ()
     "Prompt for a denote note to capture into. Empty input uses `org-default-notes-file'."
-    (let ((file (denote-file-prompt nil
-                                    (format "Capture to (RET = %s)"
-                                            (abbreviate-file-name org-default-notes-file))
-                                    :no-require-match)))
-      (if (or (null file) (string-empty-p file))
+    (let* ((files (denote-sort-get-directory-files nil 'last-modified))
+           (roots (denote-directories))
+           (default-directory (car roots))
+           (relative-files (mapcar (lambda (f)
+                                     (denote--get-file-name-relative-to-directories f roots))
+                                   files))
+           (input (completing-read
+                   (format "Capture to (RET = %s): "
+                           (abbreviate-file-name org-default-notes-file))
+                   (apply #'denote-get-completion-table
+                          relative-files
+                          denote-file-prompt-extra-metadata)
+                   nil nil nil 'denote-file-history)))
+      (if (string-empty-p input)
           org-default-notes-file
-        file)))
+        (expand-file-name input default-directory))))
 #+end_src
 *** customizing org-agenda
 - inhibit startup when preparing agenda buffers
