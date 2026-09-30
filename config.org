@@ -1838,8 +1838,8 @@ https://github.com/tpapp/julia-repl
                           nil t)))
     (defun julia-repl-start-block-select ()
       "Enter vterm-copy-mode and select the last Julia REPL block.
-Press C-r to extend selection to earlier blocks, then RET to exit
-isearch and RET again to copy the region."
+  Press C-r to extend selection to earlier blocks, then RET to exit
+  isearch and RET again to copy the region."
       (interactive)
       (vterm-copy-mode 1)
       (goto-char (point-max))
