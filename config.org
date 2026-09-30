@@ -719,7 +719,7 @@ Packages that affect several aspects
 Load consult for various useful commands as per instructions on
 https://github.com/minad/consult
 #+begin_src emacs-lisp
-    (use-package consult
+  (use-package consult
     ;; Replace bindings. Lazily loaded due by `use-package'.
     :bind
     (;; C-c bindings in `mode-specific-map'
