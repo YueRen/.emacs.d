@@ -1811,7 +1811,40 @@ https://github.com/JuliaEditorSupport/julia-emacs
     :mode "\\.jl\\'" ; defer loading until and auto-activate when .jl files are opened
     :init
     (with-eval-after-load 'julia-mode ; disable <backtack> shortcut, it is reserved for folding
-      (define-key julia-mode-map (kbd "<backtab>") nil)))
+      (define-key julia-mode-map (kbd "<backtab>") nil))
+    :config
+    ;; Prevent eglot from overriding imenu — julia-mode's own imenu-generic-expression
+    ;; is much cleaner (shows only Functions/Types/Consts, not fields/parameters).
+    (add-hook 'julia-mode-hook
+              (lambda ()
+                (setq-local eglot-stay-out-of '(imenu)))
+              -5)
+    ;; Show full signature (name + args) in imenu to distinguish same-named methods.
+    (add-hook 'julia-mode-hook
+              (lambda ()
+                (setq-local imenu-generic-expression
+                            `(("Function"
+                               ,(rx line-start (* (or space "@inline" "@noinline")) symbol-start
+                                    "function" (1+ space)
+                                    (* (seq (1+ (or word (syntax symbol))) "."))
+                                    (group (seq (1+ (or word (syntax symbol)))
+                                                (? (seq "(" (* (not (any ")\n"))) ")")))))
+                               1)
+                              ("Function"
+                               ,(rx line-start (* (or space "@inline" "@noinline")) symbol-start
+                                    (* (seq (1+ (or word (syntax symbol))) "."))
+                                    (group (seq (1+ (or word (syntax symbol)))
+                                                "(" (* (not (any ")\n"))) ")"))
+                                    (* space)
+                                    (? "::" (* space) (1+ (not (any space "\n"))))
+                                    (* space)
+                                    (* (seq "where" (or "{" (+ space)) (+ (not (any "=\n")))))
+                                    "="
+                                    (not (any "=")))
+                               1)
+                              ("Type" ,julia-type-regex 1)
+                              ("Const" ,julia-const-def-regex 1))))
+              5))
 #+end_src
 ** julia-repl
 Install julia-repl as per instructions on
